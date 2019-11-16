@@ -1,11 +1,15 @@
 <?php
 
-require('config.php');
 session_start();
+
+require('config.php');
+redirect();
 
 function button($text, $a, $href = false, $width = 200, $color = "white")
 {
 	$text = str_replace(' ', '<span style="color:Black">_</span>', $text);
+	if ($color != "white")
+		$color .= ";text-shadow:unset";
 	echo '
 	<div class="svg-wrapper">
 		<svg height="40" width="'.$width.'">
@@ -17,6 +21,10 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
 	</div>';
 }
 
+$link = NULL;
+
+try
+{
 ?>
 
 <!DOCTYPE html>
@@ -42,38 +50,34 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
 		</div>
 		<div id="vertical-menu" style="background: linear-gradient(to right, Black 200px, White);">
 			<?php
-				button("Profile", "show_page('myprofile');");
+				echo "<div style=\"padding-bottom:100px;\">";
+				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7");
+				echo "</div>";
+
 				button("SQL Injection", "show_page('sql-injection');");
 				button("CSRF", "show_page('csrf');");
-				button("SSRF", "");
-				button("XSS", "");
 				button("Code Injection", "");
-				button("RFI", "");
-				button("Include", "");
 
 				echo "<div style=\"padding-top:100px;\">";
-				button("Sign out", "", true, 200, "#2a77d7");
+				button("Sign out", "sign-out.php", true, 200, "#2a77d7");
 				echo "</div>";
 			?>
 		</div>
+		<?php $link = connect_start(); ?>
 		<div class="form-style" style="padding-left:300px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
-				<h1><?php echo /*$_SESSION['username']*/"Username" ?></h1>
+				<h1><?php echo $_SESSION['username'] ?></h1>
 			</div>
 			<div id="sql-injection" style="display:none;">
 				<h1>SQL Injection</h1>
-				<?php
-					try
-					{
-						$link = new PDO(true)
-					}
-				?>
-				<a href="challenges/SQL-injection/"></a>
+				
 			</div>
 			<div id="csrf" style="display:none;">
-				CSRF
+				<h1>CSRF</h1>
+
 			</div>
-			<input type="text" id="flag" style="display:none;" placeholder="Flag" onclick="if(windows.event.keyCode == 13) submit_flag();">
+			<a style="cursor:pointer;" onclick="start_challenge();"></a>
+			<input type="text" id="flag" style="display:none;" placeholder="Flag" onclick="if(window.event.keyCode == 13) submit_flag();">
 		</div>
 		<script type="text/javascript">
 			var last_page_name = "myprofile";
@@ -99,7 +103,20 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
 			{
 
 			}
+
+			function start_challenge()
+			{
+
+			}
 		</script>
-		<?php require_once 'footer.php' ?>
+		<?php 
+
+		}
+		catch (Exception $e)
+		{
+			
+		}
+		include 'footer.php';
+		?>
 	</body>
 </html>
