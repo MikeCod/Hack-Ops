@@ -37,8 +37,6 @@ catch (Exception $e)
 	connect_end($link);
 	$_SESSION['error'] = $e->getMessage();
 }
-if(!isset($_SESSION['username']))
-	$_SESSION['username'] = '';
 header("Location: sign-in.php");
 exit();
 

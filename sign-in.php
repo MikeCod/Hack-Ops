@@ -7,6 +7,9 @@ if(is_connected()) {
 	exit();
 }
 
+if(!isset($_SESSION['username']))
+	$_SESSION['username'] = '';
+
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +30,7 @@ if(is_connected()) {
 			<form action="sign-in-action.php" method="post">
 				<fieldset>
 					<br><br>
-					<input name="username" placeholder="Username" type="text" value="<?php echo $_SESSION['username']; ?>" autofocus>
+					<input name="username" placeholder="Username" type="text" value="<?php echo $_SESSION['username'] ?>" autofocus>
 					<!--<br><br>-->
 					<input name="password" placeholder="Password" type="password">
 				</fieldset>
