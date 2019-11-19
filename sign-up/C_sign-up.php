@@ -2,6 +2,7 @@
 
 session_start();
 include('../config.php');
+include('../M_bdd.php');
 
 $link = NULL;
 
