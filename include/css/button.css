@@ -100,7 +100,7 @@ css {
 }
 
 .text a:hover {
-	animation: animation-button 1s;
+	/*animation: animation-button 1s;*/
 	font-weight:1000; text-shadow: 0 0 10px White;
 }
 
@@ -115,8 +115,9 @@ css {
 	stroke-dashoffset: 0;
 	stroke: White;
 }
-
+/*
 @keyframes animation-button {
 	0%	{ margin-left:100%; }
 	100%{ margin-left:0; }
 }
+*/

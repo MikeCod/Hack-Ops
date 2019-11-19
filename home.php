@@ -48,7 +48,7 @@ function button($text, $a, $href = false, $width = 150, $color = "white")
 		</div>
 		<div style="font-size:32pt; text-align:center; overflow:hidden;">
 			<div id="home" style="padding-top:10%; display:none; width:100%;">
-				<?php echo '<span id="name">'.NAME.'</span>' ?>
+				<?php echo '<span style="font-size:32pt;font-size:Open Sans">'.NAME.'</span>' ?>
 			</div>
 			<div id="about-us" style="display:none; width:100%;">
 				About us

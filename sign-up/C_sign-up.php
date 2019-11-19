@@ -2,6 +2,7 @@
 
 session_start();
 include('../config.php');
+include('../M_bdd.php');
 
 $link = NULL;
 
@@ -15,7 +16,7 @@ try
 		
 	$link = connect_start();
 
-	if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 		throw new Exception("email");
 
 	if (!preg_match("/[^A-Za-z0-9_ -]/.{3,16}$#", $_POST['username']))
@@ -33,14 +34,14 @@ try
 	$_SESSION['email'] = $_POST['email'];
 	connected();
 
-	header("Location: /dashboard.php");
+	header("Location: ../dashboard.php");
 	exit();
 }
 catch (Exception $e)
 {
 	connect_end($link);
 	$_SESSION['error'] = $e->getMessage();
-	header("Location: /sign-up/");
+	header("Location: ../sign-up/");
 	exit();
 }
 

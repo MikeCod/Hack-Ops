@@ -1,12 +1,13 @@
 <?php
 
 session_start();
-require('config.php');
+require('M_bdd.php');
 if(is_connected()) {
 	header("Location: dashboard.php");
 	exit();
 }
 
+require('config.php');
 if(!isset($_SESSION['username']))
 	$_SESSION['username'] = '';
 
@@ -23,11 +24,11 @@ if(!isset($_SESSION['username']))
 </head>
 	<body>
 		<div id="banner">
-			<span id="name"><?php echo NAME ?></span>
+			<span id="name" onclick=><?php echo NAME ?></span>
 		</div>
 		<div style="padding-top:8%; padding-left:calc(50% - 200px)">
 		<div class="form-style" style="max-width:400px;">
-			<form action="sign-in-action.php" method="post">
+			<form action="C_sign-in.php" method="post">
 				<fieldset>
 					<br><br>
 					<input name="username" placeholder="Username" type="text" value="<?php echo $_SESSION['username'] ?>" autofocus>

@@ -2,6 +2,7 @@
 
 session_start();
 require('config.php');
+require('M_bdd.php');
 if(is_connected()) {
 	header("Location: dashboard.php");
 	exit();
@@ -18,7 +19,7 @@ try
 		if (!($link = connect_start()))
 			throw new Exception("Could not connect to database. Sorry for the inconvenience.");
 
-		$result = $link->query("SELECT username, email FROM ".USERS." WHERE username = ".$link->quote($_POST['username'])." AND password = '".hash('sha3-256', $_POST['password'])."'");
+		$result = $link->query("SELECT username, email FROM ".USERS." WHERE username = ".$link->quote($_POST['username'])." AND password = '".hash('sha3-512', $_POST['password'])."'");
 		connect_end($link);
 		
 		if ($result->rowCount() != 1)
