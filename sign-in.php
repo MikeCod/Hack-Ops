@@ -7,7 +7,7 @@ if(is_connected()) {
 	exit();
 }
 
-require('M_bdd.php');
+require('config.php');
 if(!isset($_SESSION['username']))
 	$_SESSION['username'] = '';
 

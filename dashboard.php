@@ -70,17 +70,7 @@ try
 			</div>
 			<div id="sql-injection" style="display:none;">
 				<h1>SQL Injection</h1>
-<<<<<<< HEAD
-				<?php
-					try
-					{
-						$link = new PDO(true);
-					}
-				?>
-				<a href="challenges/SQL-injection/"></a>
-=======
 				
->>>>>>> 6541fe91d2f3bf75561912106b4b69014c8aa805
 			</div>
 			<div id="csrf" style="display:none;">
 				<h1>CSRF</h1>
