@@ -2,7 +2,7 @@
 
 session_start();
 
-require('config.php');
+require('M_bdd.php');
 redirect();
 
 function button($text, $a, $href = false, $width = 200, $color = "white")
@@ -20,6 +20,8 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
 		</svg>
 	</div>';
 }
+
+require('config.php');
 
 $link = NULL;
 
@@ -59,7 +61,7 @@ try
 				button("Code Injection", "");
 
 				echo "<div style=\"padding-top:100px;\">";
-				button("Sign out", "sign-out.php", true, 200, "#2a77d7");
+				button("Sign out", "C_sign-out.php", true, 200, "#2a77d7");
 				echo "</div>";
 			?>
 		</div>
