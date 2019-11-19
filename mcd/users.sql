@@ -12,8 +12,9 @@ CREATE TABLE IF NOT EXISTS `HackOps`.`users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(320) NOT NULL,
   `username` VARCHAR(16) NOT NULL,
-  `password` VARCHAR(64) NOT NULL,
+  `password` VARCHAR(128) NOT NULL,
   `score` INT UNSIGNED NULL DEFAULT 0,
+  `activated` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `login_UNIQUE` (`username` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
@@ -96,3 +97,7 @@ CREATE TABLE IF NOT EXISTS `HackOps`.`completed-badges` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+-- ADD ADMIN ACCOUNT --
+-- Password: H@ck0p5P1MDC -- 
+INSERT INTO users(username, email, password) VALUES('admin', 'admin@localhost', 'f451eecb3a41963157e4d3b0063636cfc3e37b65ed46d74382ff2a09cffe7dd2e0435b60ce56670beedc472d55fa8c4c7bd98558c637ee1816264d13c3f549db')
