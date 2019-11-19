@@ -1,12 +1,13 @@
 <?php
 
 session_start();
-require('config.php');
+require('M_bdd.php');
 if(is_connected()) {
 	header("Location: dashboard.php");
 	exit();
 }
 
+require('M_bdd.php');
 if(!isset($_SESSION['username']))
 	$_SESSION['username'] = '';
 
