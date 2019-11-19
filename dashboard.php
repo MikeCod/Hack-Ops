@@ -65,7 +65,7 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
 				<?php
 					try
 					{
-						$link = new PDO(true)
+						$link = new PDO(true);
 					}
 				?>
 				<a href="challenges/SQL-injection/"></a>
