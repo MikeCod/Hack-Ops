@@ -100,4 +100,6 @@ ENGINE = InnoDB;
 
 -- ADD ADMIN ACCOUNT --
 -- Password: H@ck0p5P1MDC -- 
-INSERT INTO users(username, email, password) VALUES('admin', 'admin@localhost', 'f451eecb3a41963157e4d3b0063636cfc3e37b65ed46d74382ff2a09cffe7dd2e0435b60ce56670beedc472d55fa8c4c7bd98558c637ee1816264d13c3f549db')
+INSERT INTO users(username, email, password) VALUES('admin', 'admin@localhost', 'f451eecb3a41963157e4d3b0063636cfc3e37b65ed46d74382ff2a09cffe7dd2e0435b60ce56670beedc472d55fa8c4c7bd98558c637ee1816264d13c3f549db');
+
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('SQL injection', '1', 'Find yourself', 'flag');
