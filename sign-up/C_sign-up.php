@@ -28,7 +28,7 @@ try
 	if ($_POST['password'] != $_POST['cpassword'])
 		throw new Exception("match");
 
-	$link->query("INSERT INTO users(username, email, password) VALUES('".$link->quote($_POST['username'])."', '".$link->quote($_POST['email'])."', '".hash('sha3-512', $_POST['password'])."')");
+	$link->query("INSERT INTO users(username, email, password) VALUES(".$link->quote($_POST['username']).", ".$link->quote($_POST['email']).", '".hash('sha3-512', $_POST['password'])."')");
 
 	$_SESSION['username'] = $_POST['username'];
 	$_SESSION['email'] = $_POST['email'];

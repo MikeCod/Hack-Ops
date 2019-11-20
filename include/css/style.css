@@ -91,6 +91,7 @@ p { font-family:serif; font-size:20px; font-weight: bold; color:White; }
 	color: Black;
 }
 .form-style select{
+	padding:0;
 	-webkit-appearance: menulist-button;
 	height:35px;
 }

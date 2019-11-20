@@ -1,13 +1,12 @@
 <?php
 
 session_start();
-
-require('M_bdd.php');
+require "M_bdd.php";
 redirect();
 
 function button($text, $a, $href = false, $width = 200, $color = "white")
 {
-	$text = str_replace(' ', '<span style="color:Black">_</span>', $text);
+	$text = str_replace(' ', '<span style="color:transparent">_</span>', $text);
 	if ($color != "white")
 		$color .= ";text-shadow:unset";
 	echo '
@@ -21,12 +20,11 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
 	</div>';
 }
 
-require('config.php');
-
 $link = NULL;
 
 try
 {
+	$link = connect_start();
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +40,12 @@ try
 		h1 {
 			padding-left:100px;
 		}
+
+		@keyframes animation-breathe {
+			0%	{ background: black; }
+			50%	{ background: #202020; }
+			100%{ background: black; }
+		}
 	</style>
 </head>
 	<body>
@@ -50,7 +54,7 @@ try
 				<?php echo NAME ?>
 			</div>
 		</div>
-		<div id="vertical-menu" style="background: linear-gradient(to right, Black 200px, White);">
+		<div id="vertical-menu" style="margin-top:-10px; /*background: linear-gradient(to right, Black 200px, White);*/ animation: animation-breathe 2.5s infinite">
 			<?php
 				echo "<div style=\"padding-bottom:100px;\">";
 				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7");
@@ -58,7 +62,7 @@ try
 
 				button("SQL Injection", "show_page('sql-injection');");
 				button("CSRF", "show_page('csrf');");
-				button("Code Injection", "");
+				button("Code Injection", "show_page('code-injection');");
 
 				echo "<div style=\"padding-top:100px;\">";
 				button("Sign out", "C_sign-out.php", true, 200, "#2a77d7");
@@ -78,37 +82,109 @@ try
 				<h1>CSRF</h1>
 
 			</div>
-			<a style="cursor:pointer;" onclick="start_challenge();"></a>
-			<input type="text" id="flag" style="display:none;" placeholder="Flag" onclick="if(window.event.keyCode == 13) submit_flag();">
+			<div id="code-injection" style="display:none;">
+				<h1>Code injection</h1>
+
+			</div>
+			<div id="submit-challenge" style="padding-top:100px; display:none;">
+				<select id="difficulty" name="difficulty" style="width:200px; font-size:12pt; padding-left:10px;">
+
+				</select>
+				<br>
+				<input type="hidden" id="challenge" value="">
+				<a style="cursor:pointer; padding:10px 20px 10px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
+				<input type="text" style="margin-top:20px" placeholder="Flag" onclick="if(window.event.keyCode == 13) submit_flag();">
+				<p id="error" style="padding-top:50px;"></p>
+			</div>
 		</div>
 		<script type="text/javascript">
 			var last_page_name = "myprofile";
 			document.getElementById(last_page_name).style.display = "block";
 
-			var type = "";
-
 			function show_page(page_name)
 			{
+				set_error("");
 				if(page_name == "myprofile")
-					document.getElementById("flag").style.display = "none";
-				else
-				{
-					document.getElementById("flag").style.display = "block";
-					type = page_name;
+					document.getElementById("submit-challenge").style.display = "none";
+				else {
+					document.getElementById("submit-challenge").style.display = "block";
+					document.getElementById("difficulty").innerHTML =  "<option value=\"0\" style=\"color:grey;\">Chose a difficulty</option>";
+					switch(page_name)
+					{
+						case "sql-injection":
+							document.getElementById("difficulty").innerHTML += 
+							<?php
+							echo '"';
+							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'SQL injection'");
+							while($difficulty = $result->fetch()['difficulty'])
+								echo "<option value=\\\"".$difficulty."\\\">".$difficulty."</option>";
+							echo '"';
+							?>;
+						case "csrf":
+							document.getElementById("difficulty").innerHTML += 
+							<?php
+							echo '"';
+							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'CSRF'");
+							while($difficulty = $result->fetch()['difficulty'])
+								echo "<option value=\\\"".$difficulty."\\\">".$difficulty."</option>";
+							echo '"';
+							?>;
+						case "code-injection":
+							document.getElementById("difficulty").innerHTML += 
+							<?php
+							echo '"';
+							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'Code injection'");
+							while($difficulty = $result->fetch()['difficulty'])
+								echo "<option value=\\\"".$difficulty."\\\">".$difficulty."</option>";
+							echo '"';
+							?>;
+					}
+					document.getElementById("challenge").value = page_name;
 				}
 				document.getElementById(last_page_name).style.display = "none";
 				document.getElementById(page_name).style.display = "block";
 				last_page_name = page_name;
 			}
 
+			function set_error(text)
+			{
+				document.getElementById("error").innerHTML = text;
+			}
+
 			function submit_flag()
 			{
+				set_error("");
 
 			}
 
 			function start_challenge()
 			{
+				set_error("");
+				link = "challenges/";
+				challenge = document.getElementById("challenge").value;
+				switch(challenge)
+				{
+					case "sql-injection":
+					case "csrf":
+					case "code-injection":
+						link += challenge+"/";
+						break;
+					default:
+						set_error("Unavailable challenge");
+						return ;
+				}
+				difficulty = document.getElementById("difficulty").value;
+				if(difficulty == 0) {
+					set_error("No difficulty specified");
+					return ;
+				}
+					
+				window.open(link+difficulty, "_blank");
+			}
 
+			function sleep(ms)
+			{
+				return new Promise(resolve => setTimeout(resolve, ms));
 			}
 		</script>
 		<?php 
@@ -116,7 +192,8 @@ try
 		}
 		catch (Exception $e)
 		{
-			
+			die("Internal error: ".$e->getMessage());
+
 		}
 		include 'footer.php';
 		?>

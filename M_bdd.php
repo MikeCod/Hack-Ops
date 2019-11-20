@@ -1,5 +1,7 @@
 <?php
 
+require_once "config.php";
+
 function connect_start()
 {
 	$link = new PDO("mysql:host=".HOST.";dbname=".DB_NAME, USER, PASS);

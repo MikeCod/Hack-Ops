@@ -35,7 +35,7 @@ if(!isset($_SESSION['username']))
 					<!--<br><br>-->
 					<input name="password" placeholder="Password" type="password">
 				</fieldset>
-				<input type="submit" name="submit" value="Sign in">
+				<input type="submit" value="Sign in">
 			</form>
 			<?php
 				if(isset($_SESSION['error'])) {
