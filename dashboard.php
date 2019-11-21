@@ -43,7 +43,7 @@ try
 
 		@keyframes animation-breathe {
 			0%	{ background: black; }
-			50%	{ background: #202020; }
+			50%	{ background: #171717; }
 			100%{ background: black; }
 		}
 	</style>
@@ -91,9 +91,9 @@ try
 
 				</select>
 				<br>
-				<input type="hidden" id="challenge" value="">
+				<input type="hidden" id="type" value="">
 				<a style="cursor:pointer; padding:10px 20px 10px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
-				<input type="text" style="margin-top:20px" placeholder="Flag" onclick="if(window.event.keyCode == 13) submit_flag();">
+				<input type="text" style="margin-top:20px;" placeholder="Flag" onclick="if(window.event.keyCode == 13) submit_flag();">
 				<p id="error" style="padding-top:50px;"></p>
 			</div>
 		</div>
@@ -115,7 +115,7 @@ try
 							document.getElementById("difficulty").innerHTML += 
 							<?php
 							echo '"';
-							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'SQL injection'");
+							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'sql-injection'");
 							while($difficulty = $result->fetch()['difficulty'])
 								echo "<option value=\\\"".$difficulty."\\\">".$difficulty."</option>";
 							echo '"';
@@ -124,7 +124,7 @@ try
 							document.getElementById("difficulty").innerHTML += 
 							<?php
 							echo '"';
-							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'CSRF'");
+							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'csrf'");
 							while($difficulty = $result->fetch()['difficulty'])
 								echo "<option value=\\\"".$difficulty."\\\">".$difficulty."</option>";
 							echo '"';
@@ -133,13 +133,13 @@ try
 							document.getElementById("difficulty").innerHTML += 
 							<?php
 							echo '"';
-							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'Code injection'");
+							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'code-injection'");
 							while($difficulty = $result->fetch()['difficulty'])
 								echo "<option value=\\\"".$difficulty."\\\">".$difficulty."</option>";
 							echo '"';
 							?>;
 					}
-					document.getElementById("challenge").value = page_name;
+					document.getElementById("type").value = page_name;
 				}
 				document.getElementById(last_page_name).style.display = "none";
 				document.getElementById(page_name).style.display = "block";
@@ -154,14 +154,20 @@ try
 			function submit_flag()
 			{
 				set_error("");
-
+				const req = new XMLHttpRequest();
+				req.open("POST", "challenges/C_validate.php");
+				req.readystatechange = function() {
+					if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
+						set_error(this.res)
+				}
+				req.send("type="+document.getElementById("type").value+"&difficulty="+document.getElementById("difficulty").value);
 			}
 
 			function start_challenge()
 			{
 				set_error("");
 				link = "challenges/";
-				challenge = document.getElementById("challenge").value;
+				challenge = document.getElementById("type").value;
 				switch(challenge)
 				{
 					case "sql-injection":
@@ -179,7 +185,7 @@ try
 					return ;
 				}
 					
-				window.open(link+difficulty, "_blank");
+				window.open(link+difficulty+"/", "_blank");
 			}
 
 			function sleep(ms)
