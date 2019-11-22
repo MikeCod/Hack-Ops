@@ -102,5 +102,5 @@ ENGINE = InnoDB;
 -- Password: H@ck0p5P1MDC -- 
 INSERT INTO users(username, email, password) VALUES('admin', 'admin@localhost', 'f451eecb3a41963157e4d3b0063636cfc3e37b65ed46d74382ff2a09cffe7dd2e0435b60ce56670beedc472d55fa8c4c7bd98558c637ee1816264d13c3f549db');
 
-INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '1', 'Access to the admin session (id = 1)', '2qiAw1RwviVaeWy8ZbkCZW6Xc2iQocxJzwtDGwXKaxQLUTx7FkY2KFSXm9e3TX69');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '1', 'Access the admin session (id = 1)', '2qiAw1RwviVaeWy8ZbkCZW6Xc2iQocxJzwtDGwXKaxQLUTx7FkY2KFSXm9e3TX69');
 -- INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '1', 'Access to the admin session (id = 1)', 'flag');

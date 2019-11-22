@@ -81,7 +81,6 @@ try
 			</div>
 			<div id="sql-injection" style="display:none;">
 				<h1>SQL Injection</h1>
-				<p id="description" style="display:none"></p>
 			</div>
 			<div id="csrf" style="display:none;">
 				<h1>CSRF</h1>
@@ -104,8 +103,8 @@ try
 		<script type="text/javascript">
 			const descriptions = [
 				[
-					"sql-injection",
-					[<?php 
+					"sql-injection", 
+					<?php 
 						$first = true;
 						foreach ($sql_injection as $result) {
 							if(!$first)
@@ -114,7 +113,7 @@ try
 								$first = false;
 							echo "[".$result['difficulty'].", \"".$result['description']."\"]";
 						}
-					?>]
+					?>
 				],
 				[
 					"csrf",
@@ -184,7 +183,20 @@ try
 
 			function set_description()
 			{
-				document.getElementById("description").innerHTML = descriptions[current_page_name][document.getElementById("difficulty").value];
+				num = 0;
+				switch(current_page_name)
+				{
+					case "code-injection":
+						++num;
+					case "csrf":
+						++num;
+					case "sql-injection":
+						break;
+					default:
+						document.getElementById("description").innerHTML = "Cannot load description. Please contact the developper.";
+						return ;
+				}
+				document.getElementById("description").innerHTML = descriptions[num][document.getElementById("difficulty").value][1];
 			}
 
 			function set_error(text)
@@ -208,7 +220,7 @@ try
 			{
 				set_error("");
 				link = "challenges/";
-				challenge = document.getElementById("type").value;
+				challenge = current_page_name;
 				switch(challenge)
 				{
 					case "sql-injection":
