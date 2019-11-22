@@ -25,6 +25,10 @@ $link = NULL;
 try
 {
 	$link = connect_start();
+
+	$sql_injection = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'sql-injection'")->fetchAll();
+	$csrf = $link->query("SELECT description FROM challenges WHERE type = 'csrf'")->fetchAll();
+	$code_injection = $link->query("SELECT description FROM challenges WHERE type = 'code-injection'")->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +80,7 @@ try
 			</div>
 			<div id="sql-injection" style="display:none;">
 				<h1>SQL Injection</h1>
-				
+				<p id="description" style="display:none"></p>
 			</div>
 			<div id="csrf" style="display:none;">
 				<h1>CSRF</h1>
@@ -90,6 +94,7 @@ try
 				<select id="difficulty" name="difficulty" style="width:200px; font-size:12pt; padding-left:10px;">
 
 				</select>
+				
 				<br>
 				<input type="hidden" id="type" value="">
 				<a style="cursor:pointer; padding:10px 20px 10px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
@@ -98,6 +103,20 @@ try
 			</div>
 		</div>
 		<script type="text/javascript">
+			const descriptions = [
+				["sql-injection",
+					[<?php 
+						$first = true;
+						foreach ($sql_injection as $key => $description) {
+							if(!$first)
+								echo ", ";
+							else
+								$first = true;
+							echo "[$key, $description]";
+						}
+					?>]
+				],
+			];
 			var last_page_name = "myprofile";
 			document.getElementById(last_page_name).style.display = "block";
 
@@ -115,7 +134,7 @@ try
 							document.getElementById("difficulty").innerHTML += 
 							<?php
 							echo '"';
-							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'sql-injection'");
+							
 							while($difficulty = $result->fetch()['difficulty'])
 								echo "<option value=\\\"".$difficulty."\\\">".$difficulty."</option>";
 							echo '"';
@@ -144,6 +163,11 @@ try
 				document.getElementById(last_page_name).style.display = "none";
 				document.getElementById(page_name).style.display = "block";
 				last_page_name = page_name;
+			}
+
+			function set_description()
+			{
+				document.getElementById("description").innerHTML = 
 			}
 
 			function set_error(text)

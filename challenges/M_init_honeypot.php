@@ -1,6 +1,6 @@
 <?php
 
-require_once "../M_bdd.php";
+//require_once "../M_bdd.php";
 
 function create_honeypot($type, $difficulty, &$dbname)
 {
@@ -15,9 +15,9 @@ function create_honeypot($type, $difficulty, &$dbname)
 	if(!($link = new PDO("mysql:host=".HOST.";dbname=".$dbname, USER, PASS)))
 		return NULL;
 
-	while($request = fgets($handle)) {
+	while($request = fgets($handle))
 		$link->query($request);
-	}
+	
 	fclose($handle);
 	return $link;
 }
