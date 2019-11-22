@@ -19,7 +19,7 @@ try
 	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 		throw new Exception("email");
 
-	if (!preg_match("/[^A-Za-z0-9_ -]/.{3,16}$#", $_POST['username']))
+	if (!preg_match("/[^a-zA-Z0-9_ -]/.{3,16}$#", $_POST['username']))
 		throw new Exception("username");
 
 	if (!preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,64}$#", $_POST['password']))
