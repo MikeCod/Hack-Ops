@@ -61,7 +61,7 @@ try
 		<div id="vertical-menu" style="margin-top:-10px; /*background: linear-gradient(to right, Black 200px, White);*/ animation: animation-breathe 2.5s infinite">
 			<?php
 				echo "<div style=\"padding-bottom:100px;\">";
-				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7");
+				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7"); 
 				echo "</div>";
 
 				button("SQL Injection", "show_page('sql-injection');");
@@ -77,10 +77,14 @@ try
 		<div class="form-style" style="padding-left:300px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
 				<h1><?php echo $_SESSION['username'] ?></h1>
+				<?php include("V_profile.php"); ?>
 			</div>
 			<div id="sql-injection" style="display:none;">
 				<h1>SQL Injection</h1>
+<<<<<<< HEAD
 				<p id="description" style="display:none"></p>
+=======
+>>>>>>> f472ddf608081074670e175a150a41ec1737bfed
 			</div>
 			<div id="csrf" style="display:none;">
 				<h1>CSRF</h1>
