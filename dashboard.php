@@ -80,7 +80,7 @@ try
 				<?php include("V_profile.php"); ?>
 			</div>
 			<div id="sql-injection" style="display:none;">
-				<h1>SQL Injection</h1>
+				<h1>SQL injection</h1>
 			</div>
 			<div id="csrf" style="display:none;">
 				<h1>CSRF</h1>
@@ -153,7 +153,7 @@ try
 					document.getElementById("submit-challenge").style.display = "none";
 				else {
 					document.getElementById("submit-challenge").style.display = "block";
-					document.getElementById("difficulty").innerHTML =  "<option value=\"0\" style=\"color:grey;\">Chose a difficulty</option>";
+					document.getElementById("difficulty").innerHTML =  "<option value=\"0\" style=\"color:grey;\" onclick=\"document.getElementById('description').innerHTML = ''\">Chose a difficulty</option>";
 					<?php
 
 					function difficulty($link, $type)
