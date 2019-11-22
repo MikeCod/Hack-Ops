@@ -76,30 +76,20 @@ try
 		<?php $link = connect_start(); ?>
 		<div class="form-style" style="padding-left:300px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
-				<h1><?php echo $_SESSION['username'] ?></h1>
-				<?php include("V_profile.php"); ?>
-			</div>
-			<div id="sql-injection" style="display:none;">
-				<h1>SQL injection</h1>
-			</div>
-			<div id="csrf" style="display:none;">
-				<h1>CSRF</h1>
-
-			</div>
-			<div id="code-injection" style="display:none;">
-				<h1>Code injection</h1>
-
+				<?php include "profile/index.php"; ?>
 			</div>
 			<div id="submit-challenge" style="padding-top:100px; display:none;">
-				<p id="description"></p>
+				<h1 id="title-challenge"></h1>
+				<p id="description" style="min-height:40px;"></p>
+				<br>
 				<select id="difficulty" name="difficulty" style="width:200px; font-size:12pt; padding-left:10px;"></select>
 				<br>
-				<input type="hidden" id="type" value="">
 				<a style="cursor:pointer; padding:10px 20px 10px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
-				<input type="text" style="margin-top:20px;" placeholder="Flag" onclick="if(window.event.keyCode == 13) submit_flag();">
-				<p id="error" style="padding-top:50px;"></p>
+				<input type="text" id="flag" style="margin-top:20px;" placeholder="Flag" onkeypress="if(window.event.keyCode == 13) submit_flag();">
+				<p id="flag-error" style="color:white; padding-top:50px;"></p>
 			</div>
 		</div>
+		<script type="text/javascript" src="include/js/sweetalert/sweetalert.js"></script>
 		<script type="text/javascript">
 			const descriptions = [
 				[
@@ -117,20 +107,20 @@ try
 				],
 				[
 					"csrf",
-					[<?php 
+					<?php 
 						$first = true;
 						foreach ($csrf as $key => $description) {
 							if(!$first)
 								echo ", ";
 							else
 								$first = false;
-							echo "[".$key.", \"".$description."\"]";
+							echo "[".$result['difficulty'].", \"".$result['description']."\"]";
 						}
-					?>]
+					?>
 				],
 				[
 					"code-injection",
-					[<?php 
+					<?php 
 						$first = true;
 						foreach ($code_injection as $key => $description) {
 							if(!$first)
@@ -139,7 +129,7 @@ try
 								$first = false;
 							echo "[".$key.", \"".$description."\"]";
 						}
-					?>]
+					?>
 				]
 			];
 
@@ -148,12 +138,13 @@ try
 
 			function show_page(page_name)
 			{
+				document.getElementById("description").innerHTML = "";
 				set_error("");
 				if(page_name == "myprofile")
 					document.getElementById("submit-challenge").style.display = "none";
 				else {
 					document.getElementById("submit-challenge").style.display = "block";
-					document.getElementById("difficulty").innerHTML =  "<option value=\"0\" style=\"color:grey;\" onclick=\"document.getElementById('description').innerHTML = ''\">Chose a difficulty</option>";
+					document.getElementById("difficulty").innerHTML = "<option value=\"0\" style=\"color:grey;\" onclick=\"document.getElementById('description').innerHTML = ''\">Chose a difficulty</option>";
 					<?php
 
 					function difficulty($link, $type)
@@ -169,11 +160,17 @@ try
 					switch(page_name)
 					{
 						case "sql-injection":
+							document.getElementById("title-challenge").innerHTML = "SQL injection";
 							document.getElementById("difficulty").innerHTML += <?php difficulty($link, "sql-injection") ?>;
+							break;
 						case "csrf":
+							document.getElementById("title-challenge").innerHTML = "CSRF";
 							document.getElementById("difficulty").innerHTML += <?php difficulty($link, "csrf") ?>;
+							break;
 						case "code-injection":
+							document.getElementById("title-challenge").innerHTML = "Code injection";
 							document.getElementById("difficulty").innerHTML += <?php difficulty($link, "code-injection") ?>;
+							break;
 					}
 				}
 				document.getElementById(current_page_name).style.display = "none";
@@ -201,19 +198,25 @@ try
 
 			function set_error(text)
 			{
-				document.getElementById("error").innerHTML = text;
+				document.getElementById("flag-error").innerHTML = text;
 			}
 
 			function submit_flag()
 			{
-				set_error("");
-				const req = new XMLHttpRequest();
+				var req = new XMLHttpRequest();
 				req.open("POST", "challenges/C_validate.php");
-				req.readystatechange = function() {
-					if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
-						set_error(this.res)
+				req.readystatechange = function(event) {
+					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+						/*if(this.response == "*")
+							Swal.fire(
+								'Good job!',
+								'You clicked the button!',
+								'success'
+							);
+						else */set_error("Response: "+this.response);
+					}
 				}
-				req.send("type="+document.getElementById("type").value+"&difficulty="+document.getElementById("difficulty").value);
+				req.send("type="+current_page_name+"&difficulty="+document.getElementById("difficulty").value+"&flag="+document.getElementById("flag").value);
 			}
 
 			function start_challenge()

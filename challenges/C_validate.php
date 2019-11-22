@@ -14,12 +14,12 @@ function get_id($type, $difficulty)
 }
 
 if (!isset($_POST['flag']) or !isset($_POST['type']) or !isset($_POST['difficulty']))
-	throw new Exception("A field isn't specified");
+	die "A field isn't specified";
 
 
 if ($_POST['flag'] != get_flag($_POST['type'], $_POST['difficulty']))
-	echo "Unavailable flag";
-echo "Challenge completed successfully !";
+	die "Unavailable flag";
+echo "*";
 
 $link = connect_start();
 $link->query("INSERT INTO `completed-challenges`(user, challenge) VALUES('".$_SESSION['id']."', '".get_id($_POST['type'], $_POST['difficulty'])."')");

@@ -42,7 +42,7 @@ function button($text, $a, $href = false, $width = 150, $color = "white")
 					button("About us", "show_page('about-us');");
 					button("How does it work", "show_page('how-does-it-work');", false, 200);
 					button("Donate", "show_page('donate');");
-					echo "<div style=\"float:right;\">"; button("Sign in", "sign-in.php", true, 150, "#2a77d7"); button("Sign up", "sign-up/", true, 150, "#2a77d7"); echo '</div>';
+					echo "<div style=\"float:right;\">"; button("Sign in", "sign-in/", true, 150, "#2a77d7"); button("Sign up", "sign-up/", true, 150, "#2a77d7"); echo '</div>';
 				?>
 			</div>
 		</div>
