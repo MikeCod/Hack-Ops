@@ -92,10 +92,8 @@ try
 
 			</div>
 			<div id="submit-challenge" style="padding-top:100px; display:none;">
-				<select id="difficulty" name="difficulty" style="width:200px; font-size:12pt; padding-left:10px;">
-
-				</select>
-				
+				<p id="description"></p>
+				<select id="difficulty" name="difficulty" style="width:200px; font-size:12pt; padding-left:10px;"></select>
 				<br>
 				<input type="hidden" id="type" value="">
 				<a style="cursor:pointer; padding:10px 20px 10px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
@@ -105,21 +103,49 @@ try
 		</div>
 		<script type="text/javascript">
 			const descriptions = [
-				["sql-injection",
+				[
+					"sql-injection",
 					[<?php 
 						$first = true;
-						foreach ($sql_injection as $key => $description) {
+						foreach ($sql_injection as $result) {
 							if(!$first)
 								echo ", ";
 							else
-								$first = true;
-							echo "[$key, $description]";
+								$first = false;
+							echo "[".$result['difficulty'].", \"".$result['description']."\"]";
 						}
 					?>]
 				],
+				[
+					"csrf",
+					[<?php 
+						$first = true;
+						foreach ($csrf as $key => $description) {
+							if(!$first)
+								echo ", ";
+							else
+								$first = false;
+							echo "[".$key.", \"".$description."\"]";
+						}
+					?>]
+				],
+				[
+					"code-injection",
+					[<?php 
+						$first = true;
+						foreach ($code_injection as $key => $description) {
+							if(!$first)
+								echo ", ";
+							else
+								$first = false;
+							echo "[".$key.", \"".$description."\"]";
+						}
+					?>]
+				]
 			];
-			var last_page_name = "myprofile";
-			document.getElementById(last_page_name).style.display = "block";
+
+			var current_page_name = "myprofile";
+			document.getElementById(current_page_name).style.display = "block";
 
 			function show_page(page_name)
 			{
@@ -129,46 +155,36 @@ try
 				else {
 					document.getElementById("submit-challenge").style.display = "block";
 					document.getElementById("difficulty").innerHTML =  "<option value=\"0\" style=\"color:grey;\">Chose a difficulty</option>";
+					<?php
+
+					function difficulty($link, $type)
+					{
+						echo '"';
+						$result = $link->query("SELECT difficulty FROM challenges WHERE type = '".$type."'");
+						while($difficulty = $result->fetch()['difficulty'])
+							echo "<option value=\\\"".$difficulty."\\\" onclick=\\\"set_description();\\\">".$difficulty."</option>";
+						echo '"';
+					}
+
+					?>
 					switch(page_name)
 					{
 						case "sql-injection":
-							document.getElementById("difficulty").innerHTML += 
-							<?php
-							echo '"';
-							
-							while($difficulty = $result->fetch()['difficulty'])
-								echo "<option value=\\\"".$difficulty."\\\">".$difficulty."</option>";
-							echo '"';
-							?>;
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, "sql-injection") ?>;
 						case "csrf":
-							document.getElementById("difficulty").innerHTML += 
-							<?php
-							echo '"';
-							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'csrf'");
-							while($difficulty = $result->fetch()['difficulty'])
-								echo "<option value=\\\"".$difficulty."\\\">".$difficulty."</option>";
-							echo '"';
-							?>;
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, "csrf") ?>;
 						case "code-injection":
-							document.getElementById("difficulty").innerHTML += 
-							<?php
-							echo '"';
-							$result = $link->query("SELECT difficulty FROM challenges WHERE type = 'code-injection'");
-							while($difficulty = $result->fetch()['difficulty'])
-								echo "<option value=\\\"".$difficulty."\\\">".$difficulty."</option>";
-							echo '"';
-							?>;
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, "code-injection") ?>;
 					}
-					document.getElementById("type").value = page_name;
 				}
-				document.getElementById(last_page_name).style.display = "none";
+				document.getElementById(current_page_name).style.display = "none";
 				document.getElementById(page_name).style.display = "block";
-				last_page_name = page_name;
+				current_page_name = page_name;
 			}
 
 			function set_description()
 			{
-				document.getElementById("description").innerHTML = 
+				document.getElementById("description").innerHTML = descriptions[current_page_name][document.getElementById("difficulty").value];
 			}
 
 			function set_error(text)
