@@ -4,6 +4,7 @@ session_start();
 require "M_bdd.php";
 redirect();
 
+
 function button($text, $a, $href = false, $width = 200, $color = "white")
 {
 	$text = str_replace(' ', '<span style="color:transparent">_</span>', $text);
@@ -76,8 +77,7 @@ try
 		<?php $link = connect_start(); ?>
 		<div class="form-style" style="padding-left:300px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
-				<h1><?php echo $_SESSION['username'] ?></h1>
-				<?php include("V_profile.php"); ?>
+				<?php include "profile\index.php"; ?>
 			</div>
 			<div id="sql-injection" style="display:none;">
 				<h1>SQL injection</h1>
