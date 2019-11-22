@@ -73,11 +73,10 @@ try
 		<div class="form-style" style="padding-left:300px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
 				<h1><?php echo $_SESSION['username'] ?></h1>
-				<!-- Profile -->
+				<?php include("V_profile.php"); ?>
 			</div>
 			<div id="sql-injection" style="display:none;">
 				<h1>SQL Injection</h1>
-				
 			</div>
 			<div id="csrf" style="display:none;">
 				<h1>CSRF</h1>
