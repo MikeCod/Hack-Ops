@@ -81,10 +81,7 @@ try
 			</div>
 			<div id="sql-injection" style="display:none;">
 				<h1>SQL Injection</h1>
-<<<<<<< HEAD
 				<p id="description" style="display:none"></p>
-=======
->>>>>>> f472ddf608081074670e175a150a41ec1737bfed
 			</div>
 			<div id="csrf" style="display:none;">
 				<h1>CSRF</h1>
