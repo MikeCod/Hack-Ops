@@ -19,7 +19,7 @@ try
 	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 		throw new Exception("email");
 
-	if (!preg_match("/[^A-Za-z0-9_ -]/.{3,16}$#", $_POST['username']))
+	if (!preg_match("/[^a-zA-Z0-9_ -]/.{3,16}$#", $_POST['username']))
 		throw new Exception("username");
 
 	if (!preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,64}$#", $_POST['password']))
@@ -28,7 +28,7 @@ try
 	if ($_POST['password'] != $_POST['cpassword'])
 		throw new Exception("match");
 
-	$link->query("INSERT INTO users(username, email, password) VALUES('".$link->quote($_POST['username'])."', '".$link->quote($_POST['email'])."', '".hash('sha3-512', $_POST['password'])."')");
+	$link->query("INSERT INTO users(username, email, password) VALUES(".$link->quote($_POST['username']).", ".$link->quote($_POST['email']).", '".hash('sha3-512', $_POST['password'])."')");
 
 	$_SESSION['username'] = $_POST['username'];
 	$_SESSION['email'] = $_POST['email'];

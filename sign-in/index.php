@@ -1,13 +1,12 @@
 <?php
 
 session_start();
-require('M_bdd.php');
+require "../M_bdd.php";
 if(is_connected()) {
-	header("Location: dashboard.php");
+	header("Location: ../dashboard.php");
 	exit();
 }
 
-require('config.php');
 if(!isset($_SESSION['username']))
 	$_SESSION['username'] = '';
 
@@ -19,8 +18,8 @@ if(!isset($_SESSION['username']))
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<title><?php echo NAME ?></title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link rel="stylesheet" media="all" type="text/css" href="include/css/style.css">
-	<link rel="stylesheet" media="all" type="text/css" href="include/css/buttons.css">
+	<link rel="stylesheet" media="all" type="text/css" href="../include/css/style.css">
+	<link rel="stylesheet" media="all" type="text/css" href="../include/css/buttons.css">
 </head>
 	<body>
 		<div id="banner">
@@ -35,7 +34,7 @@ if(!isset($_SESSION['username']))
 					<!--<br><br>-->
 					<input name="password" placeholder="Password" type="password">
 				</fieldset>
-				<input type="submit" name="submit" value="Sign in">
+				<input type="submit" value="Sign in">
 			</form>
 			<?php
 				if(isset($_SESSION['error'])) {

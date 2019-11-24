@@ -1,13 +1,13 @@
 <?php
 
 session_start();
-
-require('M_bdd.php');
+require "M_bdd.php";
 redirect();
+
 
 function button($text, $a, $href = false, $width = 200, $color = "white")
 {
-	$text = str_replace(' ', '<span style="color:Black">_</span>', $text);
+	$text = str_replace(' ', '<span style="color:transparent">_</span>', $text);
 	if ($color != "white")
 		$color .= ";text-shadow:unset";
 	echo '
@@ -21,12 +21,15 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
 	</div>';
 }
 
-require('config.php');
-
 $link = NULL;
 
 try
 {
+	$link = connect_start();
+
+	$sql_injection = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'sql-injection'")->fetchAll();
+	$csrf = $link->query("SELECT description FROM challenges WHERE type = 'csrf'")->fetchAll();
+	$code_injection = $link->query("SELECT description FROM challenges WHERE type = 'code-injection'")->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +45,12 @@ try
 		h1 {
 			padding-left:100px;
 		}
+
+		@keyframes animation-breathe {
+			0%	{ background: black; }
+			50%	{ background: #171717; }
+			100%{ background: black; }
+		}
 	</style>
 </head>
 	<body>
@@ -50,65 +59,182 @@ try
 				<?php echo NAME ?>
 			</div>
 		</div>
-		<div id="vertical-menu" style="background: linear-gradient(to right, Black 200px, White);">
+		<div id="vertical-menu" style="margin-top:-10px; /*background: linear-gradient(to right, Black 200px, White);*/ animation: animation-breathe 2.5s infinite">
 			<?php
 				echo "<div style=\"padding-bottom:100px;\">";
-				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7");
+				button("Profile", "show_page('myprofile', false);", false, 200, "#2a77d7"); 
 				echo "</div>";
 
 				button("SQL Injection", "show_page('sql-injection');");
 				button("CSRF", "show_page('csrf');");
-				button("Code Injection", "");
+				button("Code Injection", "show_page('code-injection');");
 
 				echo "<div style=\"padding-top:100px;\">";
 				button("Sign out", "C_sign-out.php", true, 200, "#2a77d7");
 				echo "</div>";
 			?>
 		</div>
-		<?php $link = connect_start(); ?>
 		<div class="form-style" style="padding-left:300px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
-				<h1><?php echo $_SESSION['username'] ?></h1>
+				<?php include "profile/index.php"; ?>
 			</div>
-			<div id="sql-injection" style="display:none;">
-				<h1>SQL Injection</h1>
-				
+			<div id="challenges" style="padding-top:100px; display:none;">
+				<h1 id="title-challenge"></h1>
+				<p id="description" style="min-height:40px;"></p>
+				<br>
+				<select id="difficulty" name="difficulty" style="width:200px; font-size:12pt; padding-left:10px;"></select>
+				<br>
+				<a style="cursor:pointer; padding:10px 20px 10px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
+				<input type="text" id="flag" style="margin-top:20px;" placeholder="Flag" onkeypress="if(window.event.keyCode == 13) submit_flag();">
+				<p id="flag-error" style="color:white; padding-top:50px;"></p>
 			</div>
-			<div id="csrf" style="display:none;">
-				<h1>CSRF</h1>
-
-			</div>
-			<a style="cursor:pointer;" onclick="start_challenge();"></a>
-			<input type="text" id="flag" style="display:none;" placeholder="Flag" onclick="if(window.event.keyCode == 13) submit_flag();">
 		</div>
+		<script src="include/js/sweetalert2.all.js"></script>
 		<script type="text/javascript">
-			var last_page_name = "myprofile";
-			document.getElementById(last_page_name).style.display = "block";
+			const descriptions = [
+				[
+					"sql-injection", 
+					<?php 
+						$first = true;
+						foreach ($sql_injection as $result)
+							echo (!$first ? ", " : $first = false)."[".$result['difficulty'].", \"".$result['description']."\"]";
+					?>
+				],
+				[
+					"csrf",
+					<?php 
+						$first = true;
+						foreach ($csrf as $result)
+							echo (!$first ? ", " : $first = false)."[".$result['difficulty'].", \"".$result['description']."\"]";
+					?>
+				],
+				[
+					"code-injection",
+					<?php 
+						$first = true;
+						foreach ($code_injection as $result)
+							echo (!$first ? ", " : $first = false)."[".$result['difficulty'].", \"".$result['description']."\"]";
+					?>
+				]
+			];
 
-			var type = "";
+			var current_page_name = "myprofile";
+			document.getElementById(current_page_name).style.display = "block";
 
-			function show_page(page_name)
+			function show_page(page_name, challenge = true)
 			{
-				if(page_name == "myprofile")
-					document.getElementById("flag").style.display = "none";
-				else
-				{
-					document.getElementById("flag").style.display = "block";
-					type = page_name;
+				document.getElementById("description").innerHTML = "";
+				set_error("");
+				if(!challenge) {
+					document.getElementById(page_name).style.display = "block";
+					document.getElementById(current_page_name).style.display = "none";
 				}
-				document.getElementById(last_page_name).style.display = "none";
-				document.getElementById(page_name).style.display = "block";
-				last_page_name = page_name;
+				else {
+					document.getElementById("myprofile").style.display = "none";
+					document.getElementById("challenges").style.display = "block";
+					document.getElementById("difficulty").innerHTML = "<option value=\"0\" style=\"color:grey;\" onclick=\"document.getElementById('description').innerHTML = ''\">Chose a difficulty</option>";
+					<?php
+
+					function difficulty($link, $array)
+					{
+						$length = count($array);
+						echo '"';
+						for ($i = 0; $i < $length ; ++$i)
+							echo "<option value=\\\"".$array[$i]['difficulty']."\\\" onclick=\\\"set_description();\\\">".$array[$i]['difficulty']."</option>";
+						echo '"';
+					}
+
+					?>
+					switch (page_name)
+					{
+						case "sql-injection":
+							document.getElementById("title-challenge").innerHTML = "SQL injection";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $sql_injection) ?>;
+							break;
+						case "csrf":
+							document.getElementById("title-challenge").innerHTML = "CSRF";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $csrf) ?>;
+							break;
+						case "code-injection":
+							document.getElementById("title-challenge").innerHTML = "Code injection";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $code_injection) ?>;
+							break;
+					}
+					page_name = "challenges";
+				}
+				current_page_name = page_name;
+			}
+
+			function set_description()
+			{
+				num = 0;
+				switch(current_page_name)
+				{
+					case "code-injection":
+						++num;
+					case "csrf":
+						++num;
+					case "sql-injection":
+						break;
+					default:
+						document.getElementById("description").innerHTML = "Cannot load description. Please contact the developper.";
+						return ;
+				}
+				document.getElementById("description").innerHTML = descriptions[num][document.getElementById("difficulty").value][1];
+			}
+
+			function set_error(text)
+			{
+				document.getElementById("flag-error").innerHTML = text;
 			}
 
 			function submit_flag()
 			{
-
+				var req = new XMLHttpRequest();
+				req.onreadystatechange = function() {
+					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+						if(this.responseText == "*")
+							Swal.fire({
+								title: 'Error!',
+								text: 'Do you want to continue',
+								icon: 'error',
+								confirmButtonText: 'Cool'
+							});
+						else set_error(this.responseText);
+					}
+				};
+				req.open("POST", "challenges/C_validate.php", true);
+				req.send("type="+current_page_name+"&difficulty="+document.getElementById("difficulty").value+"&flag="+document.getElementById("flag").value);
 			}
 
 			function start_challenge()
 			{
+				set_error("");
+				link = "challenges/";
+				challenge = current_page_name;
+				switch(challenge)
+				{
+					case "sql-injection":
+					case "csrf":
+					case "code-injection":
+						link += challenge+"/";
+						break;
+					default:
+						set_error("Unavailable challenge");
+						return ;
+				}
+				difficulty = document.getElementById("difficulty").value;
+				if(difficulty == 0) {
+					set_error("No difficulty specified");
+					return ;
+				}
+					
+				window.open(link+difficulty+"/", "_blank");
+			}
 
+			function sleep(ms)
+			{
+				return new Promise(resolve => setTimeout(resolve, ms));
 			}
 		</script>
 		<?php 
@@ -116,8 +242,9 @@ try
 		}
 		catch (Exception $e)
 		{
-			
+			die("Internal error: ".$e->getMessage());
 		}
+		connect_end($link);
 		include 'footer.php';
 		?>
 	</body>

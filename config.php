@@ -13,4 +13,9 @@ define('PASS', '');
 # Tables
 define('USERS', 'users'); # Users
 
+#Badges
+define('B_SCORE', 'Score');
+define('B_CHALL', 'Challenge');
+define('B_EXTRA', 'Extra');
+
 ?>
