@@ -14,11 +14,11 @@ function get_id($type, $difficulty)
 }
 
 if (!isset($_POST['flag']) or !isset($_POST['type']) or !isset($_POST['difficulty']))
-	die "A field isn't specified";
+	die("A field isn't specified");
 
 
 if ($_POST['flag'] != get_flag($_POST['type'], $_POST['difficulty']))
-	die "Unavailable flag";
+	die("Unavailable flag");
 echo "*";
 
 $link = connect_start();
