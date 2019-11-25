@@ -19,19 +19,23 @@ try
 	
 	if(!($result = $link->query("SELECT id FROM users WHERE username = '".$_POST['username']."' AND password = '".hash('sha3-512', $_POST['password'])."'")))
 		throw new Exception("Request failed");
-	
+
 	if($result->rowCount() != 1)
 		throw new Exception("Unavailable username or password");
-	
+
 	$id = $result->fetch()['id'];
 	if($id != 1)
 		throw new Exception("You accessed to the session of ID ".$id);
 	
-	$_SESSION['result'] = "Congrats ! You can now validate this challenge with the flag ".get_flag($_POST['type'], $_POST['difficulty']);
+	$_SESSION['result'] = "<script src=\"../../../include/js/sweetalert2.all.js\"></script>\n<script type=\"text/javascript\">\nSwal.fire(
+								\"Congrats !\",
+								\"You can now validate this challenge with the flag ".get_flag($_POST['type'], $_POST['difficulty'])."\",
+								\"success\"
+							);</script>"/*"You can now validate this challenge with the flag ".get_flag($_POST['type'], $_POST['difficulty'])*/;
 }
 catch(Exception $e)
 {
-	$_SESSION['result'] = $e->getMessage();
+	$_SESSION['result'] = "<p class=\"error\">".$e->getMessage()."</p>";
 }
 connect_end($link);
 delete_honeypot($dbname);

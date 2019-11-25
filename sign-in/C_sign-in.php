@@ -16,7 +16,7 @@ try
 	if (!($link = connect_start()))
 		throw new Exception("Could not connect to database. Sorry for the inconvenience.");
 
-	$result = $link->query("SELECT id, username, email FROM ".USERS." WHERE username = ".$link->quote($_POST['username'])." AND password = '".hash('sha3-512', $_POST['password'])."'");
+	$result = $link->query("SELECT id, username, email, score, administrator FROM ".USERS." WHERE username = ".$link->quote($_POST['username'])." AND password = '".hash('sha3-512', $_POST['password'])."'");
 	connect_end($link);
 	
 	if ($result->rowCount() != 1)
