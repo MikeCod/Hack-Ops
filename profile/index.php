@@ -28,6 +28,7 @@
 		<p>Delete</p>
 	</div>
 
+	<a href="./badge">salut</a>
 
 
 
