@@ -59,32 +59,30 @@ try
 				<?php echo NAME ?>
 			</div>
 		</div>
-		<div id="vertical-menu" style="margin-top:-10px; /*background: linear-gradient(to right, Black 200px, White);*/ animation: animation-breathe 2.5s infinite">
+		<div id="vertical-menu" style="margin-top:-10px; min-width:250px;background: linear-gradient(180deg, Black 600px, White); /*animation: animation-breathe 2.5s infinite;*/">
 			<?php
 				echo "<div style=\"padding-bottom:100px;\">";
-				button("Profile", "show_page('myprofile', false);", false, 200, "#2a77d7"); 
+				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7"); 
 				echo "</div>";
 
-				button("SQL Injection", "show_page('sql-injection');");
-				button("CSRF", "show_page('csrf');");
-				button("Code Injection", "show_page('code-injection');");
+				button("SQL Injection", "show_page('sql-injection', true);");
+				button("CSRF", "show_page('csrf', true);");
+				button("Code Injection", "show_page('code-injection', true);");
 
 				echo "<div style=\"padding-top:100px;\">";
 				button("Sign out", "C_sign-out.php", true, 200, "#2a77d7");
 				echo "</div>";
 			?>
 		</div>
-		<div class="form-style" style="padding-left:300px; padding-right:50px;width:calc(100% - 350px);">
+		<div class="form-style" style="position:absolute; left:250px; top:100px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
 				<?php include "profile/index.php"; ?>
 			</div>
-			<div id="challenges" style="padding-top:100px; display:none;">
+			<div id="challenges" style="padding-top:00px; display:none;">
 				<h1 id="title-challenge"></h1>
-				<p id="description" style="min-height:40px;"></p>
-				<br>
+				<p id="description" style="padding-top:100px; min-height:40px;"></p>
 				<select id="difficulty" name="difficulty" style="width:200px; font-size:12pt; padding-left:10px;"></select>
-				<br>
-				<a style="cursor:pointer; padding:10px 20px 10px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
+				<a style="cursor:pointer; padding:5px 20px 5px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
 				<input type="text" id="flag" style="margin-top:20px;" placeholder="Flag" onkeypress="if(window.event.keyCode == 13) submit_flag();">
 				<p id="flag-error" style="color:white; padding-top:50px;"></p>
 			</div>
@@ -120,14 +118,18 @@ try
 
 			var current_page_name = "myprofile";
 			document.getElementById(current_page_name).style.display = "block";
+			var type = "";
 
-			function show_page(page_name, challenge = true)
+			function show_page(page_name, challenge = false)
 			{
 				document.getElementById("description").innerHTML = "";
 				set_error("");
 				if(!challenge) {
-					document.getElementById(page_name).style.display = "block";
-					document.getElementById(current_page_name).style.display = "none";
+					if(page_name != current_page_name) {
+						document.getElementById(current_page_name).style.display = "none";
+						document.getElementById(page_name).style.display = "block";
+						type = "";
+					}
 				}
 				else {
 					document.getElementById("myprofile").style.display = "none";
@@ -160,6 +162,7 @@ try
 							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $code_injection) ?>;
 							break;
 					}
+					type = page_name;
 					page_name = "challenges";
 				}
 				current_page_name = page_name;
@@ -168,7 +171,7 @@ try
 			function set_description()
 			{
 				num = 0;
-				switch(current_page_name)
+				switch(type)
 				{
 					case "code-injection":
 						++num;
@@ -194,30 +197,29 @@ try
 				req.onreadystatechange = function() {
 					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 						if(this.responseText == "*")
-							Swal.fire({
-								title: 'Error!',
-								text: 'Do you want to continue',
-								icon: 'error',
-								confirmButtonText: 'Cool'
-							});
+							Swal.fire(
+								"Challenge completed",
+								"Challenge added to achievements",
+								"success"
+							);
 						else set_error(this.responseText);
 					}
 				};
 				req.open("POST", "challenges/C_validate.php", true);
-				req.send("type="+current_page_name+"&difficulty="+document.getElementById("difficulty").value+"&flag="+document.getElementById("flag").value);
+				req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+				req.send("type="+type+"&difficulty="+document.getElementById("difficulty").value+"&flag="+document.getElementById("flag").value);
 			}
 
 			function start_challenge()
 			{
 				set_error("");
 				link = "challenges/";
-				challenge = current_page_name;
-				switch(challenge)
+				switch(type)
 				{
 					case "sql-injection":
 					case "csrf":
 					case "code-injection":
-						link += challenge+"/";
+						link += type+"/";
 						break;
 					default:
 						set_error("Unavailable challenge");

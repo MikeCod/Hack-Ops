@@ -34,7 +34,7 @@ redirect();
 				<input type="submit" style="margin-top:20px;">
 				<?php
 				if(isset($_SESSION['result'])) {
-					echo "<p class=\"error\">".$_SESSION['result']."</p>";
+					echo $_SESSION['result'];
 					unset($_SESSION['result']);
 				}
 				?>
