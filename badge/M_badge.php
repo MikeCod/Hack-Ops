@@ -44,4 +44,26 @@ function req_add_badge() {
         connect_end($link);
     }   
 }
+
+function req_display_score() {
+    $link = NULL;
+    try
+    {
+        if(!($link = connect_start()))
+            throw new Exception("Could not connect to database");
+             
+        if (!($result = $link->query("SELECT * FROM badges WHERE type='Score'"))) {
+                throw new Exception("No access to the table");
+        }
+        while($scoreB = $result->fetch()) {
+            echo 
+               $scoreB['description'].'    '.$scoreB['name']."<br>"
+            ;
+
+        }
+    } catch (Exception $th) {
+        echo "Internal error: ".$th->getMessage();
+    }
+    connect_end($link);
+}
 ?>

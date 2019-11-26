@@ -26,7 +26,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title><?php echo NAME ?></title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" media="all" type="text/css" href="../include/css/badge-style.css">
+    <link rel="stylesheet" media="all" type="text/css" href="../include/css/badge/badge-style.css">
 	<link rel="stylesheet" media="all" type="text/css" href="../include/css/style.css">
 	<link rel="stylesheet" media="all" type="text/css" href="../include/css/button.css">
     <style>

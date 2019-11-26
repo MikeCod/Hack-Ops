@@ -87,7 +87,7 @@ try
 				<p id="flag-error" style="color:white; padding-top:50px;"></p>
 			</div>
 		</div>
-		<script src="include/js/sweetalert2.all.js"></script>
+		<script src="include/js/sweetalert2.all.js" ></script>
 		<script type="text/javascript">
 			const descriptions = [
 				[

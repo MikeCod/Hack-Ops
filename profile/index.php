@@ -28,7 +28,7 @@
 		<p>Delete</p>
 	</div>
 
-	<a href="./badge">salut</a>
+	<a href="./badge"><h3 style="color: #00FF00">ACCES BADGE</h3></a>
 
 
 
