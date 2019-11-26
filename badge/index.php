@@ -115,7 +115,7 @@
         };
     </script>
     <div class="add" id="hide" style="display:none">
-        <form action="M_badge.php" method="POST" class="form-style">
+        <form action="C_badge.php" method="POST" class="form-style">
             <h2 style="color: #DC1D1D">Add Badge</h2>
             Name:
             <input type="text" name="name" placeholder="Name"><br>
