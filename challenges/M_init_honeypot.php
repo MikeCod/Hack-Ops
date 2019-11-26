@@ -2,6 +2,13 @@
 
 //require_once "../M_bdd.php";
 
+function get_challenge(&$type, &$difficulty)
+{
+	$array = explode("\\", getcwd());
+	$type = $array[count($array)-2];
+	$difficulty = $array[count($array)-1];
+}
+
 function create_honeypot($type, $difficulty, &$dbname)
 {
 	$dbname = $type.'-'.$difficulty.'-'.$_SESSION['id'];
@@ -24,7 +31,8 @@ function create_honeypot($type, $difficulty, &$dbname)
 
 function delete_honeypot($dbname)
 {
-	return connect_end(connect_start()->query("DROP DATABASE `".$dbname."`"));
+
+	/*connect_end(*/connect_start()->query("DROP DATABASE `".$dbname."`")/*)*/;
 }
 
 function get_flag($type, $difficulty)
