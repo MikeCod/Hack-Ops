@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `HackOps`.`badges` (
   `name` VARCHAR(16) NOT NULL,
   `value` ENUM('Beginner', 'Experimented', 'Master') NOT NULL,
   `description` VARCHAR(256) NOT NULL,
-  `type` ENUM('Friends', 'Score', 'Beginner', 'Experimented', 'Master') NOT NULL,
+  `type` ENUM('Challenge', 'Score', 'Extra') NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
@@ -101,7 +101,9 @@ ENGINE = InnoDB;
 
 -- ADD ADMIN ACCOUNT --
 -- Password: H@ck0p5P1MDC -- 
-INSERT INTO users(username, email, password) VALUES('admin', 'admin@localhost', 'f451eecb3a41963157e4d3b0063636cfc3e37b65ed46d74382ff2a09cffe7dd2e0435b60ce56670beedc472d55fa8c4c7bd98558c637ee1816264d13c3f549db');
+INSERT INTO users(username, email, password, activated, administrator) VALUES('admin', 'admin@localhost', 'f451eecb3a41963157e4d3b0063636cfc3e37b65ed46d74382ff2a09cffe7dd2e0435b60ce56670beedc472d55fa8c4c7bd98558c637ee1816264d13c3f549db', '1', '1');
 
-INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '1', 'Access the admin session (id = 1)', '2qiAw1RwviVaeWy8ZbkCZW6Xc2iQocxJzwtDGwXKaxQLUTx7FkY2KFSXm9e3TX69');
-INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '2', 'Access the admin session (id = 1)', 'J6fUax0MKD5k5460m2SLIDWOezYEwzCkLJKFqbusR7bV9uYAcCnDtP4O3WMsmZsq');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '1', 'Standard: Access the admin session (id = 1)', '2qiAw1RwviVaeWy8ZbkCZW6Xc2iQocxJzwtDGwXKaxQLUTx7FkY2KFSXm9e3TX69');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '2', 'Union: Access challenge table, the flag is inside.<br>A tool like sqlmap could be necesseray', 'J6fUax0MKD5k5460m2SLIDWOezYEwzCkLJKFqbusR7bV9uYAcCnDtP4O3WMsmZsq');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '3', 'Simple boolean: Access the challenge table, the flag is inside.<br>A tool like sqlmap could be necesseray', 'u0qRiniQjYJepTcgRKYBY4o4ER82t3AajuKax3n3ZY2vkghDATn04Vmv0Y8aDfIt');
+-- INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '4', 'Out-of-band: Access the challenge table, the flag is inside.<br>A tool like sqlmap could be necesseray', 'u0qRiniQjYJepTcgRKYBY4o4ER82t3AajuKax3n3ZY2vkghDATn04Vmv0Y8aDfIt');

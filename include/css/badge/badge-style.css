@@ -37,6 +37,7 @@ body
     margin-right: 20px;
     margin-left: 20px;
     padding: 50px 0px 50px 0px;
+    cursor: pointer;
 }
 .container .card:hover
 {
@@ -45,15 +46,15 @@ body
 }
 .container .card:before 
 {
-content: '';
-position: absolute;
-top: 0;
-left: -50%;
-width: 100%;
-height: 100%;
-background: rgba(255, 255, 255,.03);
-pointer-events: none;
-z-index: 1; 
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255,.03);
+    pointer-events: none;
+    z-index: 1; 
 }
 .percent 
 {
@@ -79,10 +80,10 @@ z-index: 1;
 }
 .percent .number h2 
 {
-color: #777;
-font-weight: 700;
-font-size: 40px;
-transition: 0.5s; 
+    color: #777;
+    font-weight: 700;
+    font-size: 40px;
+    transition: 0.5s; 
 }
 .card:hover .percent .number h2 
 {
@@ -98,9 +99,9 @@ transition: 0.5s;
 {
     color: #ccc;
     transition: 0.5s; 
-
+    
 }
-.text 
+.textB 
 {
     position: relative;
     color: #777;
@@ -132,3 +133,53 @@ svg circle
     stroke-linecap: round;
     transform: translate(5px, 5px);
 }
+
+.slideThree {
+    width: 80px;
+    height: 26px;
+    background: #333;
+    position: relative;
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2);
+  }
+  .slideThree:after {
+    content: 'ON';
+    color: #0FC117;
+    position: absolute;
+    right: 10px;
+    z-index: 0;
+    font: 12px/26px Arial, sans-serif;
+    font-weight: bold;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.15);
+  }
+  .slideThree:before {
+    content: 'OFF';
+    color: #d31717;
+    position: absolute;
+    left: 10px;
+    z-index: 0;
+    font: 12px/26px Arial, sans-serif;
+    font-weight: bold;
+  }
+  .slideThree label {
+    display: block;
+    width: 34px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    z-index: 1;
+    background: #fcfff4;
+    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    border-radius: 50px;
+    transition: all 0.4s ease;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+  }
+  .slideThree input[type=checkbox] {
+    visibility: hidden;
+  }
+  .slideThree input[type=checkbox]:checked + label {
+    left: 43px;
+  }
+  

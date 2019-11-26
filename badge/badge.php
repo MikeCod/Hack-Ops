@@ -1,19 +1,26 @@
 <?php 
     require "../config.php";
-
-    switch ($_GET['t']) {
-        case 'extra':
-            echo $_GET['t'];
-            require "../dashboard.php";
-            break;
-        case 'score':
-            echo $_GET['t'];
-            break;
-        case 'chall':
-            echo $_GET['t'];
-            break;
-        default:
-            # code...
-            break;
-    }
+    require "C_badge.php";
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><?php echo NAME ?></title>
+    <link rel="stylesheet" href="../include/css/badge/scoreBadge.css">
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="badge">
+            <?php 
+            if ($_GET['t'] == 'extra') { extra(); } 
+            else if ($_GET['t'] == 'chall') { chall(); } 
+            else if ($_GET['t'] == 'score') { score(); }
+            ?>
+        </div>
+    </div>
+</body>
+</html>

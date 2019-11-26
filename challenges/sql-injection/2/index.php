@@ -5,11 +5,12 @@ require "../../../M_bdd.php";
 redirect();
 
 $result = "";
-if(isset($_POST['username']) and isset($_POST['password'])){
+
+if(isset($_GET['id'])){
 	require "../../M_init_honeypot.php";
 	include "C_test.php";
 }
-else $_POST['username'] = '';
+else $_GET['id'] = '';
 
 ?>
 
@@ -30,12 +31,10 @@ else $_POST['username'] = '';
 				<?php echo NAME ?>
 			</div>
 		</div>
-
 		<div style="padding-left:calc(50% - 200px);">
-			<form class="form-style" method="POST">
+			<form class="form-style" method="GET">
 				<h1 style="padding-bottom:40px; text-align:center;">SQL injection</h1>
-				<input type="text" name="username" placeholder="Username" value="<?php echo $_POST['username'] ?>" autofocus>
-				<input type="password" name="password" placeholder="Password">
+				<input type="text" name="id" placeholder="ID" value="<?php echo $_GET['id'] ?>" autofocus>
 				<input type="submit" style="margin-top:20px;">
 				<?php echo $result ?>
 			</form>
