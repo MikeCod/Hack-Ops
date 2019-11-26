@@ -4,13 +4,6 @@ session_start();
 require "../../../M_bdd.php";
 redirect();
 
-$result = "";
-if(isset($_POST['username']) and isset($_POST['password'])){
-	require "../../M_init_honeypot.php";
-	include "C_test.php";
-}
-else $_POST['username'] = '';
-
 ?>
 
 
@@ -32,12 +25,19 @@ else $_POST['username'] = '';
 		</div>
 
 		<div style="padding-left:calc(50% - 200px);">
-			<form class="form-style" method="POST">
+			<form class="form-style" action="C_test.php" method="POST">
 				<h1 style="padding-bottom:40px; text-align:center;">SQL injection</h1>
-				<input type="text" name="username" placeholder="Username" value="<?php echo $_POST['username'] ?>" autofocus>
+				<input type="hidden" name="type" value="sql-injection">
+				<input type="hidden" name="difficulty" value="1">
+				<input type="text" name="username" placeholder="Username" autofocus>
 				<input type="password" name="password" placeholder="Password">
 				<input type="submit" style="margin-top:20px;">
-				<?php echo $result ?>
+				<?php
+				if(isset($_SESSION['result'])) {
+					echo $_SESSION['result'];
+					unset($_SESSION['result']);
+				}
+				?>
 			</form>
 		</div>
 	</body>
