@@ -6,11 +6,11 @@ redirect();
 
 $result = "";
 
-if(isset($_GET['name'])){
+if(isset($_GET['id'])){
 	require "../../M_init_honeypot.php";
 	include "C_test.php";
 }
-else $_GET['name'] = '';
+else $_GET['id'] = '';
 
 ?>
 
@@ -34,7 +34,7 @@ else $_GET['name'] = '';
 		<div style="padding-left:calc(50% - 200px);">
 			<form class="form-style" method="GET">
 				<h1 style="padding-bottom:40px; text-align:center;">SQL injection</h1>
-				<input type="text" name="name" placeholder="Name" value="<?php echo $_GET['name'] ?>" autofocus>
+				<input type="text" name="id" placeholder="ID" value="<?php echo $_GET['id'] ?>" autofocus>
 				<input type="submit" style="margin-top:20px;">
 				<?php echo $result ?>
 			</form>

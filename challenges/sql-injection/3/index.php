@@ -4,8 +4,15 @@ session_start();
 require "../../../M_bdd.php";
 redirect();
 
-?>
+$result = "";
 
+if(isset($_GET['id'])){
+	require "../../M_init_honeypot.php";
+	include "C_test.php";
+}
+else $_GET['id'] = '';
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,21 +30,12 @@ redirect();
 				<?php echo NAME ?>
 			</div>
 		</div>
-
 		<div style="padding-left:calc(50% - 200px);">
-			<form class="form-style" action="C_test.php" method="POST">
+			<form class="form-style" method="GET">
 				<h1 style="padding-bottom:40px; text-align:center;">SQL injection</h1>
-				<input type="hidden" name="type" value="sql-injection">
-				<input type="hidden" name="difficulty" value="1">
-				<input type="text" name="username" placeholder="Username" autofocus>
-				<input type="password" name="password" placeholder="Password">
+				<input type="text" name="id" placeholder="ID" value="<?php echo $_GET['id'] ?>" autofocus>
 				<input type="submit" style="margin-top:20px;">
-				<?php
-				if(isset($_SESSION['result'])) {
-					echo $_SESSION['result'];
-					unset($_SESSION['result']);
-				}
-				?>
+				<?php echo $result ?>
 			</form>
 		</div>
 	</body>

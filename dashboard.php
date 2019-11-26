@@ -28,8 +28,8 @@ try
 	$link = connect_start();
 
 	$sql_injection = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'sql-injection'")->fetchAll();
-	$csrf = $link->query("SELECT description FROM challenges WHERE type = 'csrf'")->fetchAll();
-	$code_injection = $link->query("SELECT description FROM challenges WHERE type = 'code-injection'")->fetchAll();
+	$csrf = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'csrf'")->fetchAll();
+	$code_injection = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'code-injection'")->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -78,14 +78,20 @@ try
 			<div id="myprofile" style="display:none;">
 				<?php include "profile/index.php"; ?>
 			</div>
+			<div id="profile-edit" style="display:none;">
+				<?php include "profile/edit.php"; ?>
+			</div>
+			<div id="profile-delete" style="display:none;">
+				<?php include "profile/delete.php"; ?>
+			</div>
 			<div id="challenges" style="padding-top:00px; display:none;">
 				<h1 id="title-challenge"></h1>
 				<p id="description" style="padding-top:100px; min-height:40px;"></p>
 				<select id="difficulty" name="difficulty" style="width:200px; font-size:12pt; padding-left:10px;"></select>
 				<a style="cursor:pointer; padding:5px 20px 5px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
 				<input type="text" id="flag" style="margin-top:20px;" placeholder="Flag" onkeypress="if(window.event.keyCode == 13) submit_flag();">
-				<p id="flag-error" style="color:white; padding-top:50px;"></p>
 			</div>
+			<p id="error" style="color:white; padding-top:50px;"></p>
 		</div>
 		<script src="include/js/sweetalert2.all.js" ></script>
 		<script type="text/javascript">
@@ -188,7 +194,7 @@ try
 
 			function set_error(text)
 			{
-				document.getElementById("flag-error").innerHTML = text;
+				document.getElementById("error").innerHTML = text;
 			}
 
 			function submit_flag()
@@ -230,7 +236,7 @@ try
 					set_error("No difficulty specified");
 					return ;
 				}
-					
+				
 				window.open(link+difficulty+"/", "_blank");
 			}
 
@@ -244,7 +250,7 @@ try
 		}
 		catch (Exception $e)
 		{
-			die("Internal error: ".$e->getMessage());
+			echo "Internal error: ".$e->getMessage();
 		}
 		connect_end($link);
 		include 'footer.php';

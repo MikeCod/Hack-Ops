@@ -1,46 +1,34 @@
 <?php
 
-session_start();
-require "../../../config.php";
-require "../../../M_bdd.php";
-require "../../M_init_honeypot.php";
-redirect();
-
 $link = NULL;
 $dbname = "";
 
+$type = "";
+$difficulty = "";
+get_challenge($type, $difficulty);
+
 try
 {
-	if(!isset($_POST['type']) or !isset($_POST['difficulty']) or !isset($_POST['username']) or !isset($_POST['password']))
-		throw new Exception("A field is missing");
-	
-	if(!($link = create_honeypot($_POST['type'], $_POST['difficulty'], $dbname)))
+	if(!($link = create_honeypot($type, $difficulty, $dbname)))
 		throw new Exception("REAL Internal error. Thanks to contact the developper of this application");
-	
-	if(!($result = $link->query("SELECT id FROM users WHERE username = '".$_POST['username']."' AND password = '".hash('sha3-512', $_POST['password'])."'")))
+
+	$link->query("CREATE TABLE challenge(flag varchar(64))");
+	$link->query("INSERT INTO challenge(flag) VALUES('".get_flag($type, $difficulty)."')");
+
+	if(!($response = $link->query("SELECT username, id FROM users WHERE id = ".$_GET['id'])))
 		throw new Exception("Request failed");
 
-	if($result->rowCount() != 1)
-		throw new Exception("Unavailable username or password");
+	if($response->rowCount() != 1)
+		throw new Exception("No user found");
 
-	$id = $result->fetch()['id'];
-	if($id != 1)
-		throw new Exception("You accessed to the session of ID ".$id);
-	
-	$_SESSION['result'] = "<script src=\"../../../include/js/sweetalert2.all.js\"></script>\n<script type=\"text/javascript\">\nSwal.fire(
-								\"Congrats !\",
-								\"You can now validate this challenge with the flag ".get_flag($_POST['type'], $_POST['difficulty'])."\",
-								\"success\"
-							);</script>"/*"You can now validate this challenge with the flag ".get_flag($_POST['type'], $_POST['difficulty'])*/;
+	$user = $response->fetch();
+	$result = "<p>ID = ".$user['id']."<br>Username: ".$user['username']." </p>";
 }
 catch(Exception $e)
 {
-	$_SESSION['result'] = "<p class=\"error\">".$e->getMessage()."</p>";
+	$result = "<p class=\"error\">".$e->getMessage()."</p>";
 }
 connect_end($link);
 delete_honeypot($dbname);
-
-header("Location: ./");
-exit();
 
 ?>
