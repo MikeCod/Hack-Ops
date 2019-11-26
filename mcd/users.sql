@@ -104,5 +104,5 @@ ENGINE = InnoDB;
 INSERT INTO users(username, email, password, activated, administrator) VALUES('admin', 'admin@localhost', 'f451eecb3a41963157e4d3b0063636cfc3e37b65ed46d74382ff2a09cffe7dd2e0435b60ce56670beedc472d55fa8c4c7bd98558c637ee1816264d13c3f549db', '1', '1');
 
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '1', 'Standard exploitation: Access the admin session (id = 1)', '2qiAw1RwviVaeWy8ZbkCZW6Xc2iQocxJzwtDGwXKaxQLUTx7FkY2KFSXm9e3TX69');
-INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '2', 'Union exploitation: Show admin\'s password', 'J6fUax0MKD5k5460m2SLIDWOezYEwzCkLJKFqbusR7bV9uYAcCnDtP4O3WMsmZsq');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '2', 'Union query: Show admin\'s password (A tool like sqlmap could be necesseray)', 'J6fUax0MKD5k5460m2SLIDWOezYEwzCkLJKFqbusR7bV9uYAcCnDtP4O3WMsmZsq');
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '3', 'Boolean exploitation: Show all tables and their contents', 'u0qRiniQjYJepTcgRKYBY4o4ER82t3AajuKax3n3ZY2vkghDATn04Vmv0Y8aDfIt');

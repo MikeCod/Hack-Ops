@@ -78,6 +78,12 @@ try
 			<div id="myprofile" style="display:none;">
 				<?php include "profile/index.php"; ?>
 			</div>
+			<div id="profile-edit" style="display:none;">
+				<?php include "profile/edit.php"; ?>
+			</div>
+			<div id="profile-delete" style="display:none;">
+				<?php include "profile/delete.php"; ?>
+			</div>
 			<div id="challenges" style="padding-top:00px; display:none;">
 				<h1 id="title-challenge"></h1>
 				<p id="description" style="padding-top:100px; min-height:40px;"></p>

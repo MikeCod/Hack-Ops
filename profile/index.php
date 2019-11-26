@@ -15,19 +15,11 @@
 			echo "<span style=\"float:left; width:300px;\">Account status</span>".(is_admin() ? "Administrator" : "User")."<br>";
 			echo "<span style=\"float:left; width:300px;\">The score account is</span>". $_SESSION['score']."<br/>";
 			echo "<span style=\"float:left; width:300px;\">Your email on this account is</span>". $_SESSION['email']."<br/>";
-			button ("edit profile", "show_page('edit');", false);
-			button ("delete profile", "show_page('delete');", false, 200, "red");
+			button ("edit profile", "show_page('profile-edit');");
+			button ("delete profile", "show_page('profile-delete');", false, 200, "red");
 		?>
 	</div>
-
-	<div id="edit" style="display:none">
-		<h1>Edit</h1>
-	</div>
-
-	<div id="delete" style="display:none">
-		<p>Delete</p>
-	</div>
-
+	
 	<a href="./badge">salut</a>
 
 
