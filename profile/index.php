@@ -16,8 +16,21 @@
 			button ("delete profile", "show_page('profile-delete');", false, 200, "red");
 		?>
 	</div>
+<<<<<<< HEAD
+
+	<div id="edit" style="display:none">
+		<h1>Edit</h1>
+	</div>
+
+	<div id="delete" style="display:none">
+		<p>Delete</p>
+	</div>
+
+	<a href="./badge"><h3 style="color: #00FF00">ACCES BADGE</h3></a>
+=======
 	
 	<a href="./badge">salut</a>
+>>>>>>> 0c8001f67ab8db61e70afecea5cd30a7d3009a07
 
 
 

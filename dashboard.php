@@ -28,8 +28,8 @@ try
 	$link = connect_start();
 
 	$sql_injection = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'sql-injection'")->fetchAll();
-	$csrf = $link->query("SELECT description FROM challenges WHERE type = 'csrf'")->fetchAll();
-	$code_injection = $link->query("SELECT description FROM challenges WHERE type = 'code-injection'")->fetchAll();
+	$csrf = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'csrf'")->fetchAll();
+	$code_injection = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'code-injection'")->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +93,7 @@ try
 			</div>
 			<p id="error" style="color:white; padding-top:50px;"></p>
 		</div>
-		<script src="include/js/sweetalert2.all.js"></script>
+		<script src="include/js/sweetalert2.all.js" ></script>
 		<script type="text/javascript">
 			const descriptions = [
 				[
@@ -236,7 +236,7 @@ try
 					set_error("No difficulty specified");
 					return ;
 				}
-					
+				
 				window.open(link+difficulty+"/", "_blank");
 			}
 
@@ -250,7 +250,7 @@ try
 		}
 		catch (Exception $e)
 		{
-			die("Internal error: ".$e->getMessage());
+			echo "Internal error: ".$e->getMessage();
 		}
 		connect_end($link);
 		include 'footer.php';

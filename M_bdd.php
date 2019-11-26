@@ -25,10 +25,10 @@ function connected()
 	$_SESSION['connected'] = true;
 }
 
-function redirect()
+function redirect($location = "./")
 {
 	if(!is_connected()) {
-		header("Location: sign-in.php");
+		header("Location: ".$location."sign-in.php");
 		exit();
 	}
 }
