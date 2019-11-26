@@ -90,8 +90,8 @@ try
 				<select id="difficulty" name="difficulty" style="width:200px; font-size:12pt; padding-left:10px;"></select>
 				<a style="cursor:pointer; padding:5px 20px 5px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
 				<input type="text" id="flag" style="margin-top:20px;" placeholder="Flag" onkeypress="if(window.event.keyCode == 13) submit_flag();">
-				<p id="flag-error" style="color:white; padding-top:50px;"></p>
 			</div>
+			<p id="error" style="color:white; padding-top:50px;"></p>
 		</div>
 		<script src="include/js/sweetalert2.all.js"></script>
 		<script type="text/javascript">
@@ -194,7 +194,7 @@ try
 
 			function set_error(text)
 			{
-				document.getElementById("flag-error").innerHTML = text;
+				document.getElementById("error").innerHTML = text;
 			}
 
 			function submit_flag()

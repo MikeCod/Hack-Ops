@@ -8,11 +8,8 @@
 	
 	<div class="consulte_account">
 		<?php
-			function is_admin(){
-	 			return ($_SESSION['administrator'] == '1');
-			}
 			echo "<span style=\"float:left; width:300px;\">Your account is the number</span>". $_SESSION['id']."<br/>";
-			echo "<span style=\"float:left; width:300px;\">Account status</span>".(is_admin() ? "Administrator" : "User")."<br>";
+			echo "<span style=\"float:left; width:300px;\">Account status</span>".($_SESSION['administrator'] == '1' ? "Administrator" : "User")."<br>";
 			echo "<span style=\"float:left; width:300px;\">The score account is</span>". $_SESSION['score']."<br/>";
 			echo "<span style=\"float:left; width:300px;\">Your email on this account is</span>". $_SESSION['email']."<br/>";
 			button ("edit profile", "show_page('profile-edit');");
