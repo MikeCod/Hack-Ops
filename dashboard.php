@@ -93,7 +93,7 @@ try
 			</div>
 			<p id="error" style="color:white; padding-top:50px;"></p>
 		</div>
-		<script src="include/js/sweetalert2.all.js"></script>
+		<script src="include/js/sweetalert2.all.js" ></script>
 		<script type="text/javascript">
 			const descriptions = [
 				[
