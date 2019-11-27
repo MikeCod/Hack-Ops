@@ -5,12 +5,11 @@ require "../../../M_bdd.php";
 redirect();
 
 $result = "";
-
-if(isset($_GET['username'])){
+if(isset($_POST['host'])){
 	require "../../M_init_honeypot.php";
 	include "C_test.php";
 }
-else $_GET['username'] = '';
+else $_POST['host'] = '';
 
 ?>
 
@@ -30,10 +29,11 @@ else $_GET['username'] = '';
 				<?php echo NAME ?>
 			</div>
 		</div>
+
 		<div style="padding-left:calc(50% - 200px);">
-			<form class="form-style" method="GET">
-				<h1 style="padding-bottom:40px; text-align:center;">SQL injection [Unavailable]</h1>
-				<input type="text" name="username" placeholder="Username" value="<?php echo $_GET['username'] ?>" autofocus>
+			<form class="form-style" method="POST">
+				<h1 style="padding-bottom:40px; text-align:center;">Code injection</h1>
+				<input type="text" name="host" placeholder="host" value="<?php echo $_POST['host'] ?>" autofocus>
 				<input type="submit" style="margin-top:20px;">
 				<?php echo $result ?>
 			</form>

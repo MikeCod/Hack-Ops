@@ -16,8 +16,6 @@ try
 		
 	if (hash("sha3-512", $_POST['password']) != $response->fetch()['password'])
 		throw new Exception("Unavailable current password");
-	
-
 
 	echo "*";
 }
