@@ -105,5 +105,4 @@ INSERT INTO users(username, email, password, activated, administrator) VALUES('a
 
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '1', 'Standard: Access the admin session (id = 1)', '2qiAw1RwviVaeWy8ZbkCZW6Xc2iQocxJzwtDGwXKaxQLUTx7FkY2KFSXm9e3TX69');
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '2', 'Union: Access challenge table, the flag is inside.<br>A tool like sqlmap could be necesseray', 'J6fUax0MKD5k5460m2SLIDWOezYEwzCkLJKFqbusR7bV9uYAcCnDtP4O3WMsmZsq');
-INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '3', 'Simple boolean: Access the challenge table, the flag is inside.<br>A tool like sqlmap could be necesseray', 'u0qRiniQjYJepTcgRKYBY4o4ER82t3AajuKax3n3ZY2vkghDATn04Vmv0Y8aDfIt');
--- INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '4', 'Out-of-band: Access the challenge table, the flag is inside.<br>A tool like sqlmap could be necesseray', 'u0qRiniQjYJepTcgRKYBY4o4ER82t3AajuKax3n3ZY2vkghDATn04Vmv0Y8aDfIt');
+-- INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '3', 'Out-of-band: Access the challenge table, the flag is inside.<br>A tool like sqlmap could be necesseray', 'u0qRiniQjYJepTcgRKYBY4o4ER82t3AajuKax3n3ZY2vkghDATn04Vmv0Y8aDfIt');
