@@ -20,12 +20,14 @@
 		var req = new XMLHttpRequest();
 		req.onreadystatechange = function() {
 			if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-				if(this.responseText == "*")
+				if(this.responseText == "*") {
 					Swal.fire(
 						"Profile Updated",
 						"Modification in profile has been implemented",
 						"success"
 					);
+					document.location.href = "dashboard.php";
+				}
 				else set_error(this.responseText);
 			}
 		};
