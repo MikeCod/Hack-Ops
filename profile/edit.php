@@ -25,15 +25,22 @@
 						"Profile Updated",
 						"Modification in profile has been implemented",
 						"success"
-					);
-					document.location.href = "dashboard.php";
+					).then((result) => {
+	  					if (result.value)
+							document.location.href = "dashboard.php";
+					});
 				}
 				else set_error(this.responseText);
 			}
 		};
 		req.open("POST", "profile/C_edit.php", true);
 		req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		var change_password = (document.getElementById("edit-password-new").value == "" ? true : false);
-		req.send("username="+document.getElementById("edit-username").value+"&email="+document.getElementById("edit-email").value+"&password="+document.getElementById("edit-password").value+(change_password ? "&password-new="+document.getElementById("edit-password-new").value+"&password-new-confirm="+document.getElementById("edit-password-new-confirm").value : ""));
+		req.send(
+			"username="+document.getElementById("edit-username").value+
+			"&email="+document.getElementById("edit-email").value+
+			"&password="+document.getElementById("edit-password").value+
+			"&password-new="+document.getElementById("edit-password-new").value+
+			"&password-new-confirm="+document.getElementById("edit-password-new-confirm").value 
+		);
 	}
 </script>

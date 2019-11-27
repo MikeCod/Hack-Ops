@@ -21,9 +21,7 @@ try
 		
 	if (hash("sha3-512", $_POST['password']) != $response->fetch()['password'])
 		throw new Exception("Unavailable current password");
-<<<<<<< HEAD
-=======
-	
+
 	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 		throw new Exception("Unavailable email");
 
@@ -46,7 +44,6 @@ try
 	$req->bindParam(':username', $_POST['username']);
 	$req->bindParam(':email', $_POST['email']);
 	$req->execute();
->>>>>>> 4ed366ab1d083f5d8f1a1851060c33a374aa5152
 
 	echo "*";
 }
