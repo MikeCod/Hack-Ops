@@ -1,5 +1,7 @@
 <?php 
 require "../M_bdd.php";
+require "../config.php";
+
 
 function req_add_badge() {
     $error = "";
@@ -45,20 +47,43 @@ function req_add_badge() {
     }   
 }
 
-function req_display_score() {
+function req_display_badge() {
     $link = NULL;
     try
     {
         if(!($link = connect_start()))
             throw new Exception("Could not connect to database");
-             
-        if (!($result = $link->query("SELECT * FROM badges WHERE type='Score'"))) {
+        if (!($result = $link->query("SELECT * FROM badges WHERE type=".$link->quote($_GET['t']).""))) {
                 throw new Exception("No access to the table");
         }
         while($scoreB = $result->fetch()) {
-            echo 
-               $scoreB['description'].'    '.$scoreB['name']."<br>"
-            ;
+            switch ($scoreB['name']) {
+                case 'WELCOME':
+                    # code...
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+            
+
+            echo '
+            <div class="card">
+                <div class="face face 1">
+                    <div class="content">
+                        <img src="../include/img/ncomplete-badge/024-shield.png">
+                        <h3>'.$scoreB['name'].'</h3>
+                    </div>
+                </div>
+                <div class="face face2">
+                    <div class="content">
+                        <p>'.$scoreB['description'].'</p>
+                        <a href="#">COMPLETE ✔️</a>
+                    </div>
+                </div>
+            </div>
+            ';
 
         }
     } catch (Exception $th) {
