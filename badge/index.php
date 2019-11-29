@@ -1,6 +1,11 @@
 <?php 
-    require "../config.php";
-    session_start();
+    require "C_badge.php";
+    #session_start();
+
+    if(isset($_POST['createB'])) {
+        option_badge("add");
+    }
+
     $score = 10;
     $chall = 90;
     $extra = 80;
@@ -54,7 +59,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="card" onclick="document.location='badge.php?t=extra'" style="cursor: pointer">
+        <div class="card" onclick="document.location='badge.php?t=Extra'" style="cursor: pointer">
             <div class="box">
                 <div class="percent">
                     <svg>
@@ -68,7 +73,7 @@
                 <h2 class="textB"><?php echo B_EXTRA ?></h2> 
             </div>
         </div>
-        <div class="card" onclick="document.location='badge.php?t=chall'" style="cursor: pointer">
+        <div class="card" onclick="document.location='badge.php?t=Challenge'" style="cursor: pointer">
             <div class="box">
                 <div class="percent">
                     <svg>
@@ -82,7 +87,7 @@
                 <h2 class="textB"><?php echo B_CHALL ?></h2> 
             </div>
         </div>
-        <div class="card" onclick="document.location='badge.php?t=score'" style="cursor: pointer">
+        <div class="card" onclick="document.location='badge.php?t=Score'" style="cursor: pointer">
             <div class="box">
                 <div class="percent">
                     <svg>
@@ -115,7 +120,7 @@
         };
     </script>
     <div class="add" id="hide" style="display:none">
-        <form action="C_badge.php" method="POST" class="form-style">
+        <form method="POST" class="form-style">
             <h2 style="color: #DC1D1D">Add Badge</h2>
             Name:
             <input type="text" name="name" placeholder="Name"><br>
