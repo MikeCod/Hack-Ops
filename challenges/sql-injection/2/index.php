@@ -33,7 +33,8 @@ else $_GET['id'] = '';
 		</div>
 		<div style="padding-left:calc(50% - 200px);">
 			<form class="form-style" method="GET">
-				<h1 style="padding-bottom:40px; text-align:center;">SQL injection</h1>
+				<h1 style="text-align:center;">SQL injection</h1>
+				<h2 style="padding-bottom:40px; text-align:center;">Search a user by ID</h2>
 				<input type="text" name="id" placeholder="ID" value="<?php echo $_GET['id'] ?>" autofocus>
 				<input type="submit" style="margin-top:20px;">
 				<?php echo $result ?>

@@ -33,7 +33,8 @@ else $_POST['username'] = '';
 
 		<div style="padding-left:calc(50% - 200px);">
 			<form class="form-style" method="POST">
-				<h1 style="padding-bottom:40px; text-align:center;">SQL injection</h1>
+				<h1 style="text-align:center;">SQL injection</h1>
+				<h2 style="padding-bottom:40px; text-align:center;">Sign in</h2>
 				<input type="text" name="username" placeholder="Username" value="<?php echo $_POST['username'] ?>" autofocus>
 				<input type="password" name="password" placeholder="Password">
 				<input type="submit" style="margin-top:20px;">

@@ -4,15 +4,7 @@ session_start();
 require "../../../M_bdd.php";
 redirect();
 
-$result = "";
-if(isset($_POST['host'])) {
-	require "../../M_init_honeypot.php";
-	include "C_test.php";
-}
-else $_POST['host'] = '';
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,13 +22,10 @@ else $_POST['host'] = '';
 			</div>
 		</div>
 		<div style="padding-left:calc(50% - 200px); width:100%;">
-			<form class="form-style" method="POST" style="width:400px;">
-				<h1 style="text-align:center;">Code injection</h1>
-				<h2 style="padding-bottom:40px; text-align:center;">Ping</h2>
-				<input type="text" name="host" placeholder="Host" value="<?php echo $_POST['host'] ?>" autofocus>
-				<input type="submit" style="margin-top:20px;">
-				<?php echo $result ?>
-			</form>
+			<div class="form-style"style="width:400px;">
+				<h1 style="text-align:center;">?</h1>
+				<p>What are you doing ? It's just an example, don't expect a real page.</p>
+			</div>
 		</div>
 	</body>
 </html>

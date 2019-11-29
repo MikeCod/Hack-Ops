@@ -138,7 +138,7 @@ try
 					}
 				}
 				else {
-					document.getElementById("myprofile").style.display = "none";
+					document.getElementById(current_page_name).style.display = "none";
 					document.getElementById("challenges").style.display = "block";
 					document.getElementById("difficulty").innerHTML = "<option value=\"0\" style=\"color:grey;\" onclick=\"document.getElementById('description').innerHTML = ''\">Chose a difficulty</option>";
 					<?php
