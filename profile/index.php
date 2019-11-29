@@ -25,9 +25,6 @@
 		<p>Delete</p>
 	</div>
 
-	<a href="./badge"><h3 style="color: #00FF00">ACCES BADGE</h3></a>
-	
-	<a href="./badge">salut</a>
-
+	<?php button ("Badge", "./badge", true, 200, "green"); ?>
 
 

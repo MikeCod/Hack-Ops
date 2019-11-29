@@ -14,13 +14,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="badge">
-            <?php 
-            if ($_GET['t'] == 'extra') { extra(); } 
-            else if ($_GET['t'] == 'chall') { chall(); } 
-            else if ($_GET['t'] == 'score') { score(); }
-            ?>
-        </div>
+        <?php option_badge("display"); ?>
     </div>
 </body>
 </html>
