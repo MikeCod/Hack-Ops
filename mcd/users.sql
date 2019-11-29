@@ -67,7 +67,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `HackOps`.`badges` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(16) NOT NULL,
+  `name` VARCHAR(32) NOT NULL,
   `value` ENUM('Beginner', 'Experimented', 'Master') NOT NULL,
   `description` VARCHAR(256) NOT NULL,
   `type` ENUM('Challenge', 'Score', 'Extra') NOT NULL,
@@ -106,3 +106,17 @@ INSERT INTO users(username, email, password, activated, administrator) VALUES('a
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '1', 'Standard: Access the admin session (id = 1)', '2qiAw1RwviVaeWy8ZbkCZW6Xc2iQocxJzwtDGwXKaxQLUTx7FkY2KFSXm9e3TX69');
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '2', 'Union: Access challenge table, the flag is inside.<br>A tool like sqlmap could be necesseray', 'J6fUax0MKD5k5460m2SLIDWOezYEwzCkLJKFqbusR7bV9uYAcCnDtP4O3WMsmZsq');
 -- INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '3', 'Out-of-band: Access the challenge table, the flag is inside.<br>A tool like sqlmap could be necesseray', 'u0qRiniQjYJepTcgRKYBY4o4ER82t3AajuKax3n3ZY2vkghDATn04Vmv0Y8aDfIt');
+
+-- BADGE Fixe--
+-- Score --
+INSERT INTO badges(name, value, description, type) VALUES('Master Score', 'Master', 'Have 250 score points', 'Score');
+INSERT INTO badges(name, value, description, type) VALUES('Expert Score', 'Experimented', 'Have 100 score points', 'Score');
+INSERT INTO badges(name, value, description, type) VALUES('Beginner Score', 'Beginner', 'Have 50 score points', 'Score');
+-- Challenge -- 
+INSERT INTO badges(name, value, description, type) VALUES('Master Challenge', 'Master', 'Complete 5 challenges', 'Challenge');
+INSERT INTO badges(name, value, description, type) VALUES('Expert Challenge', 'Experimented', 'Complete 3 challenges', 'Challenge');
+INSERT INTO badges(name, value, description, type) VALUES('Beginner Challenge', 'Beginner', 'Complete 1 challenge', 'Challenge');
+-- Extra -- 
+INSERT INTO badges(name, value, description, type) VALUES('Master Extra', 'Master', 'EXTRA BADGE MASTER', 'Extra');
+INSERT INTO badges(name, value, description, type) VALUES('Expert Extra', 'Experimented', 'EXTRA BADGE EXPERT', 'Extra');
+INSERT INTO badges(name, value, description, type) VALUES('Beginner Extra', 'Beginner', 'EXTRA BADGE BEGINNER', 'Extra');

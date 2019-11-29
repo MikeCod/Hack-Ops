@@ -2,6 +2,7 @@
 require "../M_bdd.php";
 session_start();
 
+
 function req_add_badge() {
     $error = "";
     if(!isset($_POST['name']))
@@ -59,21 +60,58 @@ function req_display_badge() {
                 throw new Exception("No access to the table");
         }
         while($scoreB = $result->fetch()) {
-            switch ($scoreB['name']) {
-                case 'WELCOME':
-                    # code...
-                    break;
-                
-                default:
-                    # code...
-                    break;
+
+   /*         
+define('S_BEGINNER','score100');
+define('SQL_BEGINNER','beginnerSQL');
+define('SQL_EXPERT','expertSQL');
+define('SQL_MASTER','masterSQL');
+define('C_BEGINNER','beginnerCode');
+define('C_EXPERT','expertCode');
+define('C_MASTER','masterCode');
+define('CS_BEGINNER','beginnerCSRF');
+define('CS_EXPERT','expertCSRF');*/
+
+            if ($scoreB['value'] == "Master") {
+                if ($_GET['t'] == "Score") {
+                    $icon = "masterCode";
+                }
+                else if ($_GET['t'] == "Challenge") {
+                    $icon = "masterSQL";
+                } 
+                else {
+                    $icon = "Flag";
+                }
+            } 
+            else if ($scoreB['value'] == "Experimented") {
+                if ($_GET['t'] == "Score") {
+                    $icon = "expertCode";
+                }
+                else if ($_GET['t'] == "Challenge") {
+                    $icon = "expertSQL";
+                } 
+                else {
+                    $icon = "expertCSRF";
+                }
+            } 
+            else {
+                if ($_GET['t'] == "Score") {
+                    $icon = "beginnerCode";
+                }
+                else if ($_GET['t'] == "Challenge") {
+                    $icon = "beginnerSQL";
+                } 
+                else {
+                    $icon = "beginnerCSRF";
+                }
             }
-            
+            /*echo $icon;*/
+
             echo '
             <div class="card">
                 <div class="face face1">
                     <div class="content">
-                        <img src="../include/img/complete-badge/masterSQL.png">
+                        <img src="../include/img/complete-badge/'.$icon.'.png">
                         <h3>'.$scoreB['name'].'</h3>
                     </div>
                 </div>
