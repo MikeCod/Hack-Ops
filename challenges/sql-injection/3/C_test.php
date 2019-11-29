@@ -15,7 +15,7 @@ try
 	$link->query("CREATE TABLE challenge(flag varchar(64))");
 	$link->query("INSERT INTO challenge(flag) VALUES('".get_flag($type, $difficulty)."')");
 
-	if(!($response = $link->query("SELECT username, id FROM users WHERE id = ".$_GET['id'])))
+	if(!($response = $link->query("SELECT username, id FROM users WHERE username = '".$_GET['username']."'")))
 		throw new Exception("Request failed");
 
 	if($response->rowCount() != 1)
