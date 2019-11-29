@@ -16,7 +16,6 @@
 			button ("delete profile", "show_page('profile-delete');", false, 200, "red");
 		?>
 	</div>
-<<<<<<< HEAD
 
 	<div id="edit" style="display:none">
 		<h1>Edit</h1>
