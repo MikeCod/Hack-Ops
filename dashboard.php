@@ -86,7 +86,7 @@ try
 			</div>
 			<div id="challenges" style="padding-top:00px; display:none;">
 				<h1 id="title-challenge"></h1>
-				<p id="description" style="padding-top:100px; min-height:40px;"></p>
+				<p id="description" style="padding-top:100px; padding-bottom:20px; min-height:80px;"></p>
 				<select id="difficulty" name="difficulty" style="width:200px; font-size:12pt; padding-left:10px;"></select>
 				<a style="cursor:pointer; padding:5px 20px 5px 20px; width:200px; font-size:14pt; background:#2a2a2a;" onclick="start_challenge()">Start</a>
 				<input type="text" id="flag" style="margin-top:20px;" placeholder="Flag" onkeypress="if(window.event.keyCode == 13) submit_flag();">

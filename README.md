@@ -11,9 +11,8 @@ You'll also need to install V8 to execute JavaScript on the server (used for CSR
 apt-get update
 apt-get install libnode-dev
 ```
-**Important**
-The virtual machine **must not** use root session.
+The virtual machine **must not** use root session. Because Hack Ops's users have an important control on the machine (like access to databases or execute commands)
 
 ## Copyrights
 SweetAlert
-v8
+V8
