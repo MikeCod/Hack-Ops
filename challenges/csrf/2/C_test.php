@@ -7,7 +7,7 @@ $type = "";
 $difficulty = "";
 get_challenge($type, $difficulty);
 
-define('LINK', 'https://localhost/challenges/csrf/1/C_edit-profile.php');
+define('LINK', 'https://localhost/challenges/csrf/2/C_edit-profile.php');
 $link_length = strlen(LINK);
 
 try
@@ -19,33 +19,19 @@ try
 		throw new Exception("No message");
 
 	$good = false;
-	$good_link = false;
+	$good_resource = false;
 	$dom = new DOMDocument();
 	$dom->loadHTML($_POST['message']);
 	$images = $dom->getElementsByTagName('img');
+
 	foreach ($images as $image) {
 		$src = $image->getAttribute('src');
-		if(strlen($src) >= $link_length and substr($src, 0, $link_length) == LINK)
-		{
-			if(strpos($src, "?") === false)
-				throw new Exception("No parameter");
-				
-			if($image->getAttribute('width') != "0" or $image->getAttribute('height') != "0" or $image->getAttribute('border') != "0")
-				throw new Exception("You should let the width, height and border to 0. Otherwise the admin will can see something goes wrong...");
+		if($image->getAttribute('width') != "0" or $image->getAttribute('height') != "0" or $image->getAttribute('border') != "0")
+			throw new Exception("You should let the width, height and border to 0. Otherwise the admin will can see something goes wrong...");
+		if(!($handle = fopen($src, "r")))
+			throw new Exception("Unavailable resource");
+		$good_resource = true;
 			
-			if(substr($src, 0, $link_length) == LINK)
-			{
-				$params = explode("&", substr($src, $link_length + 1));
-				foreach ($params as $key) {
-					$param = explode("=", $key);
-					if(isset($param[0]) and $param[0] == "new-password"){
-						$good = true;
-						break;
-					}
-				}
-				$good_link = true;
-			}
-		}
 		if($good)
 			break;
 	}

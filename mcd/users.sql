@@ -109,9 +109,10 @@ INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injectio
 
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('code-injection', '1', 'You wanna ping a host<br>The flag is in the file \'flag\'', '3xnNqUYRehmEkOOLXz3LiyZwuU57zoyJYiWcvVOd0jm7fhuDGxiIKt3lT9BIjd27');
 
-INSERT INTO challenges(type, difficulty, description, flag) VALUES('csrf', '1', 'You send a mail to the administrator.<br>Simple GET: Change admin\'s password. The payload will be the picture link (img)', '9XvVDIN61taDYO9yq9j6EZrMtrysQWhhmEBvQvQnLQgBd4CJStQPyAMxRPzZjWcg');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('csrf', '1', 'You send a mail to the administrator.<br>Note: The connection must be secured (https), and the host is local for admin (localhost).<br>Simple GET: Change admin\'s password. The payload will be the picture link (img)', '9XvVDIN61taDYO9yq9j6EZrMtrysQWhhmEBvQvQnLQgBd4CJStQPyAMxRPzZjWcg');
 
 -- INSERT INTO challenges(type, difficulty, description, flag) VALUES('csrf', '2', 'You send a mail to the administrator.<br>
-  -- Note: The payload will must use JavaScript. The payload will not be in the mail, because JavaScript cannot be executed, but we can imagine the payload is called in the mail.<br>
+  -- Note: The connection must be secured (https), and the host is local for admin (localhost).<br>
+  -- Note 2: The payload will must use JavaScript. The payload will not be in the mail, because JavaScript cannot be executed, so you'll have to use an external server (on your own computer ?) and call the resource from the mail.
   -- These links could help you: <a href=\\\"https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)\\\">OWASP</a> | <a href=\\\"https://stackoverflow.com/questions/3054315/is-javascript-supported-in-an-email-message\\\">Is JavaScript supported in an email message</a><br>
-  -- Advanced POST: Change admin\'s password to. Action page for changing password: /challenges/code-injection/2/edit-password.php', 'xk2oDXWn4FbBc9WnqRz9adipbVN5a2dNyCK9UdhMyDphlnhF9r0kKNJalDsvePds');
+  -- Advanced POST: Change admin\'s password.', 'xk2oDXWn4FbBc9WnqRz9adipbVN5a2dNyCK9UdhMyDphlnhF9r0kKNJalDsvePds');
