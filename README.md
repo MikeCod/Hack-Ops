@@ -8,8 +8,11 @@ Hack Ops is under [MIT](https://choosealicense.com/licenses/mit/) license
 You'll need a virtual machine for challenges.
 You'll also need to install V8 to execute JavaScript on the server (used for CSRF training)
 ```bash
-sudo apt-get install
+apt-get update
+apt-get install libnode-dev
 ```
+**Important**
+The virtual machine **must not** use root session.
 
 ## Copyrights
 SweetAlert
