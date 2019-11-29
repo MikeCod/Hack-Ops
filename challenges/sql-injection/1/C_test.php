@@ -1,11 +1,5 @@
 <?php
-/*
-session_start();
-require "../../../config.php";
-require "../../../M_bdd.php";
-require "../../M_init_honeypot.php";
-redirect();
-*/
+
 $link = NULL;
 $dbname = "";
 
@@ -29,10 +23,10 @@ try
 		throw new Exception("You accessed to the session of ID ".$id);
 	
 	$result = "<script src=\"../../../include/js/sweetalert2.all.js\"></script>\n<script type=\"text/javascript\">\nSwal.fire(
-								\"Congrats !\",
-								\"You can now validate this challenge with the flag ".get_flag($type, $difficulty)."\",
-								\"success\"
-							);</script>";
+		\"Congrats !\",
+		\"You can now validate this challenge with the flag ".get_flag($type, $difficulty)."\",
+		\"success\"
+		);</script>";
 }
 catch(Exception $e)
 {

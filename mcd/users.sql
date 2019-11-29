@@ -126,7 +126,7 @@ INSERT INTO challenges(type, difficulty, description, flag) VALUES('code-injecti
 
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('csrf', '1', 'You send a mail to the administrator.<br>Note: The connection must be secured (https), and the host is local for admin (localhost).<br>Simple GET: Change admin\'s password. The payload will be the picture link (img)', '9XvVDIN61taDYO9yq9j6EZrMtrysQWhhmEBvQvQnLQgBd4CJStQPyAMxRPzZjWcg');
 
--- INSERT INTO challenges(type, difficulty, description, flag) VALUES('csrf', '2', 'You send a mail to the administrator.<br>
+-- INSERT INTO challenges(type, difficulty, description, flag) VALUES('csrf', '3', 'You send a mail to the administrator.<br>
   -- Note: The connection must be secured (https), and the host is local for admin (localhost).<br>
   -- Note 2: The payload will must use JavaScript. The payload will not be in the mail, because JavaScript cannot be executed, so you'll have to use an external server (on your own computer ?) and call the resource from the mail.
   -- These links could help you: <a href=\\\"https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)\\\">OWASP</a> | <a href=\\\"https://stackoverflow.com/questions/3054315/is-javascript-supported-in-an-email-message\\\">Is JavaScript supported in an email message</a><br>
