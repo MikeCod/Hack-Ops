@@ -1,7 +1,6 @@
 <?php 
-    require "../config.php";
     require "C_badge.php";
-    session_start();
+    #session_start();
 
     if(isset($_POST['createB'])) {
         option_badge("add");

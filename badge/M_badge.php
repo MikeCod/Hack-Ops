@@ -1,7 +1,6 @@
 <?php 
 require "../M_bdd.php";
-require "../config.php";
-
+session_start();
 
 function req_add_badge() {
     $error = "";
@@ -46,6 +45,9 @@ function req_add_badge() {
         connect_end($link);
     }   
 }
+function req_delete_badge() { 
+
+}
 
 function req_display_badge() {
     $link = NULL;
@@ -67,12 +69,11 @@ function req_display_badge() {
                     break;
             }
             
-
             echo '
             <div class="card">
-                <div class="face face 1">
+                <div class="face face1">
                     <div class="content">
-                        <img src="../include/img/ncomplete-badge/024-shield.png">
+                        <img src="../include/img/complete-badge/masterSQL.png">
                         <h3>'.$scoreB['name'].'</h3>
                     </div>
                 </div>
@@ -80,6 +81,7 @@ function req_display_badge() {
                     <div class="content">
                         <p>'.$scoreB['description'].'</p>
                         <a href="#">COMPLETE ✔️</a>
+                        <a href="badge.php?t='.$_GET['t'].'&del=true">DELETE ❌</a>
                     </div>
                 </div>
             </div>
