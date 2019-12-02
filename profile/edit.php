@@ -1,7 +1,7 @@
 <!--===========================================================================================
 // Gestion de : affichage de edit profile
-// Auteurs : Charles Régniez
-// Version du : 26/11/2019
+// Auteurs : Charles Régniez, Dimtri Simon
+// Version du : 27/11/2019
 =============================================================================================-->
 
 <!-- TODO ask to authentify before edit -->

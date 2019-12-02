@@ -2,6 +2,8 @@
 
 require_once "config.php";
 
+define('ROOT', '/Hack-Ops');
+
 function connect_start()
 {
 	$link = new PDO("mysql:host=".HOST.";dbname=".DB_NAME, USER, PASS);
@@ -31,6 +33,11 @@ function redirect($location = "./")
 		header("Location: ".$location."sign-in.php");
 		exit();
 	}
+}
+
+function my_get_include_path()
+{
+	return strstr(str_replace("\\", "/", __DIR__), ROOT, true).ROOT;
 }
 
 ?>
