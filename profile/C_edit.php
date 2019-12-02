@@ -2,7 +2,7 @@
 
 session_start();
 require "../M_bdd.php";
-redirect("../");
+redirect();
 
 $link = NULL;
 try

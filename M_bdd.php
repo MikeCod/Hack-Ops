@@ -2,6 +2,8 @@
 
 require_once "config.php";
 
+define('ROOT', '/Hack-Ops/');
+
 function connect_start()
 {
 	$link = new PDO("mysql:host=".HOST.";dbname=".DB_NAME, USER, PASS);
@@ -25,10 +27,10 @@ function connected()
 	$_SESSION['connected'] = true;
 }
 
-function redirect($location = "./")
+function redirect()
 {
 	if(!is_connected()) {
-		header("Location: ".$location."sign-in.php");
+		header("Location: ".ROOT."sign-in/");
 		exit();
 	}
 }
