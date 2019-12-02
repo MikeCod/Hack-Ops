@@ -27,10 +27,10 @@ function connected()
 	$_SESSION['connected'] = true;
 }
 
-function redirect($location = "./")
+function redirect()
 {
 	if(!is_connected()) {
-		header("Location: ".$location."sign-in.php");
+		header("Location: ".ROOT."/sign-in/");
 		exit();
 	}
 }
