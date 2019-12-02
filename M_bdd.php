@@ -2,7 +2,7 @@
 
 require_once "config.php";
 
-define('ROOT', '/Hack-Ops/');
+define('ROOT', '/Hack-Ops');
 
 function connect_start()
 {
@@ -30,9 +30,14 @@ function connected()
 function redirect()
 {
 	if(!is_connected()) {
-		header("Location: ".ROOT."sign-in/");
+		header("Location: ".ROOT."/sign-in/");
 		exit();
 	}
+}
+
+function my_get_include_path()
+{
+	return strstr(str_replace("\\", "/", __DIR__), ROOT, true).ROOT;
 }
 
 ?>
