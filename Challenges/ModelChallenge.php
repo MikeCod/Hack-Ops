@@ -1,7 +1,5 @@
 <?php
 
-//require_once "../M_bdd.php";
-
 define('CHALLENGE_HOST', '192.168.202.128');
 define('CHALLENGE_PORT', '3306');
 define('CHALLENGE_USER', 'root');

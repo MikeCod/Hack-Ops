@@ -1,8 +1,7 @@
 <?php
 
 session_start();
-
-include('../config.php');
+require "../Controller/config.php";
 
 if(!isset($_SESSION['form']['username'])) $_SESSION['form']['username'] = '';
 if(!isset($_SESSION['form']['email'])) $_SESSION['form']['email'] = '';
@@ -26,7 +25,7 @@ $_POST = array();
 		</div>
 		<div style="padding-top:3%;padding-left:calc(50% - 200px);">
 			<div class="form-style">
-				<form action="C_sign-up.php" method="post">
+				<form action="../../Controller/sign-up" method="post">
 					<fieldset style="padding-top:50px;">
 						<input type="text" name="username" placeholder="Username" value="<?php echo $_SESSION['form']['username']; ?>" autofocus>
 						<input name="email" placeholder="email" type="email" value="<?php echo $_SESSION['form']['email']; ?>">

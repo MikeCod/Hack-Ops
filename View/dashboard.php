@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require "M_bdd.php";
+require "../Model/DB.php";
 redirect();
 
 
@@ -39,9 +39,9 @@ try
 	<title><?php echo NAME ?></title>
 	<link rel="icon" type="image/jpg" href="">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link rel="stylesheet" media="all" type="text/css" href="include/css/style.css">
-	<link rel="stylesheet" media="all" type="text/css" href="include/css/button.css">
-	<script src="include/js/sweetalert2.all.js"></script>
+	<link rel="stylesheet" media="all" type="text/css" href="../include/css/style.css">
+	<link rel="stylesheet" media="all" type="text/css" href="../include/css/button.css">
+	<script src="../include/js/sweetalert2.all.js"></script>
 	<style type="text/css">
 		h1 {
 			padding-left:100px;

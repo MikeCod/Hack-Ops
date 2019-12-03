@@ -1,9 +1,9 @@
 <?php
 
 session_start();
-require "../M_bdd.php";
+require "../Model/DB.php";
 if(is_connected()) {
-	header("Location: ../dashboard.php");
+	header("Location: dashboard.php");
 	exit();
 }
 

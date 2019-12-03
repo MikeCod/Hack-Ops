@@ -1,6 +1,6 @@
 <?php
 
-require('config.php');
+require "../Controller/config.php";
 
 function button($text, $a, $href = false, $width = 150, $color = "white")
 {
@@ -25,8 +25,8 @@ function button($text, $a, $href = false, $width = 150, $color = "white")
 	<title><?php echo NAME ?></title>
 	<link rel="icon" type="image/jpg" href="">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link rel="stylesheet" media="all" type="text/css" href="include/css/style.css">
-	<link rel="stylesheet" media="all" type="text/css" href="include/css/button.css">
+	<link rel="stylesheet" media="all" type="text/css" href="../include/css/style.css">
+	<link rel="stylesheet" media="all" type="text/css" href="../include/css/button.css">
 	<style type="text/css">
 		@keyframes animation-home {
 			0%	{ margin-left:100%; }
@@ -42,7 +42,7 @@ function button($text, $a, $href = false, $width = 150, $color = "white")
 					button("About us", "show_page('about-us');");
 					button("How does it work", "show_page('how-does-it-work');", false, 200);
 					button("Donate", "show_page('donate');");
-					echo "<div style=\"float:right;\">"; button("Sign in", "sign-in/", true, 150, "#2a77d7"); button("Sign up", "sign-up/", true, 150, "#2a77d7"); echo '</div>';
+					echo "<div style=\"float:right;\">"; button("Sign in", "sign-in.php", true, 150, "#2a77d7"); button("Sign up", "sign-up/", true, 150, "#2a77d7"); echo '</div>';
 				?>
 			</div>
 		</div>

@@ -1,10 +1,9 @@
 <?php
 
 session_start();
-require('config.php');
-require('M_bdd.php');
+require "../Model/DB.php";
 if(is_connected()) {
-	header("Location: dashboard.php");
+	header("Location: ../View/dashboard.php");
 	exit();
 }
 
@@ -27,7 +26,7 @@ try
 	$_SESSION = $result->fetch();
 	connected();
 
-	header("Location: dashboard.php");
+	header("Location: ../View/dashboard.php");
 	exit();
 }
 catch (Exception $e)
@@ -35,7 +34,7 @@ catch (Exception $e)
 	connect_end($link);
 	$_SESSION['error'] = $e->getMessage();
 }
-header("Location: sign-in.php");
+header("Location: ../View/sign-in/");
 exit();
 
 ?>

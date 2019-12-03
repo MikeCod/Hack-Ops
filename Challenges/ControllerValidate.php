@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require "../M_bdd.php";
+require "../Moddel/BD.php";
 redirect();
 
 require "M_challenge.php";

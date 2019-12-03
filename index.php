@@ -1,5 +1,6 @@
 <?php
 
-include 'home.php';
+header("Location: View/");
+exit();
 
 ?>
