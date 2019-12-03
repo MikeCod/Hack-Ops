@@ -71,7 +71,7 @@ try
 				button("Code Injection", "show_page('code-injection', true);");
 
 				echo "<div style=\"padding-top:100px;\">";
-				button("Sign out", "C_sign-out.php", true, 200, "#2a77d7");
+				button("Sign out", "../Controller/sign-out.php", true, 200, "#2a77d7");
 				echo "</div>";
 			?>
 		</div>
@@ -218,7 +218,7 @@ try
 						else set_error(this.responseText);
 					}
 				};
-				req.open("POST", "challenges/C_validate.php", true);
+				req.open("POST", "../challenges/ControllerValidate.php", true);
 				req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 				req.send("type="+type+"&difficulty="+document.getElementById("difficulty").value+"&flag="+document.getElementById("flag").value);
 			}

@@ -4,8 +4,8 @@ session_start();
 require "../Moddel/BD.php";
 redirect();
 
-require "M_challenge.php";
-require "M_validate.php";
+require "Challenges/ModelChallenge.php";
+require "Challenges/ModelValidate.php";
 
 if (!isset($_POST['flag']) or !isset($_POST['type']) or !isset($_POST['difficulty']))
 	die("A field isn't specified");
