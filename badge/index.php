@@ -143,7 +143,7 @@
             <input type="submit" name="createB" value="Create Badge"><br>
         </form>
     </div>
-    <div class="button" style="top: 900px; position: absolute;">
+    <div class="button" style="bottom: 05%; position: absolute;">
         <a href="../dashboard.php">Back</a> 
     </div>
 </body>
