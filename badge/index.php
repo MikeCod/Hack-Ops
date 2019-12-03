@@ -104,7 +104,7 @@
     </div>
     <?php if ($_SESSION['administrator'] == '1') 
         echo '
-        <div class="slideThree" style="bottom: 10%; position: absolute; ">  
+        <div class="slideThree" style="bottom: 15%; position: absolute; ">  
             <input type="checkbox" value="None" id="slideThree" name="check" onclick="hideForm(\'hide\');" checked />
             <label for="slideThree"></label>
         </div>';

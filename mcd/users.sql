@@ -84,7 +84,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `HackOps`.`completed-badges` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user` INT UNSIGNED NOT NULL,
-  `achievement` INT UNSIGNED NOT NULL,
+  `badge` INT UNSIGNED NOT NULL,
   UNIQUE INDEX `achievement_UNIQUE` (`achievement` ASC),
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -106,17 +106,17 @@ INSERT INTO users(username, email, password, activated, administrator) VALUES('a
 
 -- INIT BADGE--
 -- Score --
-INSERT INTO badges(name, value, description, type) VALUES('Master Score', 'Master', 'Have 250 score points', 'Score');
-INSERT INTO badges(name, value, description, type) VALUES('Expert Score', 'Experimented', 'Have 100 score points', 'Score');
-INSERT INTO badges(name, value, description, type) VALUES('Beginner Score', 'Beginner', 'Have 50 score points', 'Score');
+INSERT INTO badges(name, value, description, type) VALUES('Master Score', 'Master', 'Have 250 score points', 'Score', '250');
+INSERT INTO badges(name, value, description, type) VALUES('Expert Score', 'Experimented', 'Have 100 score points', 'Score', '100');
+INSERT INTO badges(name, value, description, type) VALUES('Beginner Score', 'Beginner', 'Have 50 score points', 'Score', '50');
 -- Challenge -- 
-INSERT INTO badges(name, value, description, type) VALUES('Master Challenge', 'Master', 'Complete 5 challenges', 'Challenge');
-INSERT INTO badges(name, value, description, type) VALUES('Expert Challenge', 'Experimented', 'Complete 3 challenges', 'Challenge');
-INSERT INTO badges(name, value, description, type) VALUES('Beginner Challenge', 'Beginner', 'Complete 1 challenge', 'Challenge');
+INSERT INTO badges(name, value, description, type) VALUES('Master Challenge', 'Master', 'Complete 5 challenges', 'Challenge', '5');
+INSERT INTO badges(name, value, description, type) VALUES('Expert Challenge', 'Experimented', 'Complete 3 challenges', 'Challenge', '3');
+INSERT INTO badges(name, value, description, type) VALUES('Beginner Challenge', 'Beginner', 'Complete 1 challenge', 'Challenge', '1');
 -- Extra -- 
-INSERT INTO badges(name, value, description, type) VALUES('Master Extra', 'Master', 'EXTRA BADGE MASTER', 'Extra');
-INSERT INTO badges(name, value, description, type) VALUES('Expert Extra', 'Experimented', 'EXTRA BADGE EXPERT', 'Extra');
-INSERT INTO badges(name, value, description, type) VALUES('Beginner Extra', 'Beginner', 'EXTRA BADGE BEGINNER', 'Extra');
+INSERT INTO badges(name, value, description, type) VALUES('Master Extra', 'Master', 'EXTRA BADGE MASTER', 'Extra', '3');
+INSERT INTO badges(name, value, description, type) VALUES('Expert Extra', 'Experimented', 'EXTRA BADGE EXPERT', 'Extra', '25');
+INSERT INTO badges(name, value, description, type) VALUES('Beginner Extra', 'Beginner', 'EXTRA BADGE BEGINNER', 'Extra', '60');
 
 
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('sql-injection', '1', 'You wanna sign in.<br>Standard: Access the admin session (id = 1)', '2qiAw1RwviVaeWy8ZbkCZW6Xc2iQocxJzwtDGwXKaxQLUTx7FkY2KFSXm9e3TX69');
