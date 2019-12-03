@@ -1,7 +1,13 @@
 <?php
+<<<<<<< HEAD
 require "C:xampp/htdocs/Hack-Ops/Controller/config.php";
+=======
+>>>>>>> 722e57f9abff552a9053cd859910be2c03018da9
 
 define('ROOT', '/Hack-Ops');
+
+set_include_path(my_get_include_path());
+require_once "Controller/config.php";
 
 function connect_start()
 {
@@ -36,7 +42,8 @@ function redirect()
 
 function my_get_include_path()
 {
-	return strstr(str_replace("\\", "/", __DIR__), ROOT, true).ROOT."\\";
+	return strstr(str_replace("\\", "/", __DIR__), ROOT, true).ROOT."/";
 }
+
 
 ?>

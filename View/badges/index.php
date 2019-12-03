@@ -2,9 +2,14 @@
     require "../../Controller/badges.php";
     #session_start();
 
+<<<<<<< HEAD
     if(isset($_POST['createB'])) {
         option_badge("add");
     }
+=======
+require "../../Controller/config.php";
+require "../../Controller/badges.php";
+>>>>>>> 722e57f9abff552a9053cd859910be2c03018da9
 
     $score = 0;
     $chall = 0;

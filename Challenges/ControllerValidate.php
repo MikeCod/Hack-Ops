@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require "../Moddel/BD.php";
+require "../Model/DB.php";
 redirect();
 
 require "Challenges/ModelChallenge.php";
@@ -32,11 +32,11 @@ try
 
 	$link = connect_start();
 	$id = get_id($link, $_POST['type'], $_POST['difficulty']);
-	add_challenge_completed($_SESSION['id'], $id);
+	add_challenge_completed($link, $_SESSION['id'], $id);
 
-	$_SESSION['score'] = update_score($_SESSION['id'], $_SESSION['score']);
+	$_SESSION['score'] = update_score($link, $_SESSION['id'], $_SESSION['score'], $add);
 
-	echo "*".update_badges($_SESSION['id'], $_SESSION['score']);
+	echo "*".update_badges($link, $_SESSION['id'], $_SESSION['score']);
 }
 catch(Exception $e)
 {
