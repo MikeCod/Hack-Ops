@@ -1,5 +1,6 @@
 <?php
-    require "../Model/badges.php";
+    require "../../Model/badges.php";
+    
 
     function option_badge($type) {
         if ($type == "display") { req_display_badge(); }

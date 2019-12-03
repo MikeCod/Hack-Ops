@@ -1,6 +1,5 @@
 <?php
-
-require_once "../Controller/config.php";
+require "C:xampp/htdocs/Hack-Ops/Controller/config.php";
 
 define('ROOT', '/Hack-Ops');
 

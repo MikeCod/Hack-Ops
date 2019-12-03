@@ -1,5 +1,5 @@
 <?php 
-require "./DB.php";
+require "DB.php";
 session_start();
 
 
@@ -73,9 +73,9 @@ function req_display_badge() {
         if (!($result = $link->query("SELECT * FROM badges WHERE type=".$link->quote($_GET['t']).""))) {
                 throw new Exception("No access to the table");
         }
-        if (!($req = $link->query("SELECT * FROM `completed-badges`"))) {
+        /*if (!($req = $link->query("SELECT * FROM `completed-badges`"))) {
             throw new Exception("No access to the table");
-        }
+        }*/
 
         while ($badge = $result->fetch()) {
 
@@ -112,7 +112,7 @@ function req_display_badge() {
                     $icon = "beginnerCSRF";
                 }
             }
-            while ($complete = $req->fetch()) {
+            /*while ($complete = $req->fetch()) {
                 if ($complete['achievement'] == $badge['id']) {
                     echo "prout";
                     $check = '<i class="fas fa-check" style="color: #00FF00"></i>'; 
@@ -120,7 +120,7 @@ function req_display_badge() {
                 else {
                     $check = '<i class="fas fa-times" style="color: #FF0000"></i>';
                 }
-            }
+            }*/
             
 
             /*echo $icon;*/
@@ -129,14 +129,14 @@ function req_display_badge() {
             <div class="card">
                 <div class="face face1">
                     <div class="content">
-                        <img src="../include/img/complete-badge/'.$icon.'.png">
+                        <img src="../../include/img/complete-badge/'.$icon.'.png">
                         <h3>'.$badge['name'].'</h3>
                     </div>
                 </div>
                 <div class="face face2">
                     <div class="content">
                         <p>'.$badge['description'].'</p>
-                        <a href="#">COMPLETE '.$check.'</a>
+                        <a href="#">COMPLETE </a>
                         <div class="optAdmin">
                             <a href="badge.php?t='.$_GET['t'].'&id='.$badge['id'].'&del=true"><i class="fas fa-times" style="color: #FF0000"></i></a>
                         </div>
