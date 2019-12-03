@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS `HackOps`.`badges` (
   `value` ENUM('Beginner', 'Experimented', 'Master') NOT NULL,
   `description` VARCHAR(256) NOT NULL,
   `type` ENUM('Challenge', 'Score', 'Extra') NOT NULL,
+  `goal` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
@@ -81,7 +82,7 @@ ENGINE = InnoDB;
 -- Table `HackOps`.`completed-badges`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `HackOps`.`completed-badges` (
-  `id` INT UNSIGNED NOT NULL,
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user` INT UNSIGNED NOT NULL,
   `achievement` INT UNSIGNED NOT NULL,
   UNIQUE INDEX `achievement_UNIQUE` (`achievement` ASC),
@@ -103,7 +104,7 @@ ENGINE = InnoDB;
 -- Password: H@ck0p5P1MDC -- 
 INSERT INTO users(username, email, password, activated, administrator) VALUES('admin', 'admin@localhost', 'f451eecb3a41963157e4d3b0063636cfc3e37b65ed46d74382ff2a09cffe7dd2e0435b60ce56670beedc472d55fa8c4c7bd98558c637ee1816264d13c3f549db', '1', '1');
 
--- BADGE Fixe--
+-- INIT BADGE--
 -- Score --
 INSERT INTO badges(name, value, description, type) VALUES('Master Score', 'Master', 'Have 250 score points', 'Score');
 INSERT INTO badges(name, value, description, type) VALUES('Expert Score', 'Experimented', 'Have 100 score points', 'Score');
