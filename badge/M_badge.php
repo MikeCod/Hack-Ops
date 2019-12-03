@@ -47,7 +47,21 @@ function req_add_badge() {
     }   
 }
 function req_delete_badge() { 
+    try
+    {
+        if(!($link = connect_start()))
+            throw new Exception("Could not connect to database");
+        if(!($result = $link->query("DELETE FROM badges WHERE id=".$link->quote($_GET['id']).""))) 
+        {
+            throw new Exception("No access to the table");
+        }
+        header("Location: ./");
+        exit();
 
+    } catch (Exception $th) {
+        echo "Internal error: ".$th->getMessage();
+    }
+    connect_end($link);
 }
 
 function req_display_badge() {
@@ -59,20 +73,13 @@ function req_display_badge() {
         if (!($result = $link->query("SELECT * FROM badges WHERE type=".$link->quote($_GET['t']).""))) {
                 throw new Exception("No access to the table");
         }
-        while($scoreB = $result->fetch()) {
+        if (!($req = $link->query("SELECT * FROM `completed-badges`"))) {
+            throw new Exception("No access to the table");
+        }
 
-   /*         
-define('S_BEGINNER','score100');
-define('SQL_BEGINNER','beginnerSQL');
-define('SQL_EXPERT','expertSQL');
-define('SQL_MASTER','masterSQL');
-define('C_BEGINNER','beginnerCode');
-define('C_EXPERT','expertCode');
-define('C_MASTER','masterCode');
-define('CS_BEGINNER','beginnerCSRF');
-define('CS_EXPERT','expertCSRF');*/
+        while ($badge = $result->fetch()) {
 
-            if ($scoreB['value'] == "Master") {
+            if ($badge['value'] == "Master") {
                 if ($_GET['t'] == "Score") {
                     $icon = "masterCode";
                 }
@@ -83,7 +90,7 @@ define('CS_EXPERT','expertCSRF');*/
                     $icon = "Flag";
                 }
             } 
-            else if ($scoreB['value'] == "Experimented") {
+            else if ($badge['value'] == "Experimented") {
                 if ($_GET['t'] == "Score") {
                     $icon = "expertCode";
                 }
@@ -105,6 +112,17 @@ define('CS_EXPERT','expertCSRF');*/
                     $icon = "beginnerCSRF";
                 }
             }
+            while ($complete = $req->fetch()) {
+                if ($complete['achievement'] == $badge['id']) {
+                    echo "prout";
+                    $check = '<i class="fas fa-check" style="color: #00FF00"></i>'; 
+                } 
+                else {
+                    $check = '<i class="fas fa-times" style="color: #FF0000"></i>';
+                }
+            }
+            
+
             /*echo $icon;*/
 
             echo '
@@ -112,14 +130,16 @@ define('CS_EXPERT','expertCSRF');*/
                 <div class="face face1">
                     <div class="content">
                         <img src="../include/img/complete-badge/'.$icon.'.png">
-                        <h3>'.$scoreB['name'].'</h3>
+                        <h3>'.$badge['name'].'</h3>
                     </div>
                 </div>
                 <div class="face face2">
                     <div class="content">
-                        <p>'.$scoreB['description'].'</p>
-                        <a href="#">COMPLETE ✔️</a>
-                        <a href="badge.php?t='.$_GET['t'].'&del=true">DELETE ❌</a>
+                        <p>'.$badge['description'].'</p>
+                        <a href="#">COMPLETE '.$check.'</a>
+                        <div class="optAdmin">
+                            <a href="badge.php?t='.$_GET['t'].'&id='.$badge['id'].'&del=true"><i class="fas fa-times" style="color: #FF0000"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>

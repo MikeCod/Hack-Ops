@@ -6,9 +6,9 @@
         option_badge("add");
     }
 
-    $score = 10;
-    $chall = 90;
-    $extra = 80;
+    $score = 0;
+    $chall = 0;
+    $extra = 0;
 
     function button($text, $a, $href = false, $width = 200, $color = "white") {
         $text = str_replace(' ', '<span style="color:transparent">_</span>', $text);

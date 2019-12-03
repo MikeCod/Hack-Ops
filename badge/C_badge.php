@@ -8,14 +8,13 @@
                 req_add_badge();
             }
         } 
-        if(!isset($_GET['del'])) {
-            $_GET['del'] = '';
+        else if($type == "delete") {
+            if ($_SESSION['administrator'] == '1') {
+                req_delete_badge();
+            }
         } 
-        else if ($_GET['del'] == true && $type == "delete") {
-            echo "test";
-        }
         else {
-            #code ...
+            #...
         }
     }
 
