@@ -1,7 +1,7 @@
 <?php 
 
-require "../config.php";
-require "C_badge.php";
+require "../../Controller/config.php";
+require "../../Controller/badges.php";
 
 if(isset($_POST['modifyB'])) {
     option_badge("modify");

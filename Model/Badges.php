@@ -1,5 +1,5 @@
 <?php 
-require "../M_bdd.php";
+require "DB.php";
 session_start();
 
 

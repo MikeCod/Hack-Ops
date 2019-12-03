@@ -11,3 +11,4 @@
 <input type="password" id="delete-password" placeholder="Actual Password">
 <input type="hidden" name="action" value="delete">
 <input type="submit">
+</form>

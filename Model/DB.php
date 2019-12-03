@@ -1,8 +1,9 @@
 <?php
 
-require_once "../Controller/config.php";
-
 define('ROOT', '/Hack-Ops');
+
+set_include_path(my_get_include_path());
+require_once "Controller/config.php";
 
 function connect_start()
 {
@@ -37,7 +38,8 @@ function redirect()
 
 function my_get_include_path()
 {
-	return strstr(str_replace("\\", "/", __DIR__), ROOT, true).ROOT."\\";
+	return strstr(str_replace("\\", "/", __DIR__), ROOT, true).ROOT."/";
 }
+
 
 ?>
