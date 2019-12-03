@@ -1,5 +1,4 @@
-<?php
+<?php 
+    include "View/home.php";
+?> 
 
-include 'home.php';
-
-?>

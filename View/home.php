@@ -1,6 +1,6 @@
 <?php
 
-require('config.php');
+require('../Controller/config.php');
 
 function button($text, $a, $href = false, $width = 150, $color = "white")
 {
