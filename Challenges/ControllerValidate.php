@@ -1,25 +1,21 @@
 <?php
 
 session_start();
-require "../M_bdd.php";
+require "../Moddel/BD.php";
 redirect();
 
-require "M_init_honeypot.php";
-
-function get_id($link, $type, $difficulty)
-{
-	return $link->query("SELECT flag FROM challenges WHERE type = '".$type."' AND difficulty = ".$difficulty)->fetch()['flag'];
-}
+require "M_challenge.php";
+require "M_validate.php";
 
 if (!isset($_POST['flag']) or !isset($_POST['type']) or !isset($_POST['difficulty']))
 	die("A field isn't specified");
 
-if ($_POST['flag'] != get_flag($_POST['type'], $_POST['difficulty']))
-	die("Unavailable flag");
-
 $link = NULL;
 try
 {
+	if ($_POST['flag'] != get_flag($_POST['type'], $_POST['difficulty']))
+		die("Unavailable flag");
+
 	$add = 0;
 	switch ($_POST['difficulty']) {
 		case 1:
@@ -35,18 +31,12 @@ try
 	}
 
 	$link = connect_start();
-	$id = get_id($_POST['type'], $_POST['difficulty']);
-	if(!$link->query("SELECT id FROM `completed-challenges` WHERE user = ".$_SESSION['id']." AND challenge = ".$id))
-		throw new Exception("Challenge already completed");
+	$id = get_id($link, $_POST['type'], $_POST['difficulty']);
+	add_challenge_completed($_SESSION['id'], $id);
 
-	if(!$link->query("INSERT INTO `completed-challenges`(user, challenge) VALUES('".$_SESSION['id']."', '".$id."')"))
-		throw new Exception("Cannot add challenge to completed challenges");
+	$_SESSION['score'] = update_score($_SESSION['id'], $_SESSION['score']);
 
-	if(!$link->query("UPDATE users SET score = '".($_SESSION['score'] + $add)."' WHERE id = ".$_SESSION['id']))
-		throw new Exception("Cannot update the score");
-	$_SESSION['score'] += $add;
-
-	echo "*";
+	echo "*".update_badges($_SESSION['id'], $_SESSION['score']);
 }
 catch(Exception $e)
 {

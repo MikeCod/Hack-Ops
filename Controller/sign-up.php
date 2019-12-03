@@ -1,8 +1,7 @@
 <?php
 
 session_start();
-include('../config.php');
-include('../M_bdd.php');
+require "../../Model/DB.php";
 
 $link = NULL;
 
@@ -13,7 +12,7 @@ try
 		!isset($_POST['password']) or empty($_POST['password']) or 
 		!isset($_POST['cpassword']) or empty($_POST['cpassword']))
 		throw new Exception("fields");
-		
+	
 	$link = connect_start();
 
 	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
@@ -28,7 +27,8 @@ try
 	if ($_POST['password'] != $_POST['cpassword'])
 		throw new Exception("match");
 
-	$link->query("INSERT INTO users(username, email, password) VALUES(".$link->quote($_POST['username']).", ".$link->quote($_POST['email']).", '".hash('sha3-512', $_POST['password'])."')");
+	require "Model/sign-up.php";
+	add_user($_POST['username'], $_POST['email'], $_POST['password']);
 
 	$_SESSION['username'] = $_POST['username'];
 	$_SESSION['email'] = $_POST['email'];

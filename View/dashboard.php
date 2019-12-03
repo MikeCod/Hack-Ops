@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require "M_bdd.php";
+require "../Model/DB.php";
 redirect();
 
 
@@ -39,8 +39,9 @@ try
 	<title><?php echo NAME ?></title>
 	<link rel="icon" type="image/jpg" href="">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link rel="stylesheet" media="all" type="text/css" href="include/css/style.css">
-	<link rel="stylesheet" media="all" type="text/css" href="include/css/button.css">
+	<link rel="stylesheet" media="all" type="text/css" href="../include/css/style.css">
+	<link rel="stylesheet" media="all" type="text/css" href="../include/css/button.css">
+	<script src="../include/js/sweetalert2.all.js"></script>
 	<style type="text/css">
 		h1 {
 			padding-left:100px;
@@ -93,7 +94,6 @@ try
 			</div>
 			<p id="error" style="color:white; padding-top:50px;"></p>
 		</div>
-		<script src="include/js/sweetalert2.all.js" ></script>
 		<script type="text/javascript">
 			const descriptions = [
 				[
@@ -202,12 +202,19 @@ try
 				var req = new XMLHttpRequest();
 				req.onreadystatechange = function() {
 					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-						if(this.responseText == "*")
+						if(this.responseText.length >= 1 && this.responseText[0] == "*") {
 							Swal.fire(
 								"Challenge completed",
 								"Challenge added to achievements",
 								"success"
 							);
+							if(this.responseText.length >= 2 && this.responseText[1] != "0")
+								Swal.fire(
+									"Badge(s) completed",
+									this.responseText.substr(1)+" badges added to achievements",
+									"success"
+								);
+						}
 						else set_error(this.responseText);
 					}
 				};

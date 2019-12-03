@@ -1,4 +1,4 @@
 <?php 
-    include "View/home.php";
-?> 
-
+header("Location: View/");
+exit();
+?>

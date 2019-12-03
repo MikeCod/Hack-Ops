@@ -1,6 +1,6 @@
 <?php
 
-require_once "config.php";
+require_once "../Controller/config.php";
 
 define('ROOT', '/Hack-Ops');
 
@@ -30,14 +30,16 @@ function connected()
 function redirect()
 {
 	if(!is_connected()) {
-		header("Location: ".ROOT."/sign-in/");
+		header("Location: ".ROOT."/View/sign-in.php");
 		exit();
 	}
 }
 
 function my_get_include_path()
 {
-	return strstr(str_replace("\\", "/", __DIR__), ROOT, true).ROOT;
+	return strstr(str_replace("\\", "/", __DIR__), ROOT, true).ROOT."\\";
 }
+
+set_include_path(my_get_include_path());
 
 ?>
