@@ -87,7 +87,7 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
         <?php button("Delete", "hideForm('optAdmin')", false, 200, "#FF0000"); ?>
         <?php button("Modify", "", true, 200, "#0000FF"); ?>
     </div>
-    <div class="button" style="top: 800px; position: absolute;">
+    <div class="button" style="bottom: 5%; position: absolute;">
         <?php button("Back", "index.php", true, 200, "#ffffff"); ?>
     </div>
 </body>
