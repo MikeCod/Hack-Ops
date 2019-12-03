@@ -4,7 +4,6 @@
 // Auteurs : Charles Régniez, Dimtri Simon
 // Version du : 27/11/2019
 // ===========================================================================================
-
 session_start();
 require "../M_bdd.php";
 redirect();
@@ -17,6 +16,7 @@ try
 		!isset($_POST['password']))
 		throw new Exception("A field is missing"); // permet de lancer l'erreur pas trop loin pour pouvoir la rattraper
 
+	
 	$link = connect_start();
 	if (!($response = $link->query("SELECT password FROM users WHERE id = ".$_SESSION['id'])))
 		throw new Exception("Internal error: Cannot retrieve current password");
