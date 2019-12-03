@@ -19,6 +19,6 @@
 		?>
 	</div>
 
-	<?php button ("Badge", "badge/", true, 200, "green"); ?>
+	<?php button ("Badge", "badges/", true, 200, "green"); ?>
 
 
