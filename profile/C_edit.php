@@ -1,8 +1,13 @@
 <?php
+// ===========================================================================================
+// Gestion de : affichage de edit profile
+// Auteurs : Charles Régniez, Dimtri Simon
+// Version du : 27/11/2019
+// ===========================================================================================
 
 session_start();
 require "../M_bdd.php";
-redirect("../");
+redirect();
 
 $link = NULL;
 try
@@ -45,7 +50,11 @@ try
 	$req->bindParam(':email', $_POST['email']);
 	$req->execute();
 
+	$_SESSION['username'] = $_POST['username'];
+	$_SESSION['email'] = $_POST['email'];
+
 	echo "*";
+
 }
 catch(Exception $e)
 {

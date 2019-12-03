@@ -4,7 +4,7 @@
 // Version du : 22/11/2019
 =============================================================================================-->
 
-	<h1 style="padding-bottom:80px;">Bienvenue <?php echo $_SESSION['username'] ?> !</h1>
+	<h1 style="padding-bottom:80px;">Welcome <?php echo $_SESSION['username'] ?> !</h1>
 	
 	<div class="consulte_account" style="padding-left:100px;">
 		<?php
@@ -13,8 +13,8 @@
 			echo "<span style=\"float:left; width:200px;\">Score</span>". $_SESSION['score']."<br/>";
 			echo "<span style=\"float:left; width:200px;\">Email</span>". $_SESSION['email']."";
 			echo "<div style=\"padding-top:40px\">";
-			button ("edit profile", "show_page('profile-edit');", false);
-			button ("delete profile", "show_page('profile-delete');", false, 200, "red");
+			button("edit profile", "show_page('profile-edit');", false);
+			button("delete profile", "show_page('profile-delete');", false, 200, "red");
 			echo "</div>";
 		?>
 	</div>
