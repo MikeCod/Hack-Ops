@@ -26,24 +26,31 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title><?php echo NAME ?></title>
     <link rel="stylesheet" media="all" type="text/css" href="../../include/css/button.css">
-    <link rel="stylesheet" href="../../include/css/badge/card-badge.css">
-    <link rel="stylesheet" href="../../include/font-awesome/css/all.min.css">
+    <link rel="stylesheet" media="all" type="text/css" href="../../include/css/badge/card-badge.css">
+    <link rel="stylesheet" media="all" type="text/css" href="../../include/font-awesome/css/all.min.css">
+    
     <style>
     
     </style>
 </head>
 <body>
+    <?php //if ($_SESSION['administrator'] == '0') 
+        echo '
+        <div class="slideThree" style="bottom: 15%; position: absolute; ">  
+            <input type="checkbox" value="None" id="slideThree" name="check" onclick="hideForm(\'hide\');" checked />
+            <label for="slideThree"></label>
+        </div>';
+    ?>
     <script>
         function hideForm(id) {
-
-            if (document.getElementsById(id).style.display == 'none') {
-                document.getElementsById(id).style.display = 'block';
+            if (document.getElementById(id).style.display == 'none') {
+                document.getElementById(id).style.display = 'block';
             } 
             else {
-                document.getElementsById(id).style.display = 'none';
+                document.getElementById(id).style.display = 'none';
             }
         };
     </script>
@@ -59,8 +66,9 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
         ?>
     </div>
     <div class="modify" id="hide" style="display:none">
-        <form method="POST" class="form-style">
-            <h2 style="color: #DC1D1D">Modify Badge</h2>
+        <form method="POST" style="left: 5%; top: 45%; position: absolute;">
+            <h2 style="color: #0000FF">Modify Badge</h2>
+            <!-- Select type : <option> $ID = 1 -- $NameChall = Master Score </option> -->
             Name:
             <input type="text" name="name" placeholder="Name"><br>
             Level:
@@ -79,14 +87,14 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
                 <option value="Challenge">Challenge</option>
                 <option value="Extra">Extra</option>
             </select><br>
-            <input type="submit" name="createB" value="Create Badge"><br>
+            <input type="submit" name="modify" value="Create Badge"><br>
         </form>
     </div>
     <div class="param" style="left: 0px; top: 50px; position: absolute;">
         <?php button("Delete", "hideForm('optAdmin')", false, 200, "#FF0000"); ?>
         <?php button("Modify", "", true, 200, "#0000FF"); ?>
     </div>
-    <div class="button" style="bottom: 5%; position: absolute;">
+    <div class="button" style="bottom: 7.5%; position: absolute;">
         <?php button("Back", "index.php", true, 200, "#ffffff"); ?>
     </div>
 </body>
