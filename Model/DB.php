@@ -1,8 +1,4 @@
 <?php
-<<<<<<< HEAD
-require "C:xampp/htdocs/Hack-Ops/Controller/config.php";
-=======
->>>>>>> 722e57f9abff552a9053cd859910be2c03018da9
 
 define('ROOT', '/Hack-Ops');
 
