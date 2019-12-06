@@ -226,7 +226,7 @@ try
 			function start_challenge()
 			{
 				set_error("");
-				link = "challenges/";
+				link = "../challenges/";
 				switch(type)
 				{
 					case "sql-injection":

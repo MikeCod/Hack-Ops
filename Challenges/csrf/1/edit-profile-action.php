@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require "../../../M_bdd.php";
+require "../../../Model/DB.php";
 redirect();
 
 ?>

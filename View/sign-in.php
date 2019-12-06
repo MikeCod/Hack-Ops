@@ -27,7 +27,7 @@ if(!isset($_SESSION['username']))
 		</div>
 		<div style="padding-top:8%; padding-left:calc(50% - 200px)">
 		<div class="form-style" style="max-width:400px;">
-			<form action="C_sign-in.php" method="post">
+			<form action="../controller/sign-in.php" method="post">
 				<fieldset>
 					<br><br>
 					<input name="username" placeholder="Username" type="text" value="<?php echo $_SESSION['username'] ?>" autofocus>
