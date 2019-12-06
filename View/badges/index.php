@@ -3,9 +3,9 @@ require "../../Controller/badges.php";
 #session_start();
 
 
-    $score = 0;
-    $chall = 0;
-    $extra = 0;
+    $score = 53;
+    $chall = 99;
+    $extra = 5;
 
     function button($text, $a, $href = false, $width = 200, $color = "white") {
         $text = str_replace(' ', '<span style="color:transparent">_</span>', $text);
@@ -55,6 +55,9 @@ require "../../Controller/badges.php";
     </style>
 </head>
 <body>
+    <div class="title" style="top: 10%; position: absolute; font-size: 250%;">
+        <h1>BADGE</h1>
+    </div>
     <div class="container">
         <div class="card" onclick="document.location='badges.php?t=Extra'" style="cursor: pointer">
             <div class="box">
@@ -99,7 +102,7 @@ require "../../Controller/badges.php";
             </div>
         </div>
     </div>
-    <?php if ($_SESSION['administrator'] == '1') 
+    <?php #if ($_SESSION['administrator'] == '1') 
         echo '
         <div class="slideThree" style="bottom: 15%; position: absolute; ">  
             <input type="checkbox" value="None" id="slideThree" name="check" onclick="hideForm(\'hide\');" checked />

@@ -1,17 +1,19 @@
 <?php
 
 session_start();
-require "../../../M_bdd.php";
+require "../../../Model/DB.php";
 redirect();
 
 $result = "";
-if(isset($_POST['host'])) {
-	require "../../M_init_honeypot.php";
-	include "C_test.php";
+if(isset($_POST['username']) and isset($_POST['password'])){
+	require "Challenges/ModelChallenge.php";
+	restore_include_path();
+	include "action.php";
 }
-else $_POST['host'] = '';
+else $_POST['username'] = '';
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,11 +31,13 @@ else $_POST['host'] = '';
 				<?php echo NAME ?>
 			</div>
 		</div>
-		<div style="padding-left:calc(50% - 200px); width:100%;">
-			<form class="form-style" method="POST" style="width:400px;">
-				<h1 style="text-align:center;">Code injection</h1>
-				<h2 style="padding-bottom:40px; text-align:center;">Ping</h2>
-				<input type="text" name="host" placeholder="Host" value="<?php echo $_POST['host'] ?>" autofocus>
+
+		<div style="padding-left:calc(50% - 200px);">
+			<form class="form-style" method="POST">
+				<h1 style="text-align:center;">SQL injection</h1>
+				<h2 style="padding-bottom:40px; text-align:center;">Sign in</h2>
+				<input type="text" name="username" placeholder="Username" value="<?php echo $_POST['username'] ?>" autofocus>
+				<input type="password" name="password" placeholder="Password">
 				<input type="submit" style="margin-top:20px;">
 				<?php echo $result ?>
 			</form>

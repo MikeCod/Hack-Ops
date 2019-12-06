@@ -1,10 +1,19 @@
 <?php
 
 session_start();
-require "../../../M_bdd.php";
+require "../../../Model/DB.php";
 redirect();
 
+$result = "";
+if(isset($_POST['host'])) {
+	require "Challenges/ModelChallenge.php";
+	restore_include_path();
+	include "action.php";
+}
+else $_POST['host'] = '';
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,10 +31,12 @@ redirect();
 			</div>
 		</div>
 		<div style="padding-left:calc(50% - 200px); width:100%;">
-			<form class="form-style" method="GET" style="width:400px;" action="C_edit-profile.php"><!-- You will need something here -->
-				<h1 style="text-align:center;">Edit profile</h1>
-				<input type="password" name="new-password" placeholder="New password" autofocus><!-- And there -->
-				<input type="submit" style="margin-top:10px;">
+			<form class="form-style" method="POST" style="width:400px;">
+				<h1 style="text-align:center;">Code injection</h1>
+				<h2 style="padding-bottom:40px; text-align:center;">Ping</h2>
+				<input type="text" name="host" placeholder="Host" value="<?php echo $_POST['host'] ?>" autofocus>
+				<input type="submit" style="margin-top:20px;">
+				<?php echo $result ?>
 			</form>
 		</div>
 	</body>

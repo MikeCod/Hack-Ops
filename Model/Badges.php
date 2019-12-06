@@ -46,6 +46,7 @@ function req_add_badge() {
         connect_end($link);
     }   
 }
+
 function req_delete_badge() { 
     try
     {
@@ -76,76 +77,7 @@ function req_display_badge() {
         /*if (!($req = $link->query("SELECT * FROM `completed-badges`"))) {
             throw new Exception("No access to the table");
         }*/
-
-        while ($badge = $result->fetch()) {
-
-            if ($badge['value'] == "Master") {
-                if ($_GET['t'] == "Score") {
-                    $icon = "masterCode";
-                }
-                else if ($_GET['t'] == "Challenge") {
-                    $icon = "masterSQL";
-                } 
-                else {
-                    $icon = "Flag";
-                }
-            } 
-            else if ($badge['value'] == "Experimented") {
-                if ($_GET['t'] == "Score") {
-                    $icon = "expertCode";
-                }
-                else if ($_GET['t'] == "Challenge") {
-                    $icon = "expertSQL";
-                } 
-                else {
-                    $icon = "expertCSRF";
-                }
-            } 
-            else {
-                if ($_GET['t'] == "Score") {
-                    $icon = "beginnerCode";
-                }
-                else if ($_GET['t'] == "Challenge") {
-                    $icon = "beginnerSQL";
-                } 
-                else {
-                    $icon = "beginnerCSRF";
-                }
-            }
-            /*while ($complete = $req->fetch()) {
-                if ($complete['achievement'] == $badge['id']) {
-                    echo "prout";
-                    $check = '<i class="fas fa-check" style="color: #00FF00"></i>'; 
-                } 
-                else {
-                    $check = '<i class="fas fa-times" style="color: #FF0000"></i>';
-                }
-            }*/
-            
-
-            /*echo $icon;*/
-
-            echo '
-            <div class="card">
-                <div class="face face1">
-                    <div class="content">
-                        <img src="../../include/img/complete-badge/'.$icon.'.png">
-                        <h3>'.$badge['name'].'</h3>
-                    </div>
-                </div>
-                <div class="face face2">
-                    <div class="content">
-                        <p>'.$badge['description'].'</p>
-                        <a href="#">COMPLETE </a>
-                        <div class="optAdmin">
-                            <a href="badge.php?t='.$_GET['t'].'&id='.$badge['id'].'&del=true"><i class="fas fa-times" style="color: #FF0000"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            ';
-
-        }
+        return $result;
     } catch (Exception $th) {
         echo "Internal error: ".$th->getMessage();
     }
