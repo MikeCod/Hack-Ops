@@ -34,7 +34,7 @@ catch (Exception $e)
 	connect_end($link);
 	$_SESSION['error'] = $e->getMessage();
 }
-header("Location: ../View/sign-in/");
+header("Location: ../View/sign-in.php");
 exit();
 
 ?>

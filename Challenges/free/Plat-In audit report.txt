@@ -1,0 +1,4 @@
+[ KO ] SQL injection: prepare() malformed (Aliments section tested), total control of database
+[ KO ] CSRF: medium criticality, for the moment
+[ KO ] XSS GET form
+[WARNING] Password encoded base64: zero security

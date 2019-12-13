@@ -30,6 +30,7 @@ try
 	$sql_injection = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'sql-injection'")->fetchAll();
 	$csrf = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'csrf'")->fetchAll();
 	$code_injection = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'code-injection'")->fetchAll();
+	$free = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'free'")->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +70,7 @@ try
 				button("SQL Injection", "show_page('sql-injection', true);");
 				button("CSRF", "show_page('csrf', true);");
 				button("Code Injection", "show_page('code-injection', true);");
+				button("Free", "show_page('free', true);", false, 200, "#7ad7d7"); 
 
 				echo "<div style=\"padding-top:100px;\">";
 				button("Sign out", "../Controller/sign-out.php", true, 200, "#2a77d7");
@@ -119,6 +121,14 @@ try
 						foreach ($code_injection as $result)
 							echo (!$first ? ", " : $first = false)."[".$result['difficulty'].", \"".$result['description']."\"]";
 					?>
+				],
+				[
+					"free",
+					<?php 
+						$first = true;
+						foreach ($free as $result)
+							echo (!$first ? ", " : $first = false)."[".$result['difficulty'].", \"".$result['description']."\"]";
+					?>
 				]
 			];
 
@@ -167,6 +177,10 @@ try
 							document.getElementById("title-challenge").innerHTML = "Code injection";
 							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $code_injection) ?>;
 							break;
+						case "free":
+							document.getElementById("title-challenge").innerHTML = "Free";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $free) ?>;
+							break;
 					}
 					type = page_name;
 					page_name = "challenges";
@@ -179,6 +193,8 @@ try
 				num = 0;
 				switch(type)
 				{
+					case "free":
+						++num;
 					case "code-injection":
 						++num;
 					case "csrf":
@@ -221,6 +237,7 @@ try
 				req.open("POST", "../challenges/ControllerValidate.php", true);
 				req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 				req.send("type="+type+"&difficulty="+document.getElementById("difficulty").value+"&flag="+document.getElementById("flag").value);
+				document.getElementById("flag").value = "";
 			}
 
 			function start_challenge()
@@ -232,6 +249,7 @@ try
 					case "sql-injection":
 					case "csrf":
 					case "code-injection":
+					case "free":
 						link += type+"/";
 						break;
 					default:

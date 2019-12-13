@@ -1,9 +1,9 @@
 <?php
 
-define('CHALLENGE_HOST', '192.168.202.128');
+define('CHALLENGE_HOST', /*'192.168.202.128'*/'localhost');
 define('CHALLENGE_PORT', '3306');
 define('CHALLENGE_USER', 'root');
-define('CHALLENGE_PASS', 'H@a[awNpm!El$wu|ruBld#dpMbcu');
+define('CHALLENGE_PASS', /*'H@a[awNpm!El$wu|ruBld#dpMbcu'*/'');
 
 function get_challenge(&$type, &$difficulty)
 {

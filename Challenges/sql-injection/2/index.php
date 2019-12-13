@@ -1,14 +1,15 @@
 <?php
 
 session_start();
-require "../../../M_bdd.php";
+require "../../../Model/DB.php";
 redirect();
 
 $result = "";
 
 if(isset($_GET['id'])){
-	require "../../M_init_honeypot.php";
-	include "C_test.php";
+	require "Challenges/ModelChallenge.php";
+	restore_include_path();
+	include "action.php";
 }
 else $_GET['id'] = '';
 

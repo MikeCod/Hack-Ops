@@ -7,7 +7,7 @@ $type = "";
 $difficulty = "";
 get_challenge($type, $difficulty);
 
-define('LINK', 'https://localhost/challenges/csrf/1/edit-profile-action.php');
+define('LINK', 'http://localhost/challenges/csrf/1/edit-profile-action.php');
 $link_length = strlen(LINK);
 
 try
