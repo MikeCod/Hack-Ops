@@ -1,6 +1,6 @@
 <?php
 
-define('ROOT', '/other/PI');
+define('ROOT', '/Hack-Ops');
 
 set_include_path(my_get_include_path());
 require_once "Controller/config.php";
