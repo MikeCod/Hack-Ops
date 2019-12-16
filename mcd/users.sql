@@ -1,8 +1,11 @@
+-- -----------------------------------------------------
+-- Schema HackOps
+-- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema HackOps
 -- -----------------------------------------------------
-CREATE DATABASE IF NOT EXISTS `HackOps` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `HackOps` DEFAULT CHARACTER SET utf8 ;
 USE `HackOps` ;
 
 -- -----------------------------------------------------
@@ -10,11 +13,11 @@ USE `HackOps` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `HackOps`.`users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(320) NOT NULL, -- can provoke the error: Specified key was too long; max key length is 767 bytes
+  `email` VARCHAR(320) NOT NULL,
   `username` VARCHAR(16) NOT NULL,
   `password` VARCHAR(128) NOT NULL,
   `score` INT UNSIGNED NULL DEFAULT 0,
-  `activated` TINYINT(1) DEFAULT 0,
+  `activated` TINYINT(1) NULL DEFAULT 0,
   `administrator` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `login_UNIQUE` (`username` ASC),
@@ -28,7 +31,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `HackOps`.`challenges` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `type` VARCHAR(16) NOT NULL,
+  `type` ENUM('sql- injection', 'csrf', 'code-injection') NOT NULL,
   `difficulty` INT UNSIGNED NOT NULL,
   `description` VARCHAR(256) NOT NULL,
   `flag` VARCHAR(64) NOT NULL,
@@ -78,14 +81,15 @@ CREATE TABLE IF NOT EXISTS `HackOps`.`badges` (
 ENGINE = InnoDB;
 
 
+
 -- -----------------------------------------------------
 -- Table `HackOps`.`completed-badges`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `HackOps`.`completed-badges` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` INT UNSIGNED NOT NULL,
   `user` INT UNSIGNED NOT NULL,
-  `badge` INT UNSIGNED NOT NULL,
-  UNIQUE INDEX `badge_UNIQUE` (`badge` ASC),
+  `achievement` INT UNSIGNED NOT NULL,
+  UNIQUE INDEX `achievement_UNIQUE` (`achievement` ASC),
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   CONSTRAINT `fk_game_users0`
@@ -93,9 +97,137 @@ CREATE TABLE IF NOT EXISTS `HackOps`.`completed-badges` (
     REFERENCES `HackOps`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_completed-badges_badges1`
-    FOREIGN KEY (`badge`)
+  CONSTRAINT `fk_completed-achievements_achievements1`
+    FOREIGN KEY (`achievement`)
     REFERENCES `HackOps`.`badges` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HackOps`.`f_categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HackOps`.`f_categories` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HackOps`.`f_subcategories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HackOps`.`f_subcategories` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `f_categories_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_f_subcategories_f_categories1_idx` (`f_categories_id` ASC),
+  CONSTRAINT `fk_f_subcategories_f_categories1`
+    FOREIGN KEY (`f_categories_id`)
+    REFERENCES `HackOps`.`f_categories` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HackOps`.`f_topics`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HackOps`.`f_topics` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `users_id` INT UNSIGNED NOT NULL,
+  `title` VARCHAR(64) NOT NULL,
+  `contenu` TEXT NOT NULL,
+  `date-create` DATETIME NOT NULL,
+  `resolved` TINYINT NOT NULL,
+  `notif_user` TINYINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_f_topics_users1_idx` (`users_id` ASC),
+  CONSTRAINT `fk_f_topics_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `HackOps`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HackOps`.`f_topic-categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HackOps`.`f_topic-categories` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `f_topics_id` INT NOT NULL,
+  `f_categories_id` INT NOT NULL,
+  `f_subcategories_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_f_topic-categories_f_topics1_idx` (`f_topics_id` ASC),
+  INDEX `fk_f_topic-categories_f_categories1_idx` (`f_categories_id` ASC),
+  INDEX `fk_f_topic-categories_f_subcategories1_idx` (`f_subcategories_id` ASC),
+  CONSTRAINT `fk_f_topic-categories_f_topics1`
+    FOREIGN KEY (`f_topics_id`)
+    REFERENCES `HackOps`.`f_topics` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_f_topic-categories_f_categories1`
+    FOREIGN KEY (`f_categories_id`)
+    REFERENCES `HackOps`.`f_categories` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_f_topic-categories_f_subcategories1`
+    FOREIGN KEY (`f_subcategories_id`)
+    REFERENCES `HackOps`.`f_subcategories` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HackOps`.`f_message`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HackOps`.`f_message` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `f_topics_id` INT NOT NULL,
+  `users_id` INT UNSIGNED NOT NULL,
+  `datePost` DATETIME NOT NULL,
+  `dateEdit` DATETIME NOT NULL,
+  `bestRes` TINYINT NULL,
+  `contents` TEXT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_f_message_users1_idx` (`users_id` ASC),
+  INDEX `fk_f_message_f_topics1_idx` (`f_topics_id` ASC),
+  CONSTRAINT `fk_f_message_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `HackOps`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_f_message_f_topics1`
+    FOREIGN KEY (`f_topics_id`)
+    REFERENCES `HackOps`.`f_topics` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HackOps`.`f_follow`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HackOps`.`f_follow` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `users_id` INT UNSIGNED NOT NULL,
+  `f_topics_id` INT NOT NULL,
+  INDEX `fk_f_follow_users1_idx` (`users_id` ASC),
+  INDEX `fk_f_follow_f_topics1_idx` (`f_topics_id` ASC),
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_f_follow_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `HackOps`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_f_follow_f_topics1`
+    FOREIGN KEY (`f_topics_id`)
+    REFERENCES `HackOps`.`f_topics` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
