@@ -2,6 +2,7 @@
 
 session_start();
 require "../Model/DB.php";
+require "../Controller/leaderboard.php";
 redirect();
 
 
@@ -65,6 +66,7 @@ try
 			<?php
 				echo "<div style=\"padding-bottom:100px;\">";
 				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7"); 
+				button("LeaderBoard", "show_page('leaderboard');", false, 200, "#2a77d7");
 				echo "</div>";
 
 				button("SQL Injection", "show_page('sql-injection', true);");
@@ -86,6 +88,9 @@ try
 			</div>
 			<div id="profile-delete" style="display:none;">
 				<?php include "profile/delete.php"; ?>
+			</div>
+			<div id="leaderboard" style="display:none;">
+				<?php include "leaderboard.php"; ?>
 			</div>
 			<div id="challenges" style="padding-top:00px; display:none;">
 				<h1 id="title-challenge"></h1>

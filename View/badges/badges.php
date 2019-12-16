@@ -31,13 +31,10 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
     <link rel="stylesheet" media="all" type="text/css" href="../../include/css/button.css">
     <link rel="stylesheet" media="all" type="text/css" href="../../include/css/badge/card-badge.css">
     <link rel="stylesheet" media="all" type="text/css" href="../../include/font-awesome/css/all.min.css">
-    
-    <style>
-    
-    </style>
+    <script src="../../include/js/sweetalert2.all.js"></script>
 </head>
 <body>
-    <?php //if ($_SESSION['administrator'] == '0') 
+    <?php if ($_SESSION['administrator'] == '1') 
         echo '
         <div class="slideThree" style="bottom: 15%; position: absolute; ">  
             <input type="checkbox" value="None" id="slideThree" name="check" onclick="hideForm(\'hide\');" checked />
@@ -53,14 +50,33 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
                 document.getElementById(id).style.display = 'none';
             }
         };
+        /*function confirmDelete() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.value) {
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                }
+            })
+        };*/
     </script>
     <div class="container">
         <?php 
             option_badge("display");
             if (!isset($_GET['del'])) { 
                 $_GET['del'] = ''; 
-            } 
-            else if ($_SESSION['administrator'] == '0' && $_GET['del'] == true) {
+            }
+            else if ($_SESSION['administrator'] == '1' && $_GET['del'] == "1") {
                 option_badge("delete");
             }
         ?>
@@ -69,6 +85,8 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
         <form method="POST" style="left: 5%; top: 45%; position: absolute;">
             <h2 style="color: #0000FF">Modify Badge</h2>
             <!-- Select type : <option> $ID = 1 -- $NameChall = Master Score </option> -->
+            Badge Number: 
+            <input type="number" name="number" placeholder="Badge Number" required><br>
             Name:
             <input type="text" name="name" placeholder="Name"><br>
             Level:
@@ -87,11 +105,13 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
                 <option value="Challenge">Challenge</option>
                 <option value="Extra">Extra</option>
             </select><br>
-            <input type="submit" name="modify" value="Create Badge"><br>
+            Goal:
+            <input type="text" name="goal" placeholder="Goal" required><br>
+            <input type="submit" name="modifyB" value="Update Badge"><br>
         </form>
     </div>
     <div class="param" style="left: 0px; top: 50px; position: absolute;">
-        <?php button("Delete", "hideForm('optAdmin')", false, 200, "#FF0000"); ?>
+        <?php button("Delete", "confirmDelete()", false, 200, "#FF0000"); ?>
         <?php button("Modify", "", true, 200, "#0000FF"); ?>
     </div>
     <div class="button" style="bottom: 7.5%; position: absolute;">
