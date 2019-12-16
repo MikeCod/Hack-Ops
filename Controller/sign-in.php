@@ -24,7 +24,7 @@ try
 
 	$_SESSION = array();
 	$_SESSION = $result->fetch();
-	connected();
+	mconnect();
 
 	header("Location: ../View/dashboard.php");
 	exit();
