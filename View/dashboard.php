@@ -82,7 +82,7 @@ try
 		</div>
 		<div class="form-style" style="position:absolute; left:250px; top:100px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
-				<?php include "profile/index.php"; ?>
+				<?php include "profile/V_index.php"; ?>
 			</div>
 			<div id="profile-edit" style="display:none;">
 				<?php include "profile/edit.php"; ?>

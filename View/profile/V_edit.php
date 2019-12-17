@@ -6,6 +6,8 @@
 
 <!-- TODO ask to authentify before edit -->
 <h1>Edit Profile</h1>
+
+<!--
 <input type="text" id="edit-username" value="<?php echo $_SESSION['username'] ?>">
 <input type="text" id="edit-email" value="<?php echo $_SESSION['email'] ?>">
 <input type="password" id="edit-password" placeholder="Actual Password">
@@ -44,3 +46,11 @@
 		);
 	}
 </script>
+-->
+
+<form method="GET" action="../Controller/profile/C_edit.php">
+<input type="text" id="edit-username" value="<?php echo $_SESSION['username'] ?>">
+<input type="text" id="edit-email" value="<?php echo $_SESSION['email'] ?>">
+<input type="password" id="edit-password" placeholder="Actual Password">
+<input type="submit" name="edit">
+

@@ -2,8 +2,9 @@
 // ===========================================================================================
 // Gestion de : affichage de edit profile
 // Auteurs : Charles Régniez, Dimtri Simon
-// Version du : 27/11/2019
+// Version du : 17/12/2019
 // ===========================================================================================
+/*
 session_start();
 require "../M_bdd.php";
 redirect();
@@ -61,5 +62,9 @@ catch(Exception $e)
 	echo "<p class=\"error\">".$e->getMessage()."</p>";
 }
 connect_end($link);
+*/
+echo $_GET['edit-username'];
+echo $_GET['edit-email'];
+echo $_GET['edit-password'];
 
 ?>

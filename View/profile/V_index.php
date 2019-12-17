@@ -13,8 +13,8 @@
 			echo "<span style=\"float:left; width:200px;\">Score</span>". $_SESSION['score']."<br/>";
 			echo "<span style=\"float:left; width:200px;\">Email</span>". $_SESSION['email']."";
 			echo "<div style=\"padding-top:40px\">";
-			button("edit profile", "show_page('profile-edit');", false);
-			button("delete profile", "show_page('profile-delete');", false, 200, "red");
+			button("edit profile", "profile/V_edit.php", true);
+			button("delete profile", "profile/V_delete.php", true, 200, "red");
 			echo "</div>";
 		?>
 	</div>
