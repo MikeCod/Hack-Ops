@@ -2,7 +2,7 @@
 
 session_start();
 require "../Model/DB.php";
-require "../Controller/leaderboard.php";
+//require "../Controller/leaderboard.php";
 redirect();
 
 
@@ -67,6 +67,7 @@ try
 				echo "<div style=\"padding-bottom:100px;\">";
 				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7"); 
 				button("LeaderBoard", "show_page('leaderboard');", false, 200, "#2a77d7");
+				button("Forum", "./FORUM", true, 200, "#2a77d7");
 				echo "</div>";
 
 				button("SQL Injection", "show_page('sql-injection', true);");
