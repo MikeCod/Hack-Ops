@@ -1,5 +1,5 @@
 <!--===========================================================================================
-// Objectif : Display Forum
+// Objectif : Display Forum : Index
 // Authors : GUYOT Jordan
 // Version : 16/12/2019
 =============================================================================================-->
@@ -10,7 +10,7 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Document</title>
+        <title><?php echo NAME ?></title>
     </head>
     <body>
         <table class="forum">
@@ -40,5 +40,6 @@ session_start();
             </tr>
             <?php } ?>
         </table>
+        <a href="./new-topic.php">New Topic</a>
     </body>
 </html>
