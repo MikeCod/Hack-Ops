@@ -13,6 +13,8 @@ $cat = $link->query('SELECT * FROM f_categories ORDER BY name');
 $subcat = $link->prepare('SELECT * FROM f_subcategories WHERE f_categories_id = ? ORDER BY name');
 connect_end($link);
 
+
+
 function test() {
     $link = NULL;
     try
@@ -28,5 +30,7 @@ function test() {
     }
     connect_end($link);
 }
+
+
 
 ?>
