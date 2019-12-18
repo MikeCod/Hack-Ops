@@ -1,21 +1,24 @@
 <!--===========================================================================================
 // Gestion de : affichage du profile de l'utilisateur
 // Auteurs : Charles Régniez
-// Version du : 22/11/2019
+// Version du : 23/11/2019
 =============================================================================================-->
 
 	<h1 style="padding-bottom:80px;">Welcome <?php echo $_SESSION['username'] ?> !</h1>
 	
 	<div class="consulte_account" style="padding-left:100px;">
 		<?php
-			echo "<span style=\"float:left; width:200px;\">ID</span>". $_SESSION['id']."<br/>";
-			echo "<span style=\"float:left; width:200px;\">Account status</span>".($_SESSION['administrator'] == '1' ? "Administrator" : "User")."<br>";
-			echo "<span style=\"float:left; width:200px;\">Score</span>". $_SESSION['score']."<br/>";
-			echo "<span style=\"float:left; width:200px;\">Email</span>". $_SESSION['email']."";
-			echo "<div style=\"padding-top:40px\">";
-			button("edit profile", "profile/V_edit.php", true);
-			button("delete profile", "profile/V_delete.php", true, 200, "red");
-			echo "</div>";
+			include ("Controller/profile/C_index.php");
+
+			// place this button in vue_categories without the one of the categorie
+			
+			echo '	<div class = "menu_profile">
+					<form method="GET" action="dashboard.php">
+					<input type="submit" name="rubrique" value="view" /><br/>
+					<input type="submit" name="rubrique" value="edit" /><br/>
+					<input type="submit" name="rubrique" value="delete" />
+					</form>
+					</div>';
 		?>
 	</div>
 
