@@ -61,6 +61,6 @@ connect_end($link);
 ?>
 }
 */
-
+	echo "coucou c'est c_delete";
 
 ?>

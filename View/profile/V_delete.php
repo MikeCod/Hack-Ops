@@ -1,7 +1,7 @@
 <!--===========================================================================================
 // Gestion de : affichage de delete profile
 // Auteurs : Charles Régniez, Dimitri Simon
-// Version du : 17/12/2019
+// Version du : 18/12/2019
 =============================================================================================-->
 
 <!-- Did not understand why they're is no the information in the query 
@@ -53,3 +53,16 @@
 </script>
 -->
 
+<!-- add spaces for password and pseudo -->
+
+<form method="GET" action="../Controller/profile/C_delete.php">
+	<p>form in process here</p>
+	<input type="submit" name="todo" value="delete">
+</form>
+
+<!-- buttons -->
+
+<form method="GET" action="dashboard.php">
+	<input type="submit" name="rubrique" value="view" /><br/>
+	<input type="submit" name="rubrique" value="edit" /><br/>
+</form>

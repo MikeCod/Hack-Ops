@@ -2,7 +2,7 @@
 // ===========================================================================================
 // Gestion de : affichage de edit profile
 // Auteurs : Charles Régniez, Dimtri Simon
-// Version du : 17/12/2019
+// Version du : 18/12/2019
 // ===========================================================================================
 /*
 session_start();
@@ -63,8 +63,10 @@ catch(Exception $e)
 }
 connect_end($link);
 */
-echo $_GET['edit-username'];
-echo $_GET['edit-email'];
-echo $_GET['edit-password'];
+	echo $_GET['edit-username'];
+	echo '<br/>';
+	echo $_GET['edit-email'];
+	echo '<br/>';
+	echo $_GET['edit-password'];
 
 ?>

@@ -1,7 +1,7 @@
 <!--===========================================================================================
 // Gestion de : affichage de edit profile
 // Auteurs : Charles Régniez, Dimtri Simon
-// Version du : 27/11/2019
+// Version du : 18/12/2019
 =============================================================================================-->
 
 <!-- TODO ask to authentify before edit -->
@@ -48,9 +48,19 @@
 </script>
 -->
 
+<!-- edit formulaire -->
+
 <form method="GET" action="../Controller/profile/C_edit.php">
-<input type="text" id="edit-username" value="<?php echo $_SESSION['username'] ?>">
-<input type="text" id="edit-email" value="<?php echo $_SESSION['email'] ?>">
-<input type="password" id="edit-password" placeholder="Actual Password">
-<input type="submit" name="edit">
+	<input type="text" name="edit-username" value="<?php echo $_SESSION['username'] ?>" />
+	<input type="text" name="edit-email" value="<?php echo $_SESSION['email'] ?>" />
+	<input type="password" name="edit-password" placeholder="Actual Password" />
+	<input type="submit" name="todo" value="edit" />
+</form>
+
+<!-- buttons -->
+
+<form method="GET" action="dashboard.php">
+	<input type="submit" name="rubrique" value="view" /><br/>
+	<input type="submit" name="rubrique" value="delete" /><br/>
+</form>
 
