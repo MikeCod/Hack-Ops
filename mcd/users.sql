@@ -31,7 +31,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `HackOps`.`challenges` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `type` ENUM('sql- injection', 'csrf', 'code-injection') NOT NULL,
+  `type` ENUM('sql-injection', 'csrf', 'code-injection', 'free') NOT NULL,
   `difficulty` INT UNSIGNED NOT NULL,
   `description` VARCHAR(256) NOT NULL,
   `flag` VARCHAR(64) NOT NULL,
