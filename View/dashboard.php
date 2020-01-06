@@ -61,7 +61,7 @@ try
 				<?php echo NAME ?>
 			</div>
 		</div>
-		<div id="vertical-menu" style="margin-top:-10px; min-width:250px;background: linear-gradient(180deg, Black 600px, White); /*animation: animation-breathe 2.5s infinite;*/">
+		<div id="vertical-menu" style="margin-top:-10px; min-width:250px;background: linear-gradient(180deg, Black 700px, White); /*animation: animation-breathe 2.5s infinite;*/">
 			<?php
 				echo "<div style=\"padding-bottom:100px;\">";
 				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7"); 

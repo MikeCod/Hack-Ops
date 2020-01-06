@@ -32,14 +32,22 @@ else $_GET['id'] = '';
 				<?php echo NAME ?>
 			</div>
 		</div>
-		<div style="padding-left:calc(50% - 200px);">
-			<form class="form-style" method="GET">
+		<div>
+			<div class="form-style" style="float:left; margin-left:50px;">
 				<h1 style="text-align:center;">SQL injection</h1>
-				<h2 style="padding-bottom:40px; text-align:center;">Search a user by ID</h2>
-				<input type="text" name="id" placeholder="ID" value="<?php echo $_GET['id'] ?>" autofocus>
-				<input type="submit" style="margin-top:20px;">
+				<h2 style="padding-bottom:40px; text-align:center;">View a user profile</h2>
+				<?php
+
+				const TMP_USERS = ["Admin", "Mars", "Bob", "Alice"];
+				for($i = 0; $i < count(TMP_USERS) ; ++$i)
+					echo "<a href=\"?id=".($i+1)."\" style=\"font-size:14pt\">".TMP_USERS[$i]."</a><br>";
+
+				?>
+				<br>
+			</div>
+			<div class="form-style" style="margin:0 auto; width:500px;">
 				<?php echo $result ?>
-			</form>
+			</div>
 		</div>
 	</body>
 </html>
