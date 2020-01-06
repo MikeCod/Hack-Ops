@@ -8,6 +8,7 @@
         <td><b>Score</b></td>
     </tr>
     <?php
-    require "../model/leaderboard.php";
-    include "../controller/leaderboard.php"; ?>
+    require_once "../model/leaderboard.php";
+    include "../controller/leaderboard.php";
+    ?>
 </table>
