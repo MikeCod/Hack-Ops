@@ -29,6 +29,36 @@ function update_badges($link, $user, $score)
 		}
 		$achievements += $response->rowCount();
 	}
+
+	if(!($response = $link->query("SELECT id FROM `completed-challenges` WHERE user = ".$user)))
+		throw new Exception("Request failed");
+
+	if(!($response = $link->query("SELECT id FROM badges WHERE type = 'Challenge' AND goal <= ".$response->rowCount())))
+		throw new Exception("Request failed");
+
+	if($response->rowCount() > 0)
+	{
+		while($badge = $response->fetch())
+		{
+			if(!$link->query("INSERT INTO `completed-badges`(user, badge) VALUES('".$user."', '".$badge['id']."')"))
+				throw new Exception("Cannot update badges");
+		}
+		$achievements += $response->rowCount();
+	}
+
+	require "Model/profile.php";
+	if(!($response = $link->query("SELECT id FROM badges WHERE type = 'Extra' AND goal <= ".get_rank($link, $score))))
+		throw new Exception("Request failed");
+
+	if($response->rowCount() > 0)
+	{
+		while($badge = $response->fetch())
+		{
+			if(!$link->query("INSERT INTO `completed-badges`(user, badge) VALUES('".$user."', '".$badge['id']."')"))
+				throw new Exception("Cannot update badges");
+		}
+		$achievements += $response->rowCount();
+	}
 	return $achievements;
 }
 

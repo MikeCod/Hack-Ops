@@ -23,7 +23,7 @@ function is_connected()
 	return isset($_SESSION['connected']);
 }
 
-function connected()
+function mconnect()
 {
 	$_SESSION['connected'] = true;
 }

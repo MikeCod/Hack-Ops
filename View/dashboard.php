@@ -2,6 +2,7 @@
 
 session_start();
 require "../Model/DB.php";
+//require "../Controller/leaderboard.php";
 redirect();
 
 
@@ -65,6 +66,8 @@ try
 			<?php
 				echo "<div style=\"padding-bottom:100px;\">";
 				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7"); 
+				button("LeaderBoard", "show_page('leaderboard');", false, 200, "#2a77d7");
+				button("Forum", "./FORUM", true, 200, "#2a77d7");
 				echo "</div>";
 
 				button("SQL Injection", "show_page('sql-injection', true);");
@@ -79,13 +82,16 @@ try
 		</div>
 		<div class="form-style" style="position:absolute; left:250px; top:100px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
-				<?php include "profile/index.php"; ?>
+				<?php include "profile/V_index.php"; ?>
 			</div>
 			<div id="profile-edit" style="display:none;">
 				<?php include "profile/edit.php"; ?>
 			</div>
 			<div id="profile-delete" style="display:none;">
 				<?php include "profile/delete.php"; ?>
+			</div>
+			<div id="leaderboard" style="display:none;">
+				<?php include "leaderboard.php"; ?>
 			</div>
 			<div id="challenges" style="padding-top:00px; display:none;">
 				<h1 id="title-challenge"></h1>

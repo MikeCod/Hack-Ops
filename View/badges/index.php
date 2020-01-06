@@ -2,25 +2,29 @@
 require "../../Controller/badges.php";
 #session_start();
 
+if(isset($_POST['createB'])) {
+    option_badge("add");
+}
 
-    $score = 53;
-    $chall = 99;
-    $extra = 5;
 
-    function button($text, $a, $href = false, $width = 200, $color = "white") {
-        $text = str_replace(' ', '<span style="color:transparent">_</span>', $text);
-        if ($color != "white")
-            $color .= ";text-shadow:unset";
-        echo '
-        <div class="svg-wrapper">
-            <svg height="40" width="'.$width.'">
-                <rect class="shape" height="40" width="'.$width.'" />
-                <div class="text">
-                    <a style="color:'.$color.';'.(!$href ? 'cursor:pointer;" onclick' : '" href').'="'.$a.'"><span class="spot"></span>'.$text.'</a>
-                </div>
-            </svg>
-        </div>';
-    }
+$score = 53;
+$chall = 99;
+$extra = 5;
+
+function button($text, $a, $href = false, $width = 200, $color = "white") {
+    $text = str_replace(' ', '<span style="color:transparent">_</span>', $text);
+    if ($color != "white")
+        $color .= ";text-shadow:unset";
+    echo '
+    <div class="svg-wrapper">
+        <svg height="40" width="'.$width.'">
+            <rect class="shape" height="40" width="'.$width.'" />
+            <div class="text">
+                <a style="color:'.$color.';'.(!$href ? 'cursor:pointer;" onclick' : '" href').'="'.$a.'"><span class="spot"></span>'.$text.'</a>
+            </div>
+        </svg>
+    </div>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,7 +74,7 @@ require "../../Controller/badges.php";
                         <h2><?php echo $extra ?><span>%</span></h2>
                     </div>
                 </div>
-                <h2 class="textB"><?php echo B_EXTRA ?></h2> 
+                <i class="fas fa-tools" style="color: #FFFFFF;"><h2 class="textB"></i><?php echo B_EXTRA ?></h2> 
             </div>
         </div>
         <div class="card" onclick="document.location='badges.php?t=Challenge'" style="cursor: pointer">
@@ -140,6 +144,8 @@ require "../../Controller/badges.php";
                 <option value="Challenge">Challenge</option>
                 <option value="Extra">Extra</option>
             </select><br>
+            Goal:
+            <input type="text" name="goal" placeholder="Goal" required><br>
             <input type="submit" name="createB" value="Create Badge"><br>
         </form>
     </div>
