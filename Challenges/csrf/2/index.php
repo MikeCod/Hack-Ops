@@ -9,7 +9,6 @@ if(isset($_POST['message']) and !empty($_POST['message'])) {
 	require "Challenges/ModelChallenge.php";
 	restore_include_path();
 	include "action.php";
-
 }
 else $_POST['message'] = '<img src="" width="0" height="0" border="0">';
 

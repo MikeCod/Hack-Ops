@@ -1,7 +1,7 @@
 <h1>Leaderboard</h1>
 <br>
 <br>
-<table width="500px">
+<table width="800px">
     <tr style="text-decoration:underline;">
         <td><b>Rank</b></td>
         <td><b>User</b></td>
