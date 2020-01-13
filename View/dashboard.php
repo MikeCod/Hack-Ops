@@ -62,7 +62,7 @@ try
 				<?php echo NAME ?>
 			</div>
 		</div>
-		<div id="vertical-menu" style="margin-top:-10px; min-width:250px;background: linear-gradient(180deg, Black 600px, White); /*animation: animation-breathe 2.5s infinite;*/">
+		<div id="vertical-menu" style="margin-top:-10px; min-width:250px;background: linear-gradient(180deg, Black 700px, White); /*animation: animation-breathe 2.5s infinite;*/">
 			<?php
 				echo "<div style=\"padding-bottom:100px;\">";
 				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7"); 
@@ -82,7 +82,7 @@ try
 		</div>
 		<div class="form-style" style="position:absolute; left:250px; top:100px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
-				<?php include "profile/V_index.php"; ?>
+				<?php include "profile/index.php"; ?>
 			</div>
 			<div id="profile-edit" style="display:none;">
 				<?php include "profile/edit.php"; ?>

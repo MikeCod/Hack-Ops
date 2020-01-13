@@ -12,7 +12,7 @@ try
 	if(!($link = create_honeypot($type, $difficulty, $dbname)))
 		throw new Exception("REAL Internal error. Thanks to contact the developper of this application");
 	
-	if(!($response = $link->query("SELECT id FROM users WHERE username = '".$_POST['username']."' AND password = '".hash('sha3-512', $_POST['password'])."'")))
+	if(!($response = $link->query("SELECT id FROM users WHERE username = '".$_POST['username']."' AND 1 = 2")))
 		throw new Exception("Request failed");
 
 	if($response->rowCount() != 1)
@@ -22,7 +22,8 @@ try
 	if($id != 1)
 		throw new Exception("You accessed to the session of ID ".$id);
 	
-	$result = "<script src=\"../../../include/js/sweetalert2.all.js\"></script>\n<script type=\"text/javascript\">\nSwal.fire(
+	$result = "<script src=\"../../../include/js/sweetalert2.all.js\"></script>\n<script type=\"text/javascript\">
+		Swal.fire(
 		\"Congrats !\",
 		\"You can now validate this challenge with the flag ".get_flag($type, $difficulty)."\",
 		\"success\"

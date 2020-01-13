@@ -7,15 +7,15 @@
 <!-- TODO ask to authentify before edit -->
 <h1>Edit Profile</h1>
 
-
 <input type="text" id="edit-username" value="<?php echo $_SESSION['username'] ?>">
 <input type="text" id="edit-email" value="<?php echo $_SESSION['email'] ?>">
 <input type="password" id="edit-password" placeholder="Actual Password">
-<br>
 <p>Only if you want to change your password :</p>
 <input type="password" id="edit-password-new" placeholder="New password">
 <input type="password" id="edit-password-new-confirm" placeholder="Confirm New password">
-<input type="submit" value="edit" onclick="submit_edit();">
+<div style="padding-left:calc(50% - 100px);">
+<?php button ("Edit", "submit_edit();", false, 200, "deepskyblue"); ?>
+</div>
 
 <script type="text/javascript">
 	function submit_edit()
@@ -47,24 +47,3 @@
 		);
 	}
 </script>
-
-<!-- edit formulaire 
-
-<form method="POST" action="../Controller/profile/C_edit.php">
-	<input type="text" name="edit-username" value="<?php echo $_SESSION['username'] ?>" />
-	<input type="text" name="edit-email" value="<?php echo $_SESSION['email'] ?>" />
-	<input type="password" name="edit-password" placeholder="Actual Password" />
-	<p>Only if you want to change your password :</p>
-	<input type="password" name="edit-password-new" placeholder="New password">
-	<input type="password" name="edit-password-new-confirm" placeholder="Confirm New password">
-	<input type="submit" value="edit" onclick="submit_edit();">
-</form>
--->
-
-<!-- buttons -->
-
-<form method="GET" action="dashboard.php">
-	<input type="submit" name="rubrique" value="view" /><br/>
-	<input type="submit" name="rubrique" value="delete" /><br/>
-</form>
-

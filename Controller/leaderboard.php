@@ -1,15 +1,14 @@
-<?php 
+<?php
 
-require "../Model/leaderboard.php";
-
-function leaderboard() {
-    $rank = order();
-    while ($leader = $rank->fetch()) {
-        echo '<tr>';
-        echo '<td align="center">'.$leader['username'].'</td>';
-        echo '<td>&nbsp;&nbsp;'.$leader['score'].' '.ucfirst($data["prenom"]).'</td>';
-        echo '</tr>';
-    }
+$rank = order();
+$i = 0;
+while($user = $rank->fetch()) {
+	echo '<tr'.($user['username'] == $_SESSION['username'] ? ' style="background:grey; color:black;"' : '').'>
+        <td>'.(++$i).'</td>
+        <td>'.$user['username'].'</td>
+        <td>'.$user['score'].'</td>
+    </tr>
+    ';
 }
 
 ?>
