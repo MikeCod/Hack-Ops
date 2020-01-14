@@ -10,7 +10,7 @@ body {
 	color: White;
 	font-size: 14pt;
 	background:#070707;
-	overflow: hidden;	
+	overflow: hidden;
 }
 #banner {
 	width:100%;
@@ -20,7 +20,7 @@ body {
 
 	/*position:fixed;*/
 }
-#name { padding-left:350px; font-family:Open Sans; font-size:24pt; color:White; }
+#name { padding-left:350px; font-family:"Open Sans"; font-size:24pt; color:White; }
 
 #footer { height:200px; background: #070707; color:White; font-size:12pt; }
 
