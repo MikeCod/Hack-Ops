@@ -7,8 +7,10 @@ $type = "";
 $difficulty = "";
 get_challenge($type, $difficulty);
 
-define('LINK', 'http://localhost/challenges/csrf/1/edit-profile-action.php');
-$link_length = strlen(LINK);
+require_once "../../../model/DB.php";
+
+$payload = 'http://localhost'.ROOT.'/challenges/csrf/2/edit-profile-action.php';
+$payload_length = strlen($payload);
 
 try
 {
@@ -25,7 +27,10 @@ try
 	$images = $dom->getElementsByTagName('img');
 	foreach ($images as $image) {
 		$src = $image->getAttribute('src');
-		if(strlen($src) >= $link_length and substr($src, 0, $link_length) == LINK)
+		if(strlen($src) >= 8 and substr($src, 0, 8) == "https://")
+			throw new Exception("Secured connection not supported");
+			
+		if(strlen($src) >= $payload_length and substr($src, 0, $payload_length) == $payload)
 		{
 			if(strpos($src, "?") === false)
 				throw new Exception("No parameter");
@@ -33,9 +38,9 @@ try
 			if($image->getAttribute('width') != "0" or $image->getAttribute('height') != "0" or $image->getAttribute('border') != "0")
 				throw new Exception("You should let the width, height and border to 0. Otherwise the admin will can see something goes wrong...");
 			
-			if(substr($src, 0, $link_length) == LINK)
+			if(substr($src, 0, $payload_length) == $payload)
 			{
-				$params = explode("&", substr($src, $link_length + 1));
+				$params = explode("&", substr($src, $payload_length + 1));
 				foreach ($params as $key) {
 					$param = explode("=", $key);
 					if(isset($param[0]) and $param[0] == "new-password"){

@@ -2,7 +2,7 @@
 
 session_start();
 require "../Model/DB.php";
-require "../Controller/leaderboard.php";
+//require "../Controller/leaderboard.php";
 redirect();
 
 
@@ -62,11 +62,12 @@ try
 				<?php echo NAME ?>
 			</div>
 		</div>
-		<div id="vertical-menu" style="margin-top:-10px; min-width:250px;background: linear-gradient(180deg, Black 600px, White); /*animation: animation-breathe 2.5s infinite;*/">
+		<div id="vertical-menu" style="margin-top:-10px; min-width:250px;background: linear-gradient(180deg, Black 700px, White); /*animation: animation-breathe 2.5s infinite;*/">
 			<?php
 				echo "<div style=\"padding-bottom:100px;\">";
 				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7"); 
 				button("LeaderBoard", "show_page('leaderboard');", false, 200, "#2a77d7");
+				button("Forum", "./FORUM", true, 200, "#2a77d7");
 				echo "</div>";
 
 				button("SQL Injection", "show_page('sql-injection', true);");
@@ -274,8 +275,29 @@ try
 			{
 				return new Promise(resolve => setTimeout(resolve, ms));
 			}
+
+			function logCookie(cookie) {
+			  if (cookie) {
+			    console.log(cookie.value);
+			  }
+			}
+
+			function getCookie(tabs) {
+			  var getting = browser.cookies.get({
+			    url: tabs[0].url,
+			    name: "favourite-colour"
+			  });
+			  getting.then(logCookie);
+			}
+
+			var getActive = browser.tabs.query({
+			  active: true,
+			  currentWindow: true
+			});
+
+			getActive.then(getCookie);
 		</script>
-		<?php 
+		<?php
 
 		}
 		catch (Exception $e)

@@ -1,10 +1,14 @@
-<h1>LeaderBoard</h1>
-
-<table width="500px">
-    <tr>
-        <td align="center"><b>Rank</b></td>
-        <td align="center"><b>User</b></td>
-        <td align="center"><b>Score</b></td>
+<h1>Leaderboard</h1>
+<br>
+<br>
+<table width="800px">
+    <tr style="text-decoration:underline;">
+        <td><b>Rank</b></td>
+        <td><b>User</b></td>
+        <td><b>Score</b></td>
     </tr>
-    <?php //leaderboard(); ?>
+    <?php
+    require_once "../model/leaderboard.php";
+    include "../controller/leaderboard.php";
+    ?>
 </table>
