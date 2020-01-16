@@ -5,7 +5,7 @@
         <title>Document</title>
     </head>
     <body>
-    <table class="forum">
+    <table border=2 class="forum">
         <tr class="header">
             <th class="main">Catégories</th>
             <th class="sub-info">Messages</th>

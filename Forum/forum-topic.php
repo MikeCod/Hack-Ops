@@ -9,6 +9,7 @@ if(isset($_GET['cats']) AND !empty($_GET['cats'])) {
    $get_categorie = htmlspecialchars($_GET['cats']);
    $categories = array();
    $req_categories = $link->query('SELECT * FROM f_categories');
+
    while($c = $req_categories->fetch()) {
       array_push($categories, array($c['id'],url_custom_encode($c['name'])));
    }
@@ -17,12 +18,14 @@ if(isset($_GET['cats']) AND !empty($_GET['cats'])) {
          $id_categorie = intval($cat[0]);
       }
    }
+
    if(@$id_categorie) {
       if(isset($_GET['subcats']) AND !empty($_GET['subcats'])) {
          $get_subcategorie = htmlspecialchars($_GET['subcats']);
          $subcategories = array();
          $req_subcategories = $link->prepare('SELECT * FROM f_subcategories WHERE categories_id = ?');
          $req_subcategories->execute(array($id_categorie));
+
          while($c = $req_subcategories->fetch()) {
             array_push($subcategories, array($c['id'],url_custom_encode($c['name'])));
          }
@@ -32,8 +35,9 @@ if(isset($_GET['cats']) AND !empty($_GET['cats'])) {
             }
          }
       }
-      $req = "SELECT * FROM f_topics
-      LEFT JOIN `f_topic-categories` ON f_topics.id = `f_topic-categories`.topics_id
+      
+      $req = "SELECT *, f_topics.id topic_base_id FROM f_topics
+      LEFT JOIN `f_topic-categories` ON f_topics.id = `f_topic-categories`.topics_id 
       LEFT JOIN f_categories ON `f_topic-categories`.categories_id = f_categories.id
       LEFT JOIN f_subcategories ON `f_topic-categories`.subcategories_id = f_subcategories.id
       LEFT JOIN users ON f_topics.users_id = users.id
@@ -47,7 +51,7 @@ if(isset($_GET['cats']) AND !empty($_GET['cats'])) {
       }
 
       $req .= " ORDER BY f_topics.id DESC";
-      
+
       $topics = $link->prepare($req);
       $topics->execute($exec_array);
    } else {
