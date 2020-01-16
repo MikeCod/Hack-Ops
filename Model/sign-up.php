@@ -1,8 +1,22 @@
 <?php
 
-function add_user($username, $email, $password)
+function available_email($link, $email)
 {
-	if(!$link->query("INSERT INTO users(username, email, password) VALUES(".$link->quote($_POST['username']).", ".$link->quote($_POST['email']).", '".hash('sha3-512', $_POST['password'])."')"))
+	if(!($result = $link->query("SELECT id FROM users WHERE email = ".$link->quote($email))))
+		throw new Exception("Request failed");
+	return ($result->rowCount() == 0);
+}
+
+function available_username($link, $username)
+{
+	if(!($result = $link->query("SELECT id FROM users WHERE username = ".$link->quote($username))))
+		throw new Exception("Request failed");
+	return ($result->rowCount() == 0);
+}
+
+function add_user($link, $username, $email, $password)
+{
+	if(!$link->query("INSERT INTO users(username, email, password) VALUES(".$link->quote($username).", ".$link->quote($email).", '".hash('sha3-512', $password)."')"))
 		throw new Exception("Cannot add user");
 }
 
