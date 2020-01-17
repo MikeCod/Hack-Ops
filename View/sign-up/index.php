@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require "../Controller/config.php";
+require "../../Controller/config.php";
 
 if(!isset($_SESSION['form']['username'])) $_SESSION['form']['username'] = '';
 if(!isset($_SESSION['form']['email'])) $_SESSION['form']['email'] = '';
@@ -16,8 +16,8 @@ $_POST = array();
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<title><?php echo NAME ?></title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link rel="stylesheet" media="all" type="text/css" href="../include/css/style.css">
-	<link rel="stylesheet" media="all" type="text/css" href="../include/css/buttons.css">
+	<link rel="stylesheet" media="all" type="text/css" href="../../include/css/style.css">
+	<link rel="stylesheet" media="all" type="text/css" href="../../include/css/buttons.css">
 </head>
 	<body>
 		<div id="banner">
