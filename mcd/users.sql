@@ -121,11 +121,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `HackOps`.`f_subcategories` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
-  `f_categories_id` INT NOT NULL,
+  `categories_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_f_subcategories_f_categories1_idx` (`f_categories_id` ASC),
+  INDEX `fk_f_subcategories_f_categories1_idx` (`categories_id` ASC),
   CONSTRAINT `fk_f_subcategories_f_categories1`
-    FOREIGN KEY (`f_categories_id`)
+    FOREIGN KEY (`categories_id`)
     REFERENCES `HackOps`.`f_categories` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -139,8 +139,8 @@ CREATE TABLE IF NOT EXISTS `HackOps`.`f_topics` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `users_id` INT UNSIGNED NOT NULL,
   `title` VARCHAR(64) NOT NULL,
-  `contenu` TEXT NOT NULL,
-  `date-create` DATETIME NOT NULL,
+  `content` TEXT NOT NULL,
+  `date_create` DATETIME NOT NULL,
   `resolved` TINYINT NOT NULL,
   `notif_user` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
@@ -158,25 +158,25 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `HackOps`.`f_topic-categories` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `f_topics_id` INT NOT NULL,
-  `f_categories_id` INT NOT NULL,
-  `f_subcategories_id` INT NOT NULL,
+  `topics_id` INT NOT NULL,
+  `categories_id` INT NOT NULL,
+  `subcategories_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_f_topic-categories_f_topics1_idx` (`f_topics_id` ASC),
-  INDEX `fk_f_topic-categories_f_categories1_idx` (`f_categories_id` ASC),
-  INDEX `fk_f_topic-categories_f_subcategories1_idx` (`f_subcategories_id` ASC),
+  INDEX `fk_f_topic-categories_f_topics1_idx` (`topics_id` ASC),
+  INDEX `fk_f_topic-categories_f_categories1_idx` (`categories_id` ASC),
+  INDEX `fk_f_topic-categories_f_subcategories1_idx` (`subcategories_id` ASC),
   CONSTRAINT `fk_f_topic-categories_f_topics1`
-    FOREIGN KEY (`f_topics_id`)
+    FOREIGN KEY (`topics_id`)
     REFERENCES `HackOps`.`f_topics` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_f_topic-categories_f_categories1`
-    FOREIGN KEY (`f_categories_id`)
+    FOREIGN KEY (`categories_id`)
     REFERENCES `HackOps`.`f_categories` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_f_topic-categories_f_subcategories1`
-    FOREIGN KEY (`f_subcategories_id`)
+    FOREIGN KEY (`subcategories_id`)
     REFERENCES `HackOps`.`f_subcategories` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -188,22 +188,22 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `HackOps`.`f_message` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `f_topics_id` INT NOT NULL,
+  `topics_id` INT NOT NULL,
   `users_id` INT UNSIGNED NOT NULL,
-  `datePost` DATETIME NOT NULL,
-  `dateEdit` DATETIME NOT NULL,
-  `bestRes` TINYINT NULL,
-  `contents` TEXT NULL,
+  `date_post` DATETIME NOT NULL,
+  `date_edit` DATETIME NOT NULL,
+  `best_res` TINYINT NULL,
+  `content` TEXT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_f_message_users1_idx` (`users_id` ASC),
-  INDEX `fk_f_message_f_topics1_idx` (`f_topics_id` ASC),
+  INDEX `fk_f_message_f_topics1_idx` (`topics_id` ASC),
   CONSTRAINT `fk_f_message_users1`
     FOREIGN KEY (`users_id`)
     REFERENCES `HackOps`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_f_message_f_topics1`
-    FOREIGN KEY (`f_topics_id`)
+    FOREIGN KEY (`topics_id`)
     REFERENCES `HackOps`.`f_topics` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -216,9 +216,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `HackOps`.`f_follow` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `users_id` INT UNSIGNED NOT NULL,
-  `f_topics_id` INT NOT NULL,
+  `topics_id` INT NOT NULL,
   INDEX `fk_f_follow_users1_idx` (`users_id` ASC),
-  INDEX `fk_f_follow_f_topics1_idx` (`f_topics_id` ASC),
+  INDEX `fk_f_follow_f_topics1_idx` (`topics_id` ASC),
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_f_follow_users1`
     FOREIGN KEY (`users_id`)
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `HackOps`.`f_follow` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_f_follow_f_topics1`
-    FOREIGN KEY (`f_topics_id`)
+    FOREIGN KEY (`topics_id`)
     REFERENCES `HackOps`.`f_topics` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -266,3 +266,13 @@ INSERT INTO challenges(type, difficulty, description, flag) VALUES('csrf', '2', 
   -- Advanced POST: Change admin\'s password.', 'xk2oDXWn4FbBc9WnqRz9adipbVN5a2dNyCK9UdhMyDphlnhF9r0kKNJalDsvePds');
 
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('free', '1', 'You\'re a user of the project Plat-In.<br>Find a vulnerability to retrieve raw admin\'s password', '<base64 password>');
+
+-- Insert cat and subcat forum --
+
+INSERT INTO f_categories(name) VALUES('Categorie #1');
+INSERT INTO f_categories(name) VALUES('Categorie #2');
+
+INSERT INTO f_subcategories(name, categories_id) VALUES('Subcat #1', '1');
+INSERT INTO f_subcategories(name, categories_id) VALUES('Subcat #2', '1');
+INSERT INTO f_subcategories(name, categories_id) VALUES('Subcat #3', '2');
+INSERT INTO f_subcategories(name, categories_id) VALUES('Subcat #4', '2');
