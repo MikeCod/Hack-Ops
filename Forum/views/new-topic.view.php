@@ -4,26 +4,26 @@
       <meta charset="UTF-8">
       <title>Forum</title>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="include/wysibb/jquery.wysibb.min.js"></script>
-        <link rel="stylesheet" href="include/wysibb/wbbtheme.css" />
-        <script>
-            $(function() {
-            var optionsWbb = {
-            buttons: "bold,italic,underline,|,justifycenter,|,img,link,|,code,quote,home",
-            lang: "fr",
-            allButtons: {
-                home: {
-                    title: 'Back Home',
-                    buttonText: 'Home',
-                    transform: {
-                    '<a href="index.php">{SELTEXT}</a>':'[home]{SELTEXT}[/home]'
-                    }
-                }
-            }
-            }
-            $("#wysibb").wysibb(optionsWbb);
-            })
-        </script>
+      <script src="include/wysibb/jquery.wysibb.min.js"></script>
+      <link rel="stylesheet" href="include/wysibb/wbbtheme.css" />
+      <script>
+         $(function() {
+         var optionsWbb = {
+         buttons: "bold,italic,underline,|,justifycenter,|,img,link,|,code,quote,home",
+         lang: "fr",
+         allButtons: {
+               home: {
+                  title: 'Back Home',
+                  buttonText: 'Home',
+                  transform: {
+                  '<a href="index.php">{SELTEXT}</a>':'[home]{SELTEXT}[/home]'
+                  }
+               }
+         }
+         }
+         $("#wysibb").wysibb(optionsWbb);
+         })
+      </script>
    </head>
    <body>
       <form class="fntopic" method="POST">
