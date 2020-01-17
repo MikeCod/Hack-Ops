@@ -14,26 +14,26 @@ $_POST = array();
 <html lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<title><?php echo NAME ?></title>
+	<title><?= NAME ?></title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 	<link rel="stylesheet" media="all" type="text/css" href="../../include/css/style.css">
 	<link rel="stylesheet" media="all" type="text/css" href="../../include/css/buttons.css">
 </head>
 	<body>
 		<div id="banner">
-			<span id="name" style="padding-left:10%; padding-right:10%;"><?php echo NAME ?></span>
+			<span id="name" style="padding-left:10%; padding-right:10%;"><?= NAME ?></span>
 		</div>
 		<div style="padding-top:3%;padding-left:calc(50% - 200px);">
 			<div class="form-style">
-				<form action="../../Controller/sign-up" method="post">
+				<form action="../../Controller/sign-up/" method="post">
 					<fieldset style="padding-top:50px;">
-						<input type="text" name="username" placeholder="Username" value="<?php echo $_SESSION['form']['username']; ?>" autofocus>
-						<input name="email" placeholder="email" type="email" value="<?php echo $_SESSION['form']['email']; ?>">
+						<input type="text" name="username" placeholder="Username" value="<?= $_SESSION['form']['username']; ?>" autofocus>
+						<input type="email" name="email" placeholder="email" value="<?= $_SESSION['form']['email']; ?>">
 						<br><br>
-						<input name="password" placeholder="Password" type="password">
-						<input name="cpassword" placeholder="Confirm password" type="password">
+						<input type="password" name="password" placeholder="Password">
+						<input type="password" name="cpassword" placeholder="Confirm password">
 					</fieldset>
-					<input type="submit" name="submit" style="width:400px;background:#2a2a2a;color:White;" value="Create account">
+					<input type="submit" name="submit" style="width:400px; background:#2a2a2a; color:white;" value="Create account">
 				</form>
 				<?php
 					if (isset($_SESSION['error']))
