@@ -2,20 +2,25 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Document</title>
+        <title><?php echo NAME ?></title>
+        <link rel="icon" type="image/jpg" href="">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+        <link rel="stylesheet" media="all" type="text/css" href="../include/css/style.css">
+        <link rel="stylesheet" media="all" type="text/css" href="../include/css/button.css">
     </head>
     <body>
+    <!--<h1>Catégorie</h1>-->
     <table border=2 class="forum">
         <tr class="header">
-            <th class="main">Catégories</th>
-            <th class="sub-info">Messages</th>
-            <th class="sub-info">Dernier message</th>
+            <th class="ain">Catégories</th>
+            <th class="ub-info">Messages</th>
+            <th class="ub-info">Dernier message</th>
         </tr>
         <?php
         while($c = $categories->fetch()) {
             $subcat->execute(array($c['id']));
             $subcategories = '';
-            while($sc = $subcat->fetch()) { 
+            while($sc = $subcat->fetch()) 
                 $subcategories .= '<a href="./forum-topic.php?cats='.url_custom_encode($c['name']).'&subcats='.url_custom_encode($sc['name']).'">'.$sc['name'].'</a> | ';
             }
             $subcategories = substr($subcategories, 0, -3);

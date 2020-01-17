@@ -2,10 +2,10 @@
 <br>
 <br>
 <table width="800px">
-    <tr style="text-decoration:underline;">
-        <td><b>Rank</b></td>
-        <td><b>User</b></td>
-        <td><b>Score</b></td>
+    <tr style="font-weight:bold;">
+        <td>Rank</td>
+        <td>User</td>
+        <td>Score</td>
     </tr>
     <?php
     require_once "../model/leaderboard.php";

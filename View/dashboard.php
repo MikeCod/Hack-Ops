@@ -54,6 +54,9 @@ try
 			50%	{ background: #171717; }
 			100%{ background: black; }
 		}
+		tr, td {
+			padding:10px 20px 10px 20px;
+		}
 	</style>
 </head>
 	<body>
