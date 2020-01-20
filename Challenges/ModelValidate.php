@@ -24,7 +24,7 @@ function update_badges($link, $user, $score)
 	{
 		while($badge = $response->fetch())
 		{
-			if(!$link->query("INSERT INTO `completed-badges`(user, badge) VALUES('".$user."', '".$badge['id']."')"))
+			if(!$link->query("INSERT INTO `completed-badges`(user, achievement) VALUES('".$user."', '".$badge['id']."')"))
 				throw new Exception("Cannot update badges");
 		}
 		$achievements += $response->rowCount();
@@ -40,7 +40,7 @@ function update_badges($link, $user, $score)
 	{
 		while($badge = $response->fetch())
 		{
-			if(!$link->query("INSERT INTO `completed-badges`(user, badge) VALUES('".$user."', '".$badge['id']."')"))
+			if(!$link->query("INSERT INTO `completed-badges`(user, achievement) VALUES('".$user."', '".$badge['id']."')"))
 				throw new Exception("Cannot update badges");
 		}
 		$achievements += $response->rowCount();
@@ -54,7 +54,7 @@ function update_badges($link, $user, $score)
 	{
 		while($badge = $response->fetch())
 		{
-			if(!$link->query("INSERT INTO `completed-badges`(user, badge) VALUES('".$user."', '".$badge['id']."')"))
+			if(!$link->query("INSERT INTO `completed-badges`(user, achievement) VALUES('".$user."', '".$badge['id']."')"))
 				throw new Exception("Cannot update badges");
 		}
 		$achievements += $response->rowCount();
