@@ -111,8 +111,10 @@ try
 					"sql-injection", 
 					<?php 
 						$first = true;
+						echo "{";
 						foreach ($sql_injection as $result)
-							echo (!$first ? ", " : $first = false)."[".$result['difficulty'].", \"".$result['description']."\"]";
+							echo (!$first ? ", " : $first = false)."".$result['difficulty'].": \"".$result['description']."\"";
+						echo "}";
 					?>
 				],
 				[
@@ -120,7 +122,7 @@ try
 					<?php 
 						$first = true;
 						foreach ($csrf as $result)
-							echo (!$first ? ", " : $first = false)."[".$result['difficulty'].", \"".$result['description']."\"]";
+							echo (!$first ? ", " : $first = false)."{\"".$result['difficulty']."\": \"".$result['description']."\"}";
 					?>
 				],
 				[
@@ -128,7 +130,7 @@ try
 					<?php 
 						$first = true;
 						foreach ($code_injection as $result)
-							echo (!$first ? ", " : $first = false)."[".$result['difficulty'].", \"".$result['description']."\"]";
+							echo (!$first ? ", " : $first = false)."{\"".$result['difficulty']."\": \"".$result['description']."\"}";
 					?>
 				],
 				[
@@ -136,7 +138,7 @@ try
 					<?php 
 						$first = true;
 						foreach ($free as $result)
-							echo (!$first ? ", " : $first = false)."[".$result['difficulty'].", \"".$result['description']."\"]";
+							echo (!$first ? ", " : $first = false)."{\"".$result['difficulty']."\": \"".$result['description']."\"}";
 					?>
 				]
 			];
@@ -166,8 +168,22 @@ try
 					{
 						$length = count($array);
 						echo '"';
-						for ($i = 0; $i < $length ; ++$i)
-							echo "<option value=\\\"".$array[$i]['difficulty']."\\\" onclick=\\\"set_description();\\\">".$array[$i]['difficulty']."</option>";
+						for ($i = 0; $i < $length ; ++$i) {
+							echo "<option value=\\\"".$array[$i]['difficulty']."\\\" onclick=\\\"set_description();\\\">";
+							switch($array[$i]['difficulty'])
+							{
+								case '1':
+									echo 'Easy';
+									break;
+								case '2':
+									echo 'Medium';
+									break;
+								case '3':
+									echo 'Hard';
+									break;
+							}
+							echo "</option>";
+						}
 						echo '"';
 					}
 
@@ -199,7 +215,7 @@ try
 
 			function set_description()
 			{
-				num = 0;
+				var num = 0;
 				switch(type)
 				{
 					case "free":
@@ -214,7 +230,7 @@ try
 						document.getElementById("description").innerHTML = "Cannot load description. Please contact the developper.";
 						return ;
 				}
-				document.getElementById("description").innerHTML = descriptions[num][document.getElementById("difficulty").value][1];
+				document.getElementById("description").innerHTML = descriptions[num][1][document.getElementById("difficulty").value];
 			}
 
 			function set_error(text)

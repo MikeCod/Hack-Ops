@@ -265,7 +265,7 @@ INSERT INTO challenges(type, difficulty, description, flag) VALUES('csrf', '2', 
   -- These links could help you: <a href=\\\"https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)\\\">OWASP</a> | <a href=\\\"https://stackoverflow.com/questions/3054315/is-javascript-supported-in-an-email-message\\\">Is JavaScript supported in an email message</a><br>
   -- Advanced POST: Change admin\'s password.', 'xk2oDXWn4FbBc9WnqRz9adipbVN5a2dNyCK9UdhMyDphlnhF9r0kKNJalDsvePds');
 
-INSERT INTO challenges(type, difficulty, description, flag) VALUES('free', '1', 'You\'re a user of the project Plat-In.<br>Find a vulnerability to retrieve raw admin\'s password', '<base64 password>');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('free', '3', 'You\'re a user of the project Plat-In.<br>Find a vulnerability to retrieve raw admin\'s password', '<base64 password>');
 
 -- Insert cat and subcat forum --
 
