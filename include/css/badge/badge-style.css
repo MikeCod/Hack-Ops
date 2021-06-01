@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+*
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+body 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #101010;
+}
+.container
+{
+    position: relative;
+    width: 900px;
+    display: flex;
+    justify-content: space-around;
+}
+.container .card 
+{
+    position: relative;
+    min-width: 250px;
+    background: linear-gradient(0deg,#1b1b1b,#222,#1b1b1b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    border-radius: 4px;
+    text-align: center;
+    overflow: hidden;
+    transition: 0.5s;
+    margin-right: 20px;
+    margin-left: 20px;
+    padding: 50px 0px 50px 0px;
+    cursor: pointer;
+}
+.container .card:hover
+{
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgb(0, 0, 0,.5);
+}
+.container .card:before 
+{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255,.03);
+    pointer-events: none;
+    z-index: 1; 
+}
+.percent 
+{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 50px #000;
+    background: #222;
+    z-index: 1000;
+}
+.percent .number
+{
+    position: absolute;
+    top: 0;
+    left: calc(50% - 35px);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    border-radius: 50%;
+}
+.percent .number h2 
+{
+    color: #777;
+    font-weight: 700;
+    font-size: 40px;
+    transition: 0.5s; 
+}
+.card:hover .percent .number h2 
+{
+    color: #cccccc;
+    font-size: 50px;
+}
+.percent .number h2 span
+{
+    font-size: 24px;
+    color: #777;
+}
+.card:hover .percent .number h2 span 
+{
+    color: #ccc;
+    transition: 0.5s; 
+    
+}
+.textB 
+{
+    position: relative;
+    color: #777;
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.5s;
+}
+.card:hover .text
+{
+    color: #ccc;
+}
+svg
+{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    z-index: 1000;
+}
+svg circle 
+{
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: #191919;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transform: translate(5px, 5px);
+}
+
+.slideThree {
+    width: 80px;
+    height: 26px;
+    background: #333;
+    position: relative;
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2);
+  }
+  .slideThree:after {
+    content: 'ON';
+    color: #0FC117;
+    position: absolute;
+    right: 10px;
+    z-index: 0;
+    font: 12px/26px Arial, sans-serif;
+    font-weight: bold;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.15);
+  }
+  .slideThree:before {
+    content: 'OFF';
+    color: #d31717;
+    position: absolute;
+    left: 10px;
+    z-index: 0;
+    font: 12px/26px Arial, sans-serif;
+    font-weight: bold;
+  }
+  .slideThree label {
+    display: block;
+    width: 34px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    z-index: 1;
+    background: #fcfff4;
+    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    border-radius: 50px;
+    transition: all 0.4s ease;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+  }
+  .slideThree input[type=checkbox] {
+    visibility: hidden;
+  }
+  .slideThree input[type=checkbox]:checked + label {
+    left: 43px;
+  }
+
+.button a{
+    margin: 15px 0 0;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 900;
+    color: #fff;
+    padding: 5px;
+    border: 1px solid #333; 
+}
+
+.button a:hover {
+    background: #fff;
+    color: #000;
+}
+
+
+  
