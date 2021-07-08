@@ -2,7 +2,6 @@
 
 session_start();
 require "../Model/DB.php";
-//require "../Controller/leaderboard.php";
 redirect();
 
 
@@ -32,6 +31,14 @@ try
 	$csrf = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'csrf' ORDER BY difficulty ASC")->fetchAll();
 	$code_injection = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'code-injection' ORDER BY difficulty ASC")->fetchAll();
 	$file_inclusion = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'fi' ORDER BY difficulty ASC")->fetchAll();
+	$open_redirect = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'open-redirect' ORDER BY difficulty ASC")->fetchAll();
+	$buffer_overflow = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'bof' ORDER BY difficulty ASC")->fetchAll();
+	$integer_overflow = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'iof' ORDER BY difficulty ASC")->fetchAll();
+	$format_string = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'fsb' ORDER BY difficulty ASC")->fetchAll();
+	$race_condition = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'rc' ORDER BY difficulty ASC")->fetchAll();
+	$use_after_free = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'uaf' ORDER BY difficulty ASC")->fetchAll();
+	$password_cracking = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'pc' ORDER BY difficulty ASC")->fetchAll();
+	$captcha_cracking = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'cc' ORDER BY difficulty ASC")->fetchAll();
 	$free = $link->query("SELECT difficulty, description FROM challenges WHERE type = 'free' ORDER BY difficulty ASC")->fetchAll();
 ?>
 
@@ -46,10 +53,6 @@ try
 	<link rel="stylesheet" media="all" type="text/css" href="../include/css/button.css">
 	<script src="../include/js/sweetalert2.all.js"></script>
 	<style type="text/css">
-		h1 {
-			padding-left:100px;
-		}
-
 		@keyframes animation-breathe {
 			0%	{ background: black; }
 			50%	{ background: #171717; }
@@ -61,30 +64,51 @@ try
 	</style>
 </head>
 	<body>
-		<div id="banner" style="padding-left:200px; float:left;">
-			<div style="padding-left:10%; padding-right:10%; padding-top:10px; height:50px; background:linear-gradient(#101010 90%, #2a2a2a 95%); font-size:24pt;">
-				<?= NAME ?> <img src="../logo.jpg" width="40" height="40">
-			</div>
-		</div>
 		<div id="vertical-menu" style="margin-top:-10px; min-width:250px; background:linear-gradient(180deg, Black 700px, White); /*animation: animation-breathe 2.5s infinite;*/">
 			<?php
 				echo "<div style=\"padding-bottom:100px;\">";
 				button("Profile", "show_page('myprofile');", false, 200, "#2a77d7"); 
 				button("LeaderBoard", "show_page('leaderboard');", false, 200, "#2a77d7");
 				button("Forum", "../Forum", true, 200, "#2a77d7");
+				button("Documentation", "documentation.php", true, 200, "#2a77d7");
 				echo "</div>";
-
-				button("File Inclusion", "show_page('fi', true);");
-				button("Command Injection", "show_page('code-injection', true);");
-				button("CSRF", "show_page('csrf', true);");
-				button("SQL Injection", "show_page('sql-injection', true);");
-				
-				button("Free", "show_page('free', true);", false, 200, "#7ad7d7"); 
+			?>
+			<ul>
+				<li class="nav-section">
+					<a class="button">Web</a>
+					<ul>
+						<li><?php button("Command Injection", "show_page('code-injection', true);"); ?></li>
+						<li><?php button("CSRF", "show_page('csrf', true);"); ?></li>
+						<li><?php button("File Inclusion", "show_page('fi', true);"); ?></li>
+						<li><?php button("Open Redirect", "show_page('open-redirect', true);"); ?></li>
+					</ul>
+				</li>
+				<li class="nav-section">
+					<a class="button">System</a>
+					<ul>
+						<li><?php button("Format String", "show_page('fsb', true);"); ?></li>
+						<li><?php button("Integer Overflow", "show_page('iof', true);"); ?></li>
+						<li><?php button("Race Condition", "show_page('rc', true);"); ?></li>
+						<li><?php button("Stack Buffer Overflow", "show_page('bof', true);"); ?></li>
+						<li><?php button("Use After Free", "show_page('uaf', true);"); ?></li>
+					</ul>
+				</li>
+				<li class="nav-section">
+					<a class="button">Programming</a>
+					<ul>
+						<li><?php button("Password cracking", "show_page('pc', true);"); ?></li>
+						<li><?php button("Captcha cracking", "show_page('cc', true);"); ?></li>
+					</ul>
+				</li>
+			</ul>
+			<?php
+				//button("Free", "show_page('free', true);", false, 200, "#7ad7d7"); 
 
 				echo "<div style=\"padding-top:100px;\">";
 				button("Sign out", "../Controller/sign-out.php", true, 200, "#2a77d7");
 				echo "</div>";
 			?>
+			
 		</div>
 		<div class="form-style" style="position:absolute; left:250px; top:100px; padding-right:50px;width:calc(100% - 350px);">
 			<div id="myprofile" style="display:none;">
@@ -126,6 +150,38 @@ try
 						echo "}, {";
 						$first = true;
 						foreach ($file_inclusion as $result)
+							echo (!$first ? ", " : $first = false).$result['difficulty'].": \"".$result['description']."\"";
+						echo "}, {";
+						$first = true;
+						foreach ($open_redirect as $result)
+							echo (!$first ? ", " : $first = false).$result['difficulty'].": \"".$result['description']."\"";
+						echo "}, {";
+						$first = true;
+						foreach ($buffer_overflow as $result)
+							echo (!$first ? ", " : $first = false).$result['difficulty'].": \"".$result['description']."\"";
+						echo "}, {";
+						$first = true;
+						foreach ($integer_overflow as $result)
+							echo (!$first ? ", " : $first = false).$result['difficulty'].": \"".$result['description']."\"";
+						echo "}, {";
+						$first = true;
+						foreach ($format_string as $result)
+							echo (!$first ? ", " : $first = false).$result['difficulty'].": \"".$result['description']."\"";
+						echo "}, {";
+						$first = true;
+						foreach ($race_condition as $result)
+							echo (!$first ? ", " : $first = false).$result['difficulty'].": \"".$result['description']."\"";
+						echo "}, {";
+						$first = true;
+						foreach ($use_after_free as $result)
+							echo (!$first ? ", " : $first = false).$result['difficulty'].": \"".$result['description']."\"";
+						echo "}, {";
+						$first = true;
+						foreach ($password_cracking as $result)
+							echo (!$first ? ", " : $first = false).$result['difficulty'].": \"".$result['description']."\"";
+						echo "}, {";
+						$first = true;
+						foreach ($captcha_cracking as $result)
 							echo (!$first ? ", " : $first = false).$result['difficulty'].": \"".$result['description']."\"";
 						echo "}, {";
 						$first = true;
@@ -191,12 +247,44 @@ try
 							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $csrf) ?>;
 							break;
 						case "code-injection":
-							document.getElementById("title-challenge").innerHTML = "Code injection";
+							document.getElementById("title-challenge").innerHTML = "Command injection";
 							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $code_injection) ?>;
 							break;
 						case "fi":
 							document.getElementById("title-challenge").innerHTML = "File inclusion";
 							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $file_inclusion) ?>;
+							break;
+						case "open-redirect":
+							document.getElementById("title-challenge").innerHTML = "Open Redirect";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $open_redirect) ?>;
+							break;
+						case "bof":
+							document.getElementById("title-challenge").innerHTML = "Stack Buffer Overflow";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $buffer_overflow) ?>;
+							break;
+						case "iof":
+							document.getElementById("title-challenge").innerHTML = "Integer Overflow";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $integer_overflow) ?>;
+							break;
+						case "fsb":
+							document.getElementById("title-challenge").innerHTML = "Format String";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $format_string) ?>;
+							break;
+						case "rc":
+							document.getElementById("title-challenge").innerHTML = "Race Condition";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $format_string) ?>;
+							break;
+						case "uaf":
+							document.getElementById("title-challenge").innerHTML = "Use After Free";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $format_string) ?>;
+							break;
+						case "pc":
+							document.getElementById("title-challenge").innerHTML = "Password cracking";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $format_string) ?>;
+							break;
+						case "cc":
+							document.getElementById("title-challenge").innerHTML = "Captcha cracking";
+							document.getElementById("difficulty").innerHTML += <?php difficulty($link, $format_string) ?>;
 							break;
 						case "free":
 							document.getElementById("title-challenge").innerHTML = "Free";
@@ -215,6 +303,22 @@ try
 				switch(type)
 				{
 					case "free":
+						++num;
+					case "cc":
+						++num;
+					case "pc":
+						++num;
+					case "uaf":
+						++num;
+					case "rc":
+						++num;
+					case "fsb":
+						++num;
+					case "iof":
+						++num;
+					case "bof":
+						++num;
+					case "open-redirect":
 						++num;
 					case "fi":
 						++num;
@@ -273,6 +377,14 @@ try
 					case "csrf":
 					case "code-injection":
 					case "fi":
+					case "open-redirect":
+					case "bof":
+					case "iof":
+					case "fsb":
+					case "rc":
+					case "uaf":
+					case "pc":
+					case "cc":
 					case "free":
 						link += type+"/";
 						break;

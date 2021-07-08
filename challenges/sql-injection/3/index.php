@@ -28,7 +28,7 @@ else $_GET['id'] = '';
 </head>
 	<body>
 		<div id="banner" style="float:left;">
-			<div style="padding-left:10%; padding-right:10%; padding-top:10px; height:50px; background:linear-gradient(#101010 90%, #2a2a2a 95%); font-size:24pt;">
+			<div style="padding-left:10%; padding-right:10%; padding-top:10px; height:50px; background:linear-gradient(black 90%, #2a2a2a 90%); font-size:24pt;">
 				<?php echo NAME ?>
 			</div>
 		</div>

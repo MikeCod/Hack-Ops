@@ -27,7 +27,7 @@ function button($text, $a, $href = false, $width = 200, $color = "white")
    </head>
    <body>
       <div id="banner" style="float:left;">
-            <div style="padding-left:10%; padding-right:10%; padding-top:10px; height:50px; background:linear-gradient(#101010 90%, #2a2a2a 95%); font-size:24pt;">
+            <div style="padding-left:10%; padding-right:10%; padding-top:10px; height:50px; background:linear-gradient(black 90%, #2a2a2a 90%); font-size:24pt;">
                 <?= NAME ?> <img src="../logo.jpg" width="40" height="40">
             </div>
         </div>

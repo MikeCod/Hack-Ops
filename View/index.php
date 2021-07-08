@@ -56,13 +56,17 @@ function button($text, $a, $href = false, $width = 150, $color = "white")
 </head>
 	<body>
 		<div id="banner">
-			<div style="padding-left:10%; padding-right:10%; padding-top:10px; height:50px; background:linear-gradient(#101010 90%, #2a2a2a 95%);">
+			<div style="padding-left:10%; padding-right:10%; padding-top:10px; height:50px; background:linear-gradient(black 90%, #2a2a2a 90%);">
 				<?php
 					button("Home", "show_page('home');");
 					button("About us", "show_page('about-us');");
 					button("How does it work", "show_page('how-does-it-work');", false, 200);
 					button("Donate", "show_page('donate');");
-					echo "<div style=\"float:right;\">"; button("Sign in", "sign-in.php", true, 150, "#2a77d7"); button("Sign up", "sign-up/", true, 150, "#2a77d7"); echo '</div>';
+					echo "<div style=\"float:right;\">";
+						button("Documentation", "documentation.php", true, 200, "#2a77d7");
+						button("Sign in", "sign-in.php", true, 150, "#2a77d7");
+						button("Sign up", "sign-up/", true, 150, "#2a77d7");
+					echo "</div>";
 				?>
 			</div>
 		</div>
@@ -73,22 +77,34 @@ function button($text, $a, $href = false, $width = 150, $color = "white")
 			</div>
 			<div id="about-us" style="display:none; width:100%;">
 				<h1>About us <img src="../logo.jpg" width="100" height="100"></h1>
-				<p>We are a team made up of three S2 students. We chose this subject for our IT Project because we think security is a big part of the future of technology. Nowedays, people doesn't realize how important of this aspect of IT is. To help people to understand how hackers can exploit their site, our project provides a platform where you can improve your skills in offensive security.</p>
+				<p>We are a team made up of 2 S5 students (we were 3 in S2, and we take back this project for our S5). We chose this subject for our IT project because we think security is a big part of the future of technology. Nowedays, people doesn't realize how important of this aspect of IT is. To help people to understand how hackers can exploit their site, our project provides a platform where you can improve your skills in offensive security.</p>
 			</div>
 			<div id="how-does-it-work" style="display:none; width:100%;">
 				<h1>How does it work <img src="../logo.jpg" width="100" height="100"></h1>
 				<h2>Create an account and train yourself to offensive security</h2>
 				<div style="text-align:left; padding-left:24%; padding-top:50px;">
-					<p>5 challenges:</p>
+					<p>4 challenges in Web category:</p>
 					<ul style="padding-left:24%;">
-						<li><span class="tab"></span>File inclusion</li>
-						<li><span class="tab"></span>Code injection</li>
+						<li><span class="tab"></span>Command injection</li>
 						<li><span class="tab"></span>CSRF</li>
-						<li><span class="tab"></span>SQL injection</li>
-						<li><span class="tab"></span>Free</li>
+						<li><span class="tab"></span>File inclusion</li>
+						<li><span class="tab"></span>Open Redirect</li>
+					</ul>
+					<p>5 challenges in System category:</p>
+					<ul style="padding-left:24%;">
+						<li><span class="tab"></span>Format String</li>
+						<li><span class="tab"></span>Integer Overflow</li>
+						<li><span class="tab"></span>Race Condition</li>
+						<li><span class="tab"></span>Stack Buffer Overflow</li>
+						<li><span class="tab"></span>Use After Free</li>
+					</ul>
+					<p>2 challenges in Programming category:</p>
+					<ul style="padding-left:24%;">
+						<li><span class="tab"></span>Password cracking</li>
+						<li><span class="tab"></span>Captcha cracking</li>
 					</ul>
 				</div>
-				<p>One challenge is a real project (<span style="color:deepskyblue;">Free</span>), a partnership with the project Plat-In.</p>
+				<!--<p>One challenge is a real project (<span style="color:deepskyblue;">Free</span>), a partnership with the project Plat-In.</p>-->
 			</div>
 			<div id="donate" style="display:none; width:100%;">
 				<h1>Donate <img src="../logo.jpg" width="100" height="100"></h1>

@@ -9,7 +9,7 @@ get_challenge($type, $difficulty);
 
 try
 {
-	if($_GET["redirect"] == "https://my.dark.site")
+	if(parse_url($_GET["redirect"], PHP_URL_SCHEME) == "https" and parse_url($_GET["redirect"], PHP_URL_HOST) == "my.dark.site")
 		$result = "<script src=\"../../../include/js/sweetalert2.all.js\"></script>\n<script type=\"text/javascript\">
 			Swal.fire(
 			\"Congrats !\",

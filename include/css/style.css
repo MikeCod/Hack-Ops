@@ -10,7 +10,7 @@ body {
 	color: White;
 	font-size: 14pt;
 	background:#070707;
-	overflow: hidden;
+	overflow-x: hidden;
 }
 #banner {
 	width:100%;
@@ -24,8 +24,9 @@ body {
 
 #footer { height:200px; background: #070707; color:White; font-size:12pt; }
 
-h1 { color: white; }
-h2 { color: #e0e0e0; }
+h1 { color: white;		padding-left:100px; }
+h2 { color: #e0e0e0; 	padding-left:50px; padding-top:100px; }
+h3 { color: #d0d0d0; 	padding-left:25px; padding-top:50px; }
 p { font-family:"Open Sans"; font-size:14pt; font-weight: bold; color:White; }
 
 .form-style {
@@ -98,19 +99,6 @@ p { font-family:"Open Sans"; font-size:14pt; font-weight: bold; color:White; }
 .form-style select:focus {
 	font-size: 14px;
 }
-.form-style .number {
-	background: DarkMagenta;
-	color: Snow;
-	height: 30px;
-	width: 30px;
-	display: inline-block;
-	font-size: 0.8em;
-	margin-right: 4px;
-	line-height: 30px;
-	text-align: center;
-	text-shadow: 0 1px 0 rgba(255,255,255,0.2);
-	border-radius: 15px 15px 15px 0px;
-}
 
 .form-style input[type="submit"],
 .form-style input[type="button"] {
@@ -177,6 +165,7 @@ p { font-family:"Open Sans"; font-size:14pt; font-weight: bold; color:White; }
 	padding-top:200px;
 	width:250px;
 	font-size:18pt;
+	z-index: 3;
 }
 
 #vertical-menu a.button-menu, .active {
@@ -233,4 +222,52 @@ a:hover {
 
 textarea {
 	color:black;
+}
+
+
+.nav-section > ul {
+	display:none;
+	transition-duration: 320ms;
+	padding: 8px;
+	background: black;
+	color: black;
+	border-radius: 4px;
+	box-shadow: 1px 1px 4px black;
+	max-height: 900px;
+	z-index: 2 !important;
+	left: 350px;
+	position: absolute;
+	margin-top: -80px !important;
+	width: 100px;
+}
+.nav-section > ul > li {
+	padding:8px;
+}
+.nav-section > ul > li > a, .nav-section > a {
+	text-decoration:none;
+}
+.nav-section {
+	display:inline-block;
+	margin-right:4px;
+	width:200px;
+}
+.nav-section > a {
+	padding:8px;
+	background:black;
+	color:white;
+	float:left;
+	width:180px;
+	cursor:pointer;
+	border-radius:4px;
+	text-align:center;
+	z-index: 1;
+	position: relative;
+}
+.nav-section:hover > ul {
+	position:absolute;
+	margin-left:-200px;
+	margin-top:40px;
+	display:inline-block;
+	list-style-type:none;
+	width:400px;
 }

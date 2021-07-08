@@ -1,0 +1,36 @@
+<h1>Open Redirect</h1>
+
+<h2>When does it appear ?</h2>
+	
+	<p>
+	Unvalidated redirects and forwards are possible when a web application accepts untrusted input that could cause the web application to redirect the request to a URL contained within untrusted input.
+	</p>
+	<pre><code class="language-php">header("Location: ".$_GET["redirect"])</code></pre>
+
+<h2>What's the risk ?</h2>
+
+	<p>
+	Because the server name in the modified link is identical to the original site, phishing attempts may have a more trustworthy appearance. Unvalidated redirect and forward attacks can also be used to maliciously craft a URL that would pass the application's access control check and then forward the attacker to privileged functions that they would normally not be able to access.
+	</p>
+
+<h2>How does the exploitation work ?</h2>
+
+	<p>
+	By modifying untrusted URL input to a malicious site, an attacker may successfully launch a phishing scam and steal user credentials.
+	</p>
+
+<h2>How to patch it ?</h2>
+
+	<p>
+	Safe use of redirects and forwards can be done in a number of ways:
+
+    	Simply avoid using redirects and forwards.
+	    If used, do not allow the URL as user input for the destination.
+	    Where possible, have the user provide short name, ID or token which is mapped server-side to a full target URL.
+	        This provides the highest degree of protection against the attack tampering with the URL.
+	        Be careful that this doesn't introduce an enumeration vulnerability where a user could cycle through IDs to find all possible redirect targets
+	    If user input can’t be avoided, ensure that the supplied value is valid, appropriate for the application, and is authorized for the user.
+	    Sanitize input by creating a list of trusted URLs (lists of hosts or a regex).
+	        This should be based on an allow-list approach, rather than a block list.
+	    Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.
+	</p>

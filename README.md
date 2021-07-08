@@ -13,29 +13,3 @@ The files `.htaccess` and `error.php` must be on root, and they __can be customi
 SweetAlert
 phpseclib
 Font Awesome
-
-## Next
-### Web
-CSRF (0 protection)
-XSS (stockée / non stockée)
-
-### System
-Buffer overflow / Integer overflow / Heap overflow
-Windows / Linux hacking
-Race condition
-Code injection
-Null Dereference
-
-### Network
-ARP poisoning
-DNS cache poisoning
-MAC flooding
-DoS (RUDY, SYN flood)
-Telnet vs SSH
-SSLStrip
-WEP vs WPA
-Port scanning
-
-### Social engineering
-A [framework](https://www.social-engineer.org/framework/general-discussion/categories-social-engineers/) for social engineering
-Password cracking / Password security challenge

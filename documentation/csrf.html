@@ -1,0 +1,28 @@
+<h1>CSRF</h1>
+
+<h2>When does it appear ?</h2>
+	
+	<p>
+	With a little help of social engineering (such as sending a link via email or chat), an attacker may trick the users of a web application into executing actions of the attacker’s choosing.
+	</p>
+
+<h2>What's the risk ?</h2>
+
+	<p>
+	Cross-Site Request Forgery (CSRF) is an attack that forces an end user to execute unwanted actions on a web application in which they’re currently authenticated.If the victim is a normal user, a successful CSRF attack can force the user to perform state changing requests like transferring funds, changing their email address, and so forth. If the victim is an administrative account, CSRF can compromise the entire web application.
+	</p>
+
+<h2>How does the exploitation work ?</h2>
+
+	<pre><code class="language-">https://vulnerable.site/change-password-resource.php?new-password=password</code></pre>
+
+<h2>How to patch it ?</h2>
+
+	<p>
+	Add a per-request nonce to the URL and all forms in addition to the standard session. This is also referred to as “form keys”. Many frameworks (e.g., Drupal.org 4.7.4+) either have or are starting to include this type of protection “built-in” to every form so the programmer does not need to code this protection manually.
+    Add a hash (session id, function name, server-side secret) to all forms.
+    For .NET, add a session identifier to ViewState with MAC (described in detail in the DotNet Security Cheat Sheet).
+    Checking the referrer header in the client’s HTTP request can prevent CSRF attacks. Ensuring that the HTTP request has come from the original site means that attacks from other sites will not function. It is very common to see referrer header checks used on embedded network hardware due to memory limitations.
+        XSS can be used to bypass both referrer and token based checks simultaneously. For instance, the Samy worm used an XMLHttpRequest to obtain the CSRF token to forge requests.
+    “Although CSRF is fundamentally a problem with the web application, not the user, users can help protect their accounts at poorly designed sites by logging off the site before visiting another, or clearing their browser’s cookies at the end of each browser session.” –http://en.wikipedia.org/wiki/Cross-site_request_forgery#_note-1
+	</p>

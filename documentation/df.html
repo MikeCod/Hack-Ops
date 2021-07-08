@@ -1,0 +1,24 @@
+<h1>Double Free</h1>
+
+<h2>When does it appear ?</h2>
+<pre><code class="language-c">char *a = malloc(16);
+char *b = malloc(16);
+
+free(a);
+free(b); // To bypass "double free or corruption (fasttop)" check
+free(a); // Double Free !
+</code></pre>
+
+<h2>What's the risk ?</h2>
+<p>Access control: Doubly freeing memory may result in a <a href="https://cwe.mitre.org/data/definitions/123.html">write-what-where condition</a>, allowing an attacker to execute arbitrary code.</p>
+
+<h2>How does the exploitation work ?</h2>
+
+
+<h2>How to patch it ?</h2>
+<p>Point to NULL after freeing the pointer, free() does nothing to a NULL pointer :</p>
+<pre><code class="language-c">char *buffer = malloc(64);
+free(a);
+a = NULL;
+free(a) // Does nothing
+</code></pre>

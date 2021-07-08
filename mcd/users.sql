@@ -27,7 +27,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `HackOps`.`challenges` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `type` ENUM('sql-injection', 'csrf', 'code-injection', 'fi', 'free') NOT NULL,
+  `type` ENUM('sql-injection','csrf','code-injection','fi','free','bof','iof','rc','fsb') NOT NULL,
   `difficulty` INT UNSIGNED NOT NULL,
   `description` VARCHAR(256) NOT NULL,
   `flag` VARCHAR(64) NOT NULL,
@@ -226,6 +226,29 @@ CREATE TABLE IF NOT EXISTS `HackOps`.`f_follow` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `HackOps`.`programming-challenges-status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HackOps`.`programming-challenges-status` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user` INT NOT NULL,
+  `challenge` INT NOT NULL,
+  `status` TINYINT NULL COMMENT '0 : Nothing sent\n1 : In progress\n2 : Failed\n3 : Success',
+  PRIMARY KEY (`id`),
+  INDEX `fk_programming-challenges-status_users1_idx` (`user` ASC),
+  INDEX `fk_programming-challenges-status_challenges1_idx` (`challenge` ASC),
+  CONSTRAINT `fk_programming-challenges-status_users1`
+    FOREIGN KEY (`user`)
+    REFERENCES `HackOps`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_programming-challenges-status_challenges1`
+    FOREIGN KEY (`challenge`)
+    REFERENCES `HackOps`.`challenges` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 -- ADD ADMIN ACCOUNT --
 -- Password: H@ck0p5P1MDC -- 
 INSERT INTO users(username, email, password, activated, administrator) VALUES('admin', 'admin@localhost', 'f451eecb3a41963157e4d3b0063636cfc3e37b65ed46d74382ff2a09cffe7dd2e0435b60ce56670beedc472d55fa8c4c7bd98558c637ee1816264d13c3f549db', '1', '1');
@@ -268,10 +291,23 @@ INSERT INTO challenges(type, difficulty, description, flag) VALUES('fi', '2', 'Y
 
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('open-redirect', '1', 'You have to exploit an Open Redirect.<br>The flag is the ressource \'https://my.dark.site\'', 'KLsYxSjRLZj3PBTaS9V4WCcDrqudeCgiUy8OgSQTDredZ8DJ61xTqdKb9BP52CLg');
 
-INSERT INTO challenges(type, difficulty, description, flag) VALUES('bof', '1', 'You have to exploit a buffer overflow on the executable \'ch-bof-1\', the source code is available in the file \'ch-bof-1.c\'<br>Goal: Change the content of the variable \'check\' to \'0xdeadbeef\'<br>Note: The flag is in the file \'flag-bof-1\'', 'wUjM7hug3cvLBqQ892nnwe1NAr8vpz3fk1LrEh7nj4nsuCVFc0Ag6uY67h7Y94cB');
-INSERT INTO challenges(type, difficulty, description, flag) VALUES('bof', '2', 'You have to exploit a buffer overflow on the executable \'ch-bof-2\', the source code is available in the file \'ch-bof-2.c\'<br>Goal: Access to the function \'secret_function\'<br>Note: The flag is in the file \'flag-bof-2\'', 'mytqQCgQnbpsMd6SRXjnApb2QIJiNoveNCB8V3A1CELRt3SoaPxBQdozGIIdlKuf');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('bof', '1', 'You have to exploit a buffer overflow on the executable \'ch\', the source code is available in the file \'ch.c\'<br>Goal: Change the content of the variable \'check\' to \'0xdeadbeef\'<br>Note: The flag is in the file \'flag\'', 'wUjM7hug3cvLBqQ892nnwe1NAr8vpz3fk1LrEh7nj4nsuCVFc0Ag6uY67h7Y94cB');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('bof', '2', 'You have to exploit a buffer overflow on the executable \'ch\', the source code is available in the file \'ch.c\'<br>Goal: Access to the function \'secret_function\'<br>Note: The flag is in the file \'flag\'', 'mytqQCgQnbpsMd6SRXjnApb2QIJiNoveNCB8V3A1CELRt3SoaPxBQdozGIIdlKuf');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('bof', '3', 'You have to exploit a buffer overflow on the executable \'ch\', the source code is available in the file \'ch.c\'<br>Goal: Execute your own shellcode to run /bin/sh<br>Note: The flag is in the file \'flag\'', '6iaiVcEwFKluWGpm806143l2dVjEUyPFCbMz4oqhugmIw8u7o7GTnU9cW99ugRQK');
 
-INSERT INTO challenges(type, difficulty, description, flag) VALUES('rc', '1', 'You have to exploit a race condition on the executable \'ch-rc\'<br>Note: The flag is in the file \'flag-rc\'', 'g2izPj0AYzr2nUfOoZBsife3mojSSFQ3nTI0i7uCWeUgnP2NTtpcbbIDCxPzgKEC');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('iof', '1', 'You have to exploit an integer overflow on the executable \'ch\', the source code is available in the file \'ch.c\'', 'p4UsgvJNEdEHXKJ5m1H6n3Wy3d7j3XFBLFctxBI62Gt3ynkFX20FoQ9XeRNiprSK');
+
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('fsb', '1', 'You have to exploit a format string bug on the executable \'ch\', the source code is available in the file \'ch.c\'', 'JeKSKwJ4Es1smUo4AEEN4RWnNt5d0fYoy71o8yyGgicbB9zmw77ArRVpWbXmgqcj');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('fsb', '2', 'You have to exploit a format string bug on the executable \'ch\', the source code is available in the file \'ch.c\'<br>Note: To make it easier, the flag is 4 characters length', 'Dpe2');
+
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('pc', '1', 'You have to crack the password of the file /home/ch-pc-1/ch <password>, using the file /usr/share/wordlists/metasploit/unix_passwords.txt. The program will return \'NO\' if the password is wrong, or \'OK\' if it\'s good. The python3 script must be called \'script.py\' and must print the password found.', 'ToA2umMr2r8MX1KPGgux3l2vobO9X8vDqia7giO7XCpl2oEY3ULBI4pXpqYRiWfs');
+
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('uaf', '2', 'You have to exploit a Use After Free on the executable \'ch\', the source code is available in the file \'ch.c\'', 'BnXT1CZ1VNLafXmIeX6S70bX0WdbnAEkKEB75GjFkMQVd1MBj0QMaRTRnjtq9phv');
+
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('cc', '1', 'You have to crack the captcha in the file \'/home/ch-cc-1/captcha.txt\', you\'ll have to solve the calculation, it\'ll be like \'a + b\'. The python3 script must be called \'script.py\' and must print the result.', 'ahsYgCc8t3A4l8je9D6bzgzcB6bcZlOy6tmbqBpG9Tgu1P8umYMOzuSqUUCRIDWR');
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('cc', '2', 'You have to crack the captcha from the file \'/home/ch-cc-2/captcha.bmp\', you\'ll have to extract characters, and don\'t forget to strip the string. The python3 script must be called \'script.py\' and must print the captcha found.', 'Z5AyR6pcI7e1lgxtm2qLIH5OPWXmjlpzqHIXMyiaWFo6XNurvosJiRbH2yAsnctH');
+
+INSERT INTO challenges(type, difficulty, description, flag) VALUES('rc', '1', 'You have to exploit a race condition on the executable \'ch\', the source code is available in the file \'ch.c\'', 'g2izPj0AYzr2nUfOoZBsife3mojSSFQ3nTI0i7uCWeUgnP2NTtpcbbIDCxPzgKEC');
 
 INSERT INTO challenges(type, difficulty, description, flag) VALUES('free', '3', 'You\'re a user of the project Plat-In<br>Find a vulnerability to retrieve raw admin\'s password.<br>The flag is in the users table, the username is in the user column and the password in u_password.', 'cXprJUB6QlVUbzg2OU8zXmJiV0dlaHF6WTRzSkdiZFQ=');
 

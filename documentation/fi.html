@@ -1,0 +1,30 @@
+<h1>File Inclusion</h1>
+
+<h2>When does it appear ?</h2>
+	
+	<p>
+	The vulnerability occurs due to the use of user-supplied input without proper validation.
+	</p>
+
+<h2>What's the risk ?</h2>
+
+	<p>
+	This can lead to something as outputting the contents of the file, but depending on the severity, it can also lead to:
+
+		    Code execution on the web server
+		    Code execution on the client-side such as JavaScript which can lead to other attacks such as cross site scripting (XSS)
+		    Denial of Service (DoS)
+		    Sensitive Information Disclosure
+	</p>
+
+<h2>How does the exploitation work ?</h2>
+
+	<p>
+	The File Inclusion vulnerability allows an attacker to include a file, usually exploiting a “dynamic file inclusion” mechanisms implemented in the target application.
+	</p>
+
+<h2>How to patch it ?</h2>
+
+	<p>
+	The most effective solution to eliminate file inclusion vulnerabilities is to avoid passing user-submitted input to any filesystem/framework API. If this is not possible the application can maintain an allow list of files, that may be included by the page, and then use an identifier (for example the index number) to access to the selected file. Any request containing an invalid identifier has to be rejected, in this way there is no attack surface for malicious users to manipulate the path.
+	</p>

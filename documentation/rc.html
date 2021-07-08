@@ -1,0 +1,79 @@
+<h1>Race Condition</h1>
+
+<h2>When does it appear ?</h2>
+<p style="text-decoration:underline;">Example taken from the book "Linux Kernel Development" :</p>
+<p>One of the most common functions performed by cash machines is withdrawing money from an individual’s personal bank account. A person walks up to the machine, inserts an ATM card, types in a PIN, selects Withdrawal , inputs a pecuniary amount, hits OK, takes the money, and mails it to me.<br>
+After the user has asked for a specific amount of money, the cash machine needs to ensure that the money actually exists in that user’s account. If the money exists, it then needs to deduct the withdrawal from the total funds available. The code to implement this would look something like :</p>
+<pre><code class="language-c">int total = get_total_from_account(); /* total funds in account */
+int withdrawal = get_withdrawal_amount(); /* amount user asked to withdrawal */
+
+/* check whether the user has enough funds in her account */
+if (total < withdrawal) {
+	error("You do not have that much money !");
+	return -1;
+}
+/* OK, the user has enough money: deduct the withdrawal amount from her total */
+total -= withdrawal;
+update_total_funds(total);
+/* give the user their money */
+spit_out_money(withdrawal);
+</code></pre>
+<p>Now, let’s presume that another deduction in the user’s funds is happening at the same time. It does not matter how the simultaneous deduction is happening: Assume that the user’s spouse is initiating another withdrawal at another ATM, a payee is electronically transferring funds out of the account, or the bank is deducting a fee from the account (as banks these days are so wont to do). Any of these scenarios fits our example. Both systems performing the withdrawal would have code similar to what we just looked at: First check whether the deduction is possible, then compute the new total funds, and finally execute the physical deduction. Now let’s make up some numbers. Presume that the first deduction is a withdrawal from an ATM for $100 and that the second deduction is the bank applying a fee of $10 because the customer walked into the bank. Assume the customer has a total of $105 in the bank. Obviously, one of these transactions cannot correctly complete without sending the account into the red. What you would expect is something like this: The fee transaction happens first. Ten dollars is less than $105, so 10 is subtracted from 105 to get a new total of 95, and $10 is pocketed by the bank. Then the ATM withdrawal comes along and fails because $95 is less than $100. With race conditions, life can be much more interesting. Assume that the two transactions are initiated at roughly the same time. Both transactions verify that sufficient funds exist: $105 is more than both $100 and $10, so all is good. Then the withdrawal process subtracts $100 from $105, yielding $5. The fee transaction then does the same, subtracting $10 from $105 and getting $95. The withdrawal process then updates the user’s new total available funds to $5. Now the fee transaction also updates the new total, resulting in $95. Free money! Clearly, financial institutions must ensure that this can never happen. They must lock the account during certain operations, making each transaction atomic with respect to any other transaction. Such transactions must occur in their entirety, without interruption, or not occur at all.</p>
+<p>Code paths that access and manipulate shared data are called critical regions (also called critical sections ).</p>
+
+<h2>What's the risk ?</h2>
+<p>Race conditions have a significant impact when accessing shared resources (e.g. databases, files, objects in code), as they can result in the corruption of said resource, or other unpredictable behavior. By simultaneously accessing and modifying a shared resource, the integrity of the resource can be affected as well.</p>
+<a href="https://www.securitycompassadvisory.com/blog/race-condition-web-applications/">Source</a>
+
+
+<h2>How does the exploitation work ?</h2>
+<p>In the race condition challenge we see in the source code that the flag file exists during 50ms. We need to be fast to show the content of the flag within these 50ms.</p>
+<pre><code class="language-bash">$ ./ch & cat flag
+[1] 22549
+cat: flag: No such file or directory
+</code></pre>
+<p>Okay, we are a bit too fast. Let's wait like 10ms to let it the time to create the file :</p>
+<pre><code class="language-bash">$ ./ch & sleep .01 && cat flag
+[2] 22561
+[1]   Terminated                    ./ch
+&#60;censored&#62;
+</code></pre>
+<h2>How to patch it ?</h2>
+<p>There's few way to patch :</p>
+<ul>
+	<li>Mutex : Lock a function thread until its end.</li>
+	<li>Semaphore : A variable (or an abstract data type) shared by different "actors", which guarantees that they can only access it sequentially through atomic operations.</li>
+</ul>
+<pre><code class="language-c">#include &#60;stdio.h&#62;
+#include &#60;threads.h&#62;
+#include &#60;stdatomic.h&#62;
+
+atomic_int acnt; // Semaphore
+int cnt;
+
+int f(void* thr_data)
+{
+    for(int n = 0; n < 1000; ++n) {
+        ++cnt;
+        ++acnt;
+    }
+    return 0;
+}
+ 
+int main(void)
+{
+    thrd_t thr[10];
+    for(int n = 0; n < 10; ++n)
+        thrd_create(&thr[n], f, NULL);
+    for(int n = 0; n < 10; ++n)
+        thrd_join(thr[n], NULL);
+ 
+    printf("The atomic counter is %u\n", acnt);
+    printf("The non-atomic counter is %u\n", cnt);
+}
+</code></pre>
+<p>Possible output :</p>
+<pre><code class="language-bash">The atomic counter is 10000 # Always true
+The non-atomic counter is 8644 # NOT always true because the threads attempt to access the variable at the same time
+</code></pre>
+<a target="_blank" href="https://en.cppreference.com/w/c/language/atomic">Source</a>

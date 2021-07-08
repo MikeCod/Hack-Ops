@@ -1,0 +1,28 @@
+<h1>Use After Free (UAF)</h1>
+
+<h2>When does it appear ?</h2>
+<pre><code class="language-c">char *buffer = NULL;
+buffer = malloc(64);
+free(buffer);
+// The buffer don't point to NULL, there's a vulnerability
+</code></pre>
+
+<h2>What's the risk ?</h2>
+<p>The next allocation can point to the area of the freed buffer, and thus the buffer can be used as valid with the data of the new buffer.</p>
+
+<h2>How does the exploitation work ?</h2>
+<p>If we control the new buffer, we can control the data of the freed buffer :</p>
+<pre><code class="language-c">char *buffer = NULL;
+char *new_buffer = NULL;
+
+buffer = malloc(64);
+free(buffer);
+
+new_buffer = malloc(64);
+strcpy(new_buffer, "Use After Free");
+// buffer points to new_buffer address, thus its data will be interpreted as "Use After Free"
+</code></pre>
+
+<h2>How to patch it ?</h2>
+<p>Point to NULL after freeing the buffer :</p>
+<pre><code class="language-c">buffer = NULL;</code></pre>

@@ -1,0 +1,41 @@
+<h1>Integer Overflow</h1>
+
+<h2>When does it appear ?</h2>
+<pre><code class="language-c">unsigned short length = 65535;
+++length; // 65536 ≡ 0 [2^16]
+buffer = malloc(length * sizeof(char)); // Allocation of 0 byte
+</code></pre>
+
+<h2>What's the risk ?</h2>
+<p>It can cause a buffer overflow, and thus code execution.</p>
+
+<h2>How does the exploitation work ?</h2>
+<p>The following example is taken from a real vulnerability affecting OpenSSH (versions 2.9.9 to 3.3) and having the following CVE identifier number: CVE-2002-06392.</p>
+<p>The source code snippet below, taken from OpenSSH, is in C language, comments have been added for clarity.</p>
+<pre><code class="language-c">// Extract an integer from a packet received by OpenSSH
+nresp = packet_get_int();
+if (nresp > 0) {
+	// Allocate a buffer of: nresp * 4 bytes (or 8 for a 64 bits machine)
+	response = xmalloc(nresp * sizeof(char*));
+	for (i = 0; i < nresp; i++)
+		response[i] = packet_get_string(NULL);
+}
+</code></pre>
+<p>In the code shown above, an integer is taken from a packet received by OpenSSH. This integer is then multiplied by the size (sizeof) of a char pointer, which is usually 4 bytes on a 32-bits system (or 8 for a 64 bits machine). The result of this multiplication is then passed as a parameter to the xmalloc function (similar to malloc) which is used to allocate a buffer.</p>
+<p>If the integer received in the packet (variable nresp) has a value of 1,073,741,824, the result of the operation "nresp * sizeof (char *)" is equivalent to:</p>
+<pre><code class="language-">1,073,741,824 × 4 = 4,294,967,296</code></pre>
+<p>The maximum representable value of a 32-bits integer being 2^32 - 1, the truncation therefore takes place at 2^32. The parameter passed to the xmalloc function in the code is therefore equal (where % is the modulo operator):</p>
+<pre><code class="language-">(1073741824 * 4) % 2^32 = 0</code></pre>
+<p>Either in standard mathematical writing</p>
+<pre><code class="language-">(1,073,741,824 × 4) ≡ 0 [2^32]</code></pre>
+<p>Since in most cases memory allocations allow an allocation of 0 bytes, the xmalloc function returns a valid pointer to a 0 byte buffer. The loop directly following the allocation function will add data to this 0 byte buffer causing a heap overflow.</p>
+<a href="https://fr.wikipedia.org/wiki/D%C3%A9passement_d%27entier">Source</a>
+<h2>How to patch it ?</h2>
+<p>Make sure you won't write in the buffer more than it can contain :</p>
+<pre><code class="language-c">nresp = packet_get_int();
+if (nresp > 0 && nresp < 536870912) { // Patch there : 4,294,967,296 / 8 = 536,870,912
+	response = xmalloc(nresp * sizeof(char*));
+	for (i = 0; i < nresp; i++)
+		response[i] = packet_get_string(NULL);
+}
+</code></pre>

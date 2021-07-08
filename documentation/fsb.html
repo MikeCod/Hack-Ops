@@ -1,0 +1,26 @@
+<h1>Format String Bug (FSB)</h1>
+
+<h2>When does it appear ?</h2>
+<pre><code class="language-c">printf(argv[1])</code></pre>
+
+<h2>What's the risk ?</h2>
+<p>Read data from the stack.</p>
+
+<h2>How does the exploitation work ?</h2>
+<p>Imagine we have this code :</p>
+<pre><code class="language-c">#include &#60;stdio.h&#62;
+#include &#60;unistd.h&#62;
+
+int main(int argc, char *argv[]){
+	FILE *secret = fopen("flag", "rt");
+	char buffer[80];
+	fgets(buffer, sizeof(buffer), secret);
+	printf(argv[1]); // Vulnerable to format string bug
+	fclose(secret);
+	return 0;
+}</code></pre>
+<p>We can read the stack, putting format specifiers (like %d, %c, or even %s).</p>
+
+<h2>How to patch it ?</h2>
+<p>Use format string function correctly :</p>
+<pre><code class="language-c">printf("%s", argv[1])</code></pre>

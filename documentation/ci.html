@@ -1,0 +1,26 @@
+<h1>Command Injection</h1>
+
+<h2>When does it appear ?</h2>
+	
+	<p>
+	Command injection attacks are possible when an application passes unsafe user supplied data (forms, cookies, HTTP headers etc.) to a system shell.
+	</p>
+	<pre><code class="language-php">$ssh->exec("ping -W 250 -c 4 ".$_POST['host'])</code></pre>
+
+<h2>What's the risk ?</h2>
+
+	<p>
+	Command injection is an attack in which the goal is execution of arbitrary commands on the host operating system via a vulnerable application.
+	</p>
+
+<h2>How does the exploitation work ?</h2>
+
+	<pre><code class="language-">0|whoami</code></pre>
+
+<h2>How to patch it ?</h2>
+
+	<p>
+	Ideally, a developer should use existing API for their language. For example (Java): Rather than use Runtime.exec() to issue a ‘mail’ command, use the available Java API located at javax.mail.*.
+
+	If no such available API exists, the developer should scrub all input for malicious characters. Implementing a positive security model would be most efficient. Typically, it is much easier to define the legal characters than the illegal characters.
+	</p>
